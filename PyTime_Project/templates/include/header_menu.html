@@ -4,20 +4,38 @@
   {% url "resumePage" as resumeUrl %}
 
   <li class="header_menu_nav_item">
-    <a class="header_menu_link nav-link mx-2 p-0 d-flex justify-content-center" href="{{ projectsUrl }}">
-        Проекты
-    </a>
+    {% if navigationSelected != 1 %}
+      <a class="header_menu_link nav-link mx-2 p-0 d-flex justify-content-center" href="{{ projectsUrl }}">
+          Проекты
+      </a>
+    {% else %}
+      <p class="selected_header_menu_link nav-link mb-0 mx-2 p-0 d-flex justify-content-center" href="{{ projectsUrl }}">
+          Проекты
+      </p>
+    {% endif %} 
   </li>
   
   <li class="header_menu_nav_item">
-    <a class="header_menu_link nav-link mx-2 p-0 d-flex align-items-center justify-content-center" href="{{ articlesUrl }}">
+    {% if navigationSelected != 2 %}
+      <a class="header_menu_link nav-link mx-2 p-0 d-flex align-items-center justify-content-center" href="{{ articlesUrl }}">
         Статьи
     </a>
+    {% else %}
+      <p class="selected_header_menu_link nav-link mb-0 mx-2 p-0 d-flex align-items-center justify-content-center" href="{{ articlesUrl }}">
+        Статьи
+    </p>
+    {% endif %} 
   </li>
-  
+
   <li class="header_menu_nav_item">
-    <a class="header_menu_link nav-link mx-2 p-0 d-flex align-items-center justify-content-center" href="{{ resumeUrl }}">
+    {% if navigationSelected != 3 %}
+      <a class="header_menu_link nav-link mx-2 p-0 d-flex align-items-center justify-content-center" href="{{ resumeUrl }}">
         Резюме
     </a>
+    {% else %}
+      <p class="selected_header_menu_link nav-link mb-0 mx-2 p-0 d-flex align-items-center justify-content-center" href="{{ resumeUrl }}">
+        Резюме
+      </p>
+    {% endif %} 
   </li>
 </ul>

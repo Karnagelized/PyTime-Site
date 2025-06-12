@@ -92,8 +92,8 @@ p {
 .about_developer_road_img,
 .developer_hard_skills_img,
 .developer_soft_skills_img {
-    width: 620px;
-    height: 640px;
+    width: 650px;
+    height: 650px;
     object-fit: cover;
 }
 
@@ -163,7 +163,10 @@ p {
 .footer_agreements_item_link,
 .project_card_view_link,
 .article_card_view_link,
-.feedback_publish_button {
+.feedback_publish_button,
+.agreement_link,
+.agreement_underline,
+.forgot_password_link {
     transition: all ease .4s;
 }
 
@@ -190,7 +193,7 @@ p {
 /* ====== */
 /* Errors */
 /* ====== */
-.error_404 {
+.error_404 {    
     height: 730px;
 }
 
@@ -225,6 +228,15 @@ p {
     height: 40px;
 }
 
+.selected_header_menu_link {
+    font-size: 16px;
+    color: #59A5F5;;
+}
+
+.selected_header_menu_link:hover {
+    color: #59A5F5;;
+}
+
 .header_menu_link,
 .header_authorization_link,
 .footer_agreements_item_text,
@@ -249,7 +261,10 @@ p {
 .header_menu_link:hover,
 .footer_agreements_item_link:hover,
 .project_card_view_link:hover,
-.article_card_view_link:hover {
+.article_card_view_link:hover,
+.agreement_link:hover,
+.agreement_underline:hover,
+.forgot_password_link:hover {
     color: #59A5F5;
 }
 
@@ -305,7 +320,7 @@ p {
 }
 
 .main_greeting_left_side {
-    width: 560px;
+    width: 650px;
 }
 
 .main_greeting_buttons {
@@ -360,7 +375,7 @@ p {
 
 .main_skills_left_side_text {
     margin-top: 30px;
-    margin-bottom: 20px;
+    margin-bottom: 30px;
 }
 
 .main_skills_left_side_skills {
@@ -374,6 +389,15 @@ p {
     font-size: 18px;
 }
 
+.main_skills_left_side_skills_item:first-child {
+    margin-top: 0px;
+}
+
+.main_skills_left_side_skills_item:last-child {
+    margin-bottom: 0px;
+}
+
+
 /* My Projects */
 .explore_my_projects_and_blog {
     height: 440px;
@@ -385,7 +409,7 @@ p {
 .explore_my_blog_right_side,
 .explore_my_projects_left_side,
 .explore_my_projects_right_side {
-    width: 610px;
+    width: 650px;
 }
 
 .explore_my_projects_and_blog_left_side_text,
@@ -416,10 +440,13 @@ p {
 .developer_hard_skills_text,
 .brief_information_title,
 .preview_last_project_title,
-.preview_last_article_title,
+.preview_last_article_title {
+    margin-top: 30px;
+    margin-bottom: 30px;
+}
+
 .preview_last_project_text,
 .preview_last_article_text {
-    margin-top: 30px;
     margin-bottom: 30px;
 }
 
@@ -439,7 +466,7 @@ p {
 .about_developer_road_left_side,
 .preview_last_project_left_side,
 .preview_last_article_left_side {
-    width: 620px;
+    width: 650px;
 }
 
 .developer_soft_skills_text {
@@ -453,11 +480,6 @@ p {
 /* ======================= */
 /* Projects page container */
 /* ======================= */
-/*.preview_projects,
-.preview_articles {
-    height: 850px;
-}*/
-
 .preview_projects_up_side {
     height: 240px;
 }
@@ -485,15 +507,15 @@ p {
 
 .preview_last_project_right_side,
 .preview_last_article_right_side {
-    width: 620px;
-    height: 640px;
+    width: 650px;
+    height: 650px;
 }
 
 .preview_last_project_img {
     object-fit: cover;
 }
 
-/* Article card */
+/* Article and Project card */
 .project_card,
 .article_card {
     border: solid;
@@ -502,6 +524,11 @@ p {
     border-width: 1px;
     width: 350px;
     height: 420px;
+}
+
+.project_card_view_link,
+.article_card_view_link {
+    font-size: 18px;
 }
 
 .project_card_description,
@@ -647,10 +674,123 @@ p {
 
 
 
+/* ========== */
+/* Agreements */
+/* ========== */
+.agreement_link {
+    color: #212529;
+}
+
+.agreement_underline {
+    color: #212529;
+}
+
+.agremeent_title {
+    margin-top: 50px;
+    margin-bottom: 50px;
+}
+
+.agreement_chapter {
+    margin-bottom: 20px;
+    font-size: 22px;
+    font-weight: bold;
+}
+
+.agreement_point_1,
+.agreement_point_2,
+.agreement_point_3,
+.agreement_text {
+    margin-bottom: 15px;
+}
+
+.agreement_point_2 {
+    margin-left: 35px;
+}
+
+.agreement_point_3 {
+    margin-left: 70px;
+}
+
+.agreement_block {
+    margin-bottom: 50px;
+}
+
+.agreement_block p:last-child {
+    margin-bottom: 0px;
+}
+
+.agreement_text {
+    text-indent: 35px;
+}
+
+.agreement_cell {
+    border: solid;
+    border-color: #000000;
+    border-width: 2px;
+    padding: 15px;
+    max-width: 500px;
+}
 
 
 
 
+
+/* ============= */
+/* Authorization */
+/* ============= */
+.authorization_content {
+    height: 730px;
+}
+
+.authorization_block {
+    border: solid;
+    border-width: 1px;
+    border-radius: 10px;
+    width: 420px;
+    padding: 30px;
+}
+
+.authorization_title {
+    font-size: 24px;
+    font-weight: bold;
+    margin-bottom: 20px;
+}
+
+.input_title {
+    font-size: 16px;
+}
+
+.input_title,
+.input_text_block {
+    margin-bottom: 5px;
+}
+
+.authorization_input {
+    text-indent: 5px;
+    border: solid;
+    border-color: #AFAFAF;
+    border-width: 1px;
+    border-radius: 5px;
+    background-color: #F3F3F3;
+    margin-bottom: 20px;
+    width: 100%;
+}
+
+.authorization_line {
+    color: #707070;
+    border: solid;
+    border-width: 1px;
+    border-radius: 5px;
+}
+
+.forgot_password_link {
+    color: #212529;
+}
+
+.create_accaunt_block .block_button_white_background {
+    width: 120px;
+    height: 40px;
+}
 
 
 

@@ -3,8 +3,12 @@
 		<a href="#{{ id_name }}" class="button_white_background w-100 d-flex align-items-center justify-content-center">
 			{{ name }}
 		</a>
-	{% else %}
+	{% elif url_name %}
 		<a href="{{ url_name }}" class="button_white_background w-100 d-flex align-items-center justify-content-center">
+			{{ name }}
+		</a>
+	{% else %}
+		<a href="{% url 'badRequest' %}" class="button_white_background w-100 d-flex align-items-center justify-content-center">
 			{{ name }}
 		</a>
 	{% endif %}

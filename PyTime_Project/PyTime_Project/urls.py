@@ -17,9 +17,13 @@ Including another URLconf
 
 from django.contrib import admin
 from django.urls import path, include
-from core.views import pageNotFound
+from core.views import (
+    badRequest, forbidden,
+    pageNotFound, internalServerError
+)
 from django.conf.urls.static import static
 from django.conf import settings
+
 
 urlpatterns = [
     path('admin', admin.site.urls),
@@ -30,4 +34,7 @@ urlpatterns = [
 if settings.DEBUG:
     urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 
+handler400 = badRequest
+handler403 = forbidden
 handler404 = pageNotFound
+handler500 = internalServerError

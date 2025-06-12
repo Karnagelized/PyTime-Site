@@ -41,7 +41,7 @@
 
             <div class="header_right_side_block d-flex align-items-center">
                 <div class="header_authorization d-flex justify-content-center">
-                    <a class="header_authorization_link d-flex justify-content-center align-items-center" href="#">
+                    <a class="header_authorization_link d-flex justify-content-center align-items-center" href="{% url 'authorizationUser' %}">
                         Войти
                     </a>
                 </div>
@@ -74,12 +74,12 @@
                     </p>
                 </li>
                 <li class="footer_agreements_item d-flex align-items-center justify-content-center">
-                    <a class="footer_agreements_item_link p-0" href="#">
+                    <a class="footer_agreements_item_link p-0" href="{% url 'userAgreement' %}">
                         Пользовательское соглашение
                     </a>
                 </li>
                 <li class="footer_agreements_item d-flex align-items-center justify-content-center">
-                    <a class="footer_agreements_item_link p-0" href="#">
+                    <a class="footer_agreements_item_link p-0" href="{% url 'privacy' %}">
                         Политика конфиденциальности
                     </a>
                 </li>
