@@ -1,0 +1,43 @@
+{% extends "base.html" %}
+
+{% block title %}
+	{{ articleData.shortTitle }}
+{% endblock title %}
+
+{% block main-container %}
+	<div class="main_content">
+		<div class="preview_article d-flex justify-content-between align-items-center">
+			<div class="preview_article_left_side d-flex flex-column align-content-center">
+				<h2 class="article_title">
+					{{ articleData.title }}
+				</h2>
+
+				<!-- Tags -->
+				{% include 'include/item_tags.html' with itemData=articleData %}
+			</div>
+
+			<div class="preview_article_right_side">
+				<p class="article_text mb-0">
+					{{ articleData.description }}
+				</p>
+			</div>
+		</div>
+
+        <!-- Separator line -->
+        <hr class="content_separator">
+
+		<div class="body_article">
+			<div class="article_text_block">
+				<p class="article_text">
+					{{ articleData.text }}
+				</p>
+			</div>
+		</div>
+
+        <!-- Separator line -->
+        <hr class="content_separator">
+
+        <!-- Write a comment block -->
+        {% include 'include/write_comment.html' %}
+	</div>
+{% endblock %}

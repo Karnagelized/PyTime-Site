@@ -1,0 +1,30 @@
+{% extends "base.html" %}
+
+{% block title %}
+	Все проекты
+{% endblock title %}
+
+{% block main-container %}
+	<div class="main_content">
+		<!-- Preview all projects -->
+		<div class="all_preview_projects h-auto">
+            {% include 'include/check_last_projects.html' %}
+			
+			{% if allProjects|length != 0 %}
+				<div class="preview_all_projects_bottom_side d-flex flex-column justify-content-between">
+					<div class="preview_all_projects_line d-flex align-content-center flex-wrap justify-content-between">
+	                    {% include 'include/cards/project_card.html' with projects=allProjects %}
+					</div>
+				</div>
+            {% else %}
+				{% include 'errors/section_is_empty.html' %}
+            {% endif %}
+		</div>
+
+        <!-- Separator line -->
+        <hr class="content_separator">
+
+		<!-- Explore my blog -->
+		{% include 'include/explore_my_work/expole_my_blog.html' %}
+	</div>
+{% endblock %}

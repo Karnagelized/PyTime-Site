@@ -1,0 +1,24 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}
+    Ошибка 404
+{% endblock title %}
+
+{% block main-container %}
+    <div class="main_content">
+        <div class="error_404 d-flex align-items-center justify-content-between">
+            <div class="error_404_left_side d-flex flex-column justify-content-center">
+                <h2 class="error_404_title mb-0">
+                    Ошибка 404
+                </h2>
+                
+                <p class="error_404_text mb-0">
+                    Кажется что-то пошло не так! Страница, которую вы запрашиваете, не существует. Возможно она устарела, была удалена, или был введен неверный адрес в адресной строке.
+                </p>
+            </div>
+
+            <img class="error_404_img" src="{% static 'img/errors/404.jpg' %}">
+        </div>
+    </div>
+{% endblock main-container %}

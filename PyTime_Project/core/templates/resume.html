@@ -1,10 +1,106 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-</head>
-<body>
+{% extends "base.html" %}
+{% load static %}
 
-</body>
-</html>
+{% block title %}
+    Резюме Разработчика
+{% endblock title %}
+
+{% block main-container %}
+    <div class="main_content">
+        <div class="brief_information_block d-flex flex-column justify-content-center">
+            <p class="brief_information_short_name mb-0">
+                Кодер
+            </p>
+            
+            <h2 class="brief_information_title">
+                Python Backend Разработчик
+            </h2>
+            
+            <p class="brief_information_text">
+                Создаю эффективные решения с использованием Python, чтобы помочь вашему бизнесу достичь новых высот.
+            </p>
+
+            <!-- Buttons -->
+            <div class="block_duo_buttons d-flex justify-content-between">
+                {% url "projectsPage" as projectsUrl %}
+                {% url "articlesPage" as articlesUrl %}
+
+                {% include "buttons/button_white_background.html" with name="Узнать больше" url_name=projectsUrl %}
+                {% include "buttons/button_black_background.html" with name="Читать" url_name=articlesUrl %}
+            </div>
+        </div>
+
+        <!-- Separator line -->
+        <hr class="content_separator">
+
+        <div class="about_developer_road d-flex align-items-center justify-content-between">
+            <div class="about_developer_road_left_side d-flex flex-column justify-content-center">
+                <p class="brief_information_short_block_name mb-0">
+                    Профессионал
+                </p>
+                
+                <h2 class="brief_information_title">
+                    Краткая информация о разработчике и его пути
+                </h2>
+                
+                <p class="brief_information_text">
+                    Будучи студентом 3 курса технической специальности, я обладаю более чем 3-х летним опытом разработки учебных и личных проектов на Python. Начинал свою карьеру с PHP, однако в дальнейшем отдал предпочтение Python, который считаю мощным и универсальным инструментом для решения большинства задач. Непрерывно совершенствую свои навыки, активно изучая литературу, статьи и видеоматериалы. Убежден, что программирование – это процесс, требующий постоянного саморазвития.
+                </p>
+
+                <!-- Buttons -->
+                <div class="block_duo_buttons d-flex justify-content-between">
+                    {% url "projectsPage" as projectsUrl %}
+                    {% url "mainPage" as mainUrl %}
+
+                    {% include "buttons/button_white_background.html" with name="Узнать больше" url_name=projectsUrl %}
+                    {% include "buttons/button_black_background.html" with name="Связаться" id_name="footer_id" %}
+                </div>
+            </div>
+
+            <img class="about_developer_road_img" src="{% static 'img/resume/avatar.jpg' %}">
+        </div>
+
+        <!-- Separator line -->
+        <hr class="content_separator">
+
+        <div class="developer_hard_skills d-flex align-items-center justify-content-between">
+            <img class="developer_hard_skills_img" src="{% static 'img/resume/hardSkills.jpg' %}">
+
+            <div class="developer_hard_skills_left_side d-flex flex-column justify-content-center">
+                <h2 class="developer_hard_skills_title mb-0">
+                    Ключевые <u class="developer_hard_skills_underline_title">Hard</u> навыки и умения
+                </h2>
+                
+                <p class="developer_hard_skills_text">
+                    Я обладаю знаниями в Python и опытом работы с различными фреймворками. Мои навыки включают разработку Web-приложений, работу с БД и тестирование кода.
+                </p>
+
+                <!-- Skills -->
+                {% include 'include/hard_skills.html' %}
+            </div>
+        </div>
+
+        <!-- Separator line -->
+        <hr class="content_separator">
+
+        <div class="developer_soft_skills d-flex align-items-center justify-content-between">
+            <div class="developer_soft_skills_right_side d-flex flex-column justify-content-center">
+                <h2 class="developer_soft_skills_title mb-0">
+                    Ключевые <u class="developer_soft_skills_underline_title">Soft</u> навыки и умения
+                </h2>
+                
+                <p class="developer_soft_skills_text mb-0">
+                    Я постоянно работаю над собой, чтобы быть не только сильным программистом, но и эффективным членом команды. Четко выражаю свои мысли и умею слушать других, обеспечивая продуктивную коммуникацию. Легко нахожу общий язык с коллегами, стремлюсь к сотрудничеству и помогаю в решении проблем. Понимаю важность самоорганизации, поэтому умело планирую время и выполняю задачи в срок. И, конечно, не останавливаюсь в развитии, постоянно изучаю новое и адаптируюсь к изменениям в индустрии.
+                </p>
+            </div>
+
+            <img class="developer_soft_skills_img" src="{% static 'img/resume/softSkills.jpg' %}">
+        </div>
+
+        <!-- Separator line -->
+        <hr class="content_separator">
+
+        <!-- Explore projects and blog block -->
+        {% include "include/explore_my_work/expole_my_projects_and_blog.html" %}
+    </div>
+{% endblock main-container %}

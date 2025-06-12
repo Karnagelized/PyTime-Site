@@ -1,0 +1,36 @@
+{% load static %}
+
+{% for article in articles %}
+    <div class="article_card d-flex flex-column">
+        <div class="article_card_img_block w-100">
+            {% if article.image %}
+                <img src="{{ article.image.url }}" class="article_card_img w-100 h-100">
+            {% else %}
+                <img src="{% static 'img/404_IMG.png' %}" class="article_card_img w-100 h-100">
+            {% endif %}
+        </div>
+
+        <div class="article_card_description mb-100">
+            <p class="article_card_title">
+                {{ article.title }}
+            </p>
+            
+            <p class="article_card_text">
+                {{ article.text|truncatechars:80 }}
+            </p>
+
+            <!-- Tags -->
+            {% include 'include/item_tags.html' with itemData=article %}
+        </div>
+
+        <div class="article_card_view_block mt-auto d-flex justify-content-between">
+            <a href="{{ article.get_absolute_url }}" class="article_card_view_link">
+                Читать ❯
+            </a>
+
+            <p class="article_card_datetime_published mb-0">
+                {{ article.datetimeCreate }}
+            </p>
+        </div>
+    </div>
+{% endfor %}

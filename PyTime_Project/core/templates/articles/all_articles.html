@@ -1,0 +1,30 @@
+{% extends "base.html" %}
+
+{% block title %}
+	Все статьи
+{% endblock title %}
+
+{% block main-container %}
+	<div class="main_content">
+		<!-- Preview all articles -->
+		<div class="all_preview_articles h-auto">
+            {% include 'include/check_last_articles.html' %}
+			
+            {% if allArticles|length != 0 %}
+				<div class="preview_all_articles_bottom_side d-flex flex-column justify-content-between">
+					<div class="preview_all_articles_line d-flex align-content-center flex-wrap justify-content-between">
+	                    {% include 'include/cards/article_card.html' with articles=allArticles %}
+					</div>
+				</div>
+            {% else %}
+				{% include 'errors/section_is_empty.html' %}
+            {% endif %}
+		</div>
+
+        <!-- Separator line -->
+        <hr class="content_separator">
+
+		<!-- Explore my blog -->
+		{% include 'include/explore_my_work/expole_my_projects.html' %}
+	</div>
+{% endblock %}

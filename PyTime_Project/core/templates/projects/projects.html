@@ -1,0 +1,71 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}
+	Проекты
+{% endblock title %}
+
+{% block main-container %}
+	<div class="main_content">
+		<!-- Preview 4 last projects -->
+		<div class="preview_projects">
+			{% include 'include/check_last_projects.html' %}
+			
+            {% if lastProjects|length != 0 %}
+                <div class="preview_projects_bottom_side d-flex flex-column justify-content-between">
+                    <div class="preview_projects_line d-flex justify-content-around">
+    					{% include 'include/cards/project_card.html' with projects=lastProjects %}
+    				</div>
+
+                    <div class="view_all_projects d-flex justify-content-center">
+                        {% url "allProjectsPage" as allProjectsUrl %}
+
+                        {% include "buttons/button_white_background.html" with name="Смотреть все" url_name=allProjectsUrl %}
+                    </div>
+    			</div>
+            {% else %}
+                {% include 'errors/section_is_empty.html' %}
+            {% endif %}
+		</div>
+
+        <!-- Separator line -->
+        <hr class="content_separator">
+
+		<!-- Preview last project -->
+        {% if lastProject is not None %}
+    		<div class="preview_last_project d-flex justify-content-between align-items-center">
+                <div class="preview_last_project_left_side d-flex flex-column justify-content-center">
+                    <p class="preview_last_project_short_block_name mb-0">
+                        Последняя разработка
+                    </p>
+                    
+                    <h2 class="preview_last_project_title">
+                        {{ lastProject.title }}
+                    </h2>
+                    
+                    <p class="preview_last_project_text">
+                        {{ lastProject.text|truncatechars:800 }}
+                    </p>
+
+                    <!-- Button -->
+                    {% include "buttons/button_black_background.html" with name="Узнать больше" url_name=lastProject.get_absolute_url %}
+                </div>
+
+                <!-- Img block -->
+                <div class="preview_last_project_right_side">
+                    {% if lastProject.image %}
+                        <img src="{{ lastProject.image.url }}" class="project_card_img w-100 h-100">
+                    {% else %}
+                        <img src="{% static 'img/404_IMG.png' %}" class="project_card_img w-100 h-100">
+                    {% endif %}
+                </div>
+    		</div>
+        
+            <!-- Separator line -->
+            <hr class="content_separator">
+        {% endif %}
+
+		<!-- Explore my blog -->
+		{% include 'include/explore_my_work/expole_my_blog.html' %}
+	</div>
+{% endblock %}

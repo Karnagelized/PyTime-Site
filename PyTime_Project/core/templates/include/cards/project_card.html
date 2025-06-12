@@ -1,0 +1,36 @@
+{% load static %}
+
+{% for project in projects %}
+    <div class="project_card d-flex flex-column">
+        <div class="project_card_img_block w-100">
+            {% if project.image %}
+                <img src="{{ project.image.url }}" class="project_card_img w-100 h-100">
+            {% else %}
+                <img src="{% static 'img/404_IMG.png' %}" class="project_card_img w-100 h-100">
+            {% endif %}
+        </div>
+
+        <div class="project_card_description mb-100">
+            <p class="project_card_title">
+                {{ project.title }}
+            </p>
+            
+            <p class="project_card_text">
+                {{ project.text|truncatechars:80 }}
+            </p>
+
+            <!-- Tags -->
+            {% include 'include/item_tags.html' with itemData=project %}
+        </div>
+
+        <div class="project_card_view_block mt-auto d-flex justify-content-between">
+            <a href="{{ project.get_absolute_url }}" class="project_card_view_link">
+                Читать ❯
+            </a>
+
+            <p class="project_card_datetime_published mb-0">
+                {{ project.datetimeCreate }}
+            </p>
+        </div>
+    </div>
+{% endfor %}

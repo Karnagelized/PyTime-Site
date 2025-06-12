@@ -1,0 +1,715 @@
+* {
+    font-family: "Roboto Regular";
+}
+
+header,
+footer,
+.base_content_separator {
+    margin-left: 140px;
+    margin-right: 140px;
+}
+
+header {
+    height: 70px;
+}
+
+footer {
+    height: 150px;
+}
+
+ul {
+    padding-inline-start: 0px;
+}
+
+a {
+    text-decoration: none;
+    font-size: 16px;
+}
+
+h1 {
+    font-family: "Roboto Bold";
+    font-size: 56px;
+}
+
+h2 {
+    font-family: "Roboto Bold";
+    font-size: 48px;
+}
+
+p {
+    font-size: 18px;
+}
+
+
+
+
+
+/* ===== */
+/* Fonts */
+/* ===== */
+@font-face {
+  font-family: "Roboto Regular";
+  src: url("../fonts/Roboto-Regular.ttf");
+}
+
+@font-face {
+  font-family: "Roboto SemiBold";
+  src: url("../fonts/Roboto-SemiBold.ttf");
+}
+
+@font-face {
+  font-family: "Roboto Bold";
+  src: url("../fonts/Roboto-Bold.ttf");
+}
+
+.brief_information_short_block_name,
+.brief_information_short_name,
+.preview_last_project_short_block_name,
+.preview_last_article_short_block_name,
+.developer_soft_skills_underline_title,
+.developer_hard_skills_underline_title,
+.explore_my_projects_text,
+.footer_agreements_item_text,
+.footer_agreements_item_link,
+.footer_site_email_link {
+    font-family: "Roboto SemiBold";
+}
+
+.article_card_title,
+.project_card_title,
+.project_card_view_link,
+.article_card_view_link {
+    font-family: "Roboto Bold";
+}
+
+
+
+/* ====== */
+/* Images */
+/* ====== */
+.error_404_img,
+.main_skills_img,
+.about_developer_road_img,
+.developer_hard_skills_img,
+.developer_soft_skills_img {
+    width: 620px;
+    height: 640px;
+    object-fit: cover;
+}
+
+
+
+
+
+/* ======== */
+/* Includes */
+/* ======== */
+.block_duo_buttons {
+    width: 335px;
+}
+
+.block_button_white_background,
+.block_button_black_background,
+.feedback_publish_button {
+    border: solid;
+    border-width: 2px;
+    border-color: #000000;
+    border-radius: 5px;
+    border-width: 2px;
+}
+
+.block_button_black_background,
+.block_button_white_background {
+    width: 160px;
+    height: 50px;
+}
+
+.block_button_white_background,
+.main_greeting_know_more {
+    background-color: #FFFFFF;
+}
+
+.block_button_black_background,
+.feedback_publish_button {
+    background-color: #000000;
+}
+
+.button_white_background,
+.main_greeting_know_more_link,
+.header_authorization_link,
+.project_card_view_link,
+.article_card_view_link {
+    color: #000000;
+}
+
+.button_black_background,
+.main_greeting_title,
+.main_greeting_about,
+.main_greeting_contact_link {
+    color: #FFFFFF;
+}
+
+.block_button_white_background,
+.button_white_background,
+.block_button_black_background,
+.button_black_background,
+.header_authorization,
+.header_authorization_link,
+.main_greeting_know_more,
+.main_greeting_know_more_link,
+.main_greeting_contact,
+.main_greeting_contact_link,
+.footer_social_link_svg,
+.footer_agreements_item_link,
+.project_card_view_link,
+.article_card_view_link,
+.feedback_publish_button {
+    transition: all ease .4s;
+}
+
+.block_button_white_background:hover {
+    background-color: #000000;
+
+    .button_white_background {
+        color: #FFFFFF;
+    }
+}
+
+.block_button_black_background:hover {
+    background-color: #FFFFFF;
+
+    .button_black_background {
+        color: #000000;
+    }
+}
+
+
+
+
+
+/* ====== */
+/* Errors */
+/* ====== */
+.error_404 {
+    height: 730px;
+}
+
+.error_404_left_side {
+    width: 590px;
+}
+
+.error_404_text {
+    margin-top: 50px;
+}
+
+.selection_empty {
+    margin-top: 50px;
+    margin-bottom: 50px;
+}
+
+.selection_empty_underline {
+    
+}
+
+
+
+/* ====== */
+/* Header */
+/* ====== */
+.header_logo {
+    width: 120px;
+}
+
+.logo_img {
+    width: 85px;
+    height: 40px;
+}
+
+.header_menu_link,
+.header_authorization_link,
+.footer_agreements_item_text,
+.footer_agreements_item_link,
+.footer_site_email_link,
+.footer_site_email_link:hover {
+    color: #707070;
+}
+
+.header_authorization_link:hover {
+    background-color: #000000;
+    border-color: #000000;
+    border-width: 2px;
+    border-radius: 5px;
+    color: #FFFFFF;
+}
+
+.header_menu_nav_item {
+    width: 120px;
+}
+
+.header_menu_link:hover,
+.footer_agreements_item_link:hover,
+.project_card_view_link:hover,
+.article_card_view_link:hover {
+    color: #59A5F5;
+}
+
+.header_authorization_link {
+    height: 40px;
+    width: 100px;
+    border: solid;
+    border-width: 2px;
+    border-color: #000000;
+    border-radius: 5px;
+}
+
+
+
+
+
+/* =================== */
+/* Main page container */
+/* =================== */
+
+/* Separator line */
+.content_separator,
+.base_content_separator {
+    color: #707070;
+    height: 1px;
+    border: solid;
+    border-width: 1px;
+    border-radius: 5px;
+    margin-bottom: 0px;
+    margin-top: 0px;
+}
+
+/* Greeting */
+.main_greeting {
+    min-height: calc(100vh - 70px);
+    background-image: url(
+        "../img/main_page/main.jpg"
+    );
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: center;
+    padding-left: 140px;
+    padding-right: 140px;
+}
+
+.main_greeting_title {
+    font-size: 56px;
+}
+
+.main_greeting_about {
+    margin-top: 30px;
+    margin-bottom: 30px;
+}
+
+.main_greeting_left_side {
+    width: 560px;
+}
+
+.main_greeting_buttons {
+    width: 335px;
+}
+
+.main_greeting_know_more,
+.main_greeting_contact {
+    border: solid;
+    border-width: 2px;
+    border-color: #FFFFFF;
+    border-radius: 5px;
+    border-width: 2px;
+}
+
+.main_greeting_contact,
+.main_greeting_know_more {
+    width: 160px;
+    height: 50px;
+}
+
+.main_greeting_contact:hover {
+    background-color: #FFFFFF;
+
+    .main_greeting_contact_link {
+        color: #000000;
+    }
+}
+
+.main_greeting_know_more:hover {
+    background-color: transparent;
+
+    .main_greeting_know_more_link {
+        color: #FFFFFF;
+    }
+}
+
+/* Main_content */
+.main_content {
+    padding-left: 140px;
+    padding-right: 140px;
+}
+
+/* Skils */
+.main_skills {
+    height: 870px;
+}
+
+.main_skills_left_side {
+    width: 650px;
+}
+
+.main_skills_left_side_text {
+    margin-top: 30px;
+    margin-bottom: 20px;
+}
+
+.main_skills_left_side_skills {
+    list-style-type: circle;
+    margin-left: 20px;
+}
+
+.main_skills_left_side_skills_item {
+    margin-top: 10px;
+    margin-bottom: 10px;
+    font-size: 18px;
+}
+
+/* My Projects */
+.explore_my_projects_and_blog {
+    height: 440px;
+}
+
+.explore_my_projects_and_blog_left_side,
+.explore_my_projects_and_blog_right_side,
+.explore_my_blog_left_side,
+.explore_my_blog_right_side,
+.explore_my_projects_left_side,
+.explore_my_projects_right_side {
+    width: 610px;
+}
+
+.explore_my_projects_and_blog_left_side_text,
+.explore_my_blog_left_side_text {
+    margin-bottom: 20px;
+}
+
+.explore_my_projects_and_blog_right_side_text,
+.explore_my_blog_right_side_text,
+.explore_my_projects_right_side_text {
+    margin-bottom: 15px;
+}
+
+
+
+
+
+/* ===================== */
+/* Resume page container */
+/* ===================== */
+
+/* Brief information */
+.brief_information_block {
+    width: 700px;
+    height: 500px;
+}
+
+.developer_hard_skills_text,
+.brief_information_title,
+.preview_last_project_title,
+.preview_last_article_title,
+.preview_last_project_text,
+.preview_last_article_text {
+    margin-top: 30px;
+    margin-bottom: 30px;
+}
+
+.brief_information_text {
+    margin-bottom: 30px;
+}
+
+/* About developer road */
+.developer_hard_skills,
+.developer_soft_skills,
+.about_developer_road {
+    height: 860px;
+}
+
+.developer_hard_skills_left_side,
+.developer_soft_skills_right_side,
+.about_developer_road_left_side,
+.preview_last_project_left_side,
+.preview_last_article_left_side {
+    width: 620px;
+}
+
+.developer_soft_skills_text {
+    margin-top: 30px;
+}
+
+
+
+
+
+/* ======================= */
+/* Projects page container */
+/* ======================= */
+/*.preview_projects,
+.preview_articles {
+    height: 850px;
+}*/
+
+.preview_projects_up_side {
+    height: 240px;
+}
+
+.explore_my_projects_title {
+    margin-top: 20px;
+    margin-bottom: 20px;
+}
+
+.preview_projects_bottom_side,
+.preview_articles_bottom_side {
+    padding-top: 50px;
+    padding-bottom: 50px;
+}
+
+.preview_last_project,
+.preview_last_article {
+    height: 860px;
+}
+
+.explore_my_blog,
+.explore_my_projects {
+    height: 330px;
+}
+
+.preview_last_project_right_side,
+.preview_last_article_right_side {
+    width: 620px;
+    height: 640px;
+}
+
+.preview_last_project_img {
+    object-fit: cover;
+}
+
+/* Article card */
+.project_card,
+.article_card {
+    border: solid;
+    border-color: #000000;
+    border-radius: 5px;
+    border-width: 1px;
+    width: 350px;
+    height: 420px;
+}
+
+.project_card_description,
+.article_card_description {
+    padding-top: 20px;
+
+}
+
+.project_card_description,
+.project_card_view_block,
+.article_card_description,
+.article_card_view_block {
+    padding-left: 20px;
+    padding-right: 20px;   
+}
+
+.project_card_img_block,
+.article_card_img_block {
+    margin-left: -1px;
+    min-width: 350px;
+    height: 180px;
+}
+
+.project_card_img,
+.article_card_img {
+    object-fit: cover;
+    border: none;
+    border-width: 2px;
+    border-radius: 5px 5px 0px 0px;
+}
+
+.project_card_title,
+.project_card_text,
+.article_card_title,
+.article_card_text {
+    margin-bottom: 10px;
+}
+
+.footer_agreements_item_text,
+.feedback_agreement,
+.project_card_text,
+.article_card_text {
+    font-size: 16px;
+}
+
+.card_tags_item {
+    padding: 5px;
+    background-color: #F3F3F3;
+    margin-right: 5px;
+    margin-bottom: 5px;
+}
+
+.project_card_view_block,
+.article_card_view_block {
+    margin-bottom: 10px;
+}
+
+
+
+
+
+/* ================ */
+/* All acticle page */
+/* ================ */
+.preview_all_projects_bottom_side,
+.preview_all_articles_bottom_side {
+    padding-top: 50px;
+}
+
+.project_card,
+.article_card {
+    margin-bottom: 50px;
+}
+
+
+
+/* ============ */
+/* Acticle page */
+/* ============ */
+.preview_project,
+.preview_article {
+    height: 300px;
+}
+
+.preview_project_left_side,
+.preview_article_left_side {
+    width: 600px;
+}
+
+.project_title,
+.article_title {
+    margin-bottom: 20px;
+}
+
+
+
+.preview_project_right_side,
+.preview_article_right_side {
+    width: 600px;
+}
+
+/* Body Article block */
+.body_project,
+.body_article,
+.feedback_container {
+    padding-top: 50px;
+    padding-bottom: 50px;
+}
+
+/* Feedback block */
+.feedback_block {
+    width: 650px;
+}
+
+.feedback_input {
+    margin-bottom: 20px;
+    padding: 5px;
+    min-height: 70px;
+    max-height: 300px;
+    border: solid;
+    border-color: #AFAFAF;
+    border-radius: 5px;
+    border-width: 1px;
+    background-color: #F3F3F3;
+}
+
+.feedback_agreement {
+    width: 450px;
+}
+
+.feedback_publish_button {
+    width: 160px;
+    height: 50px;
+    color: #FFFFFF;   
+}
+
+.feedback_publish_button:hover {
+    background-color: #FFFFFF;
+    color: #000000;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/* ====== */
+/* Footer */
+/* ====== */
+.footer_logo {
+    width: 120px;
+}
+
+.footer_agreements {
+    width: 770px;
+}
+
+.footer_feedback {
+    width: 200px;
+}
+
+.footer_social_link_svg {
+    width: 50px;
+    height: 50px;
+    fill-rule: evenodd;
+}
+
+.footer_social_link_svg:hover {
+    fill: #59A5F5;
+}
+
+.footer_site_email_link {
+    margin-top: 5px;
+}

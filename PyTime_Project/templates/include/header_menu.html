@@ -1,0 +1,23 @@
+<ul class="header_menu_nav list-unstyled m-0 d-flex align-items-center">
+  {% url "projectsPage" as projectsUrl %}
+  {% url "articlesPage" as articlesUrl %}
+  {% url "resumePage" as resumeUrl %}
+
+  <li class="header_menu_nav_item">
+    <a class="header_menu_link nav-link mx-2 p-0 d-flex justify-content-center" href="{{ projectsUrl }}">
+        Проекты
+    </a>
+  </li>
+  
+  <li class="header_menu_nav_item">
+    <a class="header_menu_link nav-link mx-2 p-0 d-flex align-items-center justify-content-center" href="{{ articlesUrl }}">
+        Статьи
+    </a>
+  </li>
+  
+  <li class="header_menu_nav_item">
+    <a class="header_menu_link nav-link mx-2 p-0 d-flex align-items-center justify-content-center" href="{{ resumeUrl }}">
+        Резюме
+    </a>
+  </li>
+</ul>

@@ -1,0 +1,71 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}
+	Статьи
+{% endblock title %}
+
+{% block main-container %}
+	<div class="main_content">
+		<!-- Preview 4 last articles -->
+		<div class="preview_articles">
+			{% include 'include/check_last_articles.html' %}
+			
+            {% if lastArticles|length != 0 %}
+                <div class="preview_articles_bottom_side d-flex flex-column justify-content-between">
+                    <div class="preview_articles_line d-flex justify-content-around">
+                        {% include 'include/cards/article_card.html' with articles=lastArticles %}
+                    </div>
+
+                    <div class="view_all_articles d-flex justify-content-center">
+                        {% url "allArticlesPage" as allArticlesUrl %}
+
+                        {% include "buttons/button_white_background.html" with name="Смотреть все" url_name=allArticlesUrl %}
+                    </div>
+                </div>
+            {% else %}
+                {% include 'errors/section_is_empty.html' %}
+            {% endif %}
+		</div>
+
+        <!-- Separator line -->
+        <hr class="content_separator">
+
+		<!-- Preview last article -->
+		{% if lastArticle is not None %}
+            <div class="preview_last_article d-flex justify-content-between align-items-center">
+                <div class="preview_last_article_left_side d-flex flex-column justify-content-center">
+                    <p class="preview_last_article_short_block_name mb-0">
+                        Последняя публикация
+                    </p>
+                    
+                    <h2 class="preview_last_article_title">
+                        {{ lastArticle.title }}
+                    </h2>
+                    
+                    <p class="preview_last_article_text">
+                        {{ lastArticle.text|truncatechars:800 }}
+                    </p>
+
+                    <!-- Button -->
+                    {% include "buttons/button_black_background.html" with name="Узнать больше" url_name=lastArticle.get_absolute_url %}
+                </div>
+
+                <!-- Img block -->
+                <div class="preview_last_article_right_side">
+                    {% if lastArticle.image %}
+                        <img src="{{ lastArticle.image.url }}" class="article_card_img w-100 h-100">
+                    {% else %}
+                        <img src="{% static 'img/404_IMG.png' %}" class="article_card_img w-100 h-100">
+                    {% endif %}
+                </div>
+    		</div>
+
+            <!-- Separator line -->
+            <hr class="content_separator">
+        {% endif %}
+
+		<!-- Explore my blog -->
+		{% include 'include/explore_my_work/expole_my_projects.html' %}
+	</div>
+{% endblock %}

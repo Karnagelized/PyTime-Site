@@ -1,0 +1,20 @@
+<div class="explore_my_blog d-flex justify-content-between align-items-center">
+	<div class="explore_my_blog_left_side">
+		<h2 class="explore_my_blog_left_side_title m-0">
+			Исследуйте мой блог
+		</h2>
+	</div>
+
+	<div class="explore_my_blog_right_side">
+		<p class="explore_my_blog_right_side_text">
+			Погрузитесь в мир IT! В моем блоге - полезные советы, разборы кейсов и актуальные новости. Читайте, применяйте, развивайтесь! Не забудьте оставить свой комментарий и поделиться своим опытом.
+		</p>
+
+		<!-- Buttons -->
+		<div class="block_duo_buttons d-flex justify-content-between">
+            {% url "articlesPage" as articlesUrl %}
+
+            {% include "buttons/button_white_background.html" with name="Узнать больше" url_name=articlesUrl %}
+		</div>
+	</div>
+</div>
