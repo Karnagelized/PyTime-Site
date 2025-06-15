@@ -1,1 +1,67 @@
-registration
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}
+	PyTime - Регистрация
+{% endblock title %}
+
+{% block main-container %}
+	<div class="main_content">
+		<div class="authentication_content d-flex align-items-center justify-content-center">
+			<div class="authentication_block">
+				<p class="authentication_title">
+					Регистрация
+				</p>
+				
+				<form action="#" class="authentication_form_block">
+					<div class="authentication_input_block">
+						<p class="authentication_input_title">
+							Имя пользователя
+						</p>
+						<input required type="text" placeholder="Введите имя пользователя" class="authentication_input">
+					</div>
+
+					<div class="authentication_input_block">
+						<p class="authentication_input_title">
+							Почта
+						</p>
+						<input required type="email" placeholder="Введите почту" class="authentication_input">
+					</div>
+
+					<div class="authentication_input_block">
+						<p class="authentication_input_title">
+							Пароль
+						</p>
+						<input required type="password" placeholder="Введите пароль" class="authentication_input">
+					</div>
+
+					<!-- Кнопка регистрации -->
+					<div class="authentication_button_block d-flex justify-content-center">
+						<!-- {% url "articlesPage" as articlesUrl %} -->
+		                {% include "buttons/button_black_background.html" with name="Создать аккаунт" %}
+					</div>
+
+					<div class="authentication_agreement_block">
+						<p class="authentication_agreement_text mb-0">
+							Регистрируясь, Вы соглашаетесь с условиями
+							
+							<u class="agreement_underline"><a class="agreement_link" href="{% url 'privacy' %}">политики конфиденциальности</a></u> и <u class="agreement_underline"><a class="agreement_link" href="{% url 'userAgreement' %}">пользовательского соглашения</a></u>
+						</p>
+					</div>
+				</form>
+
+				<hr class="authentication_line">
+
+				<div class="authentication_login_account_block d-flex justify-content-between align-items-center">
+					<p class="authentication_text mb-0">
+						У Вас уже есть аккаунт?
+					</p>
+
+					<!-- Кнопка регистрации -->
+					{% url "authorizationUser" as authorizationUserURl %}
+					{% include "buttons/button_white_background.html" with name="Войти" url_name=authorizationUserURl %}
+				</div>
+			</div>
+		</div>
+	</div>
+{% endblock %}

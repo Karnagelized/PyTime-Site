@@ -27,8 +27,8 @@ urlpatterns = [
     path('authorization', loginUser, name='authorizationUser'),
     path('registration', registrationUser, name='registrationUser'),
     path('password-reset', passwordResetEnterMail, name='passwordResetEnterMail'),
-    path('password-reset', passwordResetEnterCode, name='passwordResetEnterCode'),
-    path('password-reset', passwordResetEnterNewPassword, name='passwordResetEnterNewPassword'),
+    path('password-reset-enter-code', passwordResetEnterCode, name='passwordResetEnterCode'),
+    path('password-reset-enter-password', passwordResetEnterNewPassword, name='passwordResetEnterNewPassword'),
     # Соглашения
     path('agreement', userAgreement, name='userAgreement'),
     path('privacy', privacy, name='privacy'),

@@ -29,6 +29,10 @@ def resumePage(request: HttpRequest) -> HttpResponse:
     return render(request, 'resume.html', context=pageData)
 
 
+def profilePage(request: HttpRequest) -> HttpResponse:
+    return render(request, 'profile.html')
+
+
 """
     Страницы для раздела со Статьями 
 """

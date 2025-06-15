@@ -7,49 +7,51 @@
 
 {% block main-container %}
 	<div class="main_content">
-		<div class="authorization_content d-flex align-items-center justify-content-center">
-			<div class="authorization_block">
-				<p class="authorization_title">
+		<div class="authentication_content d-flex align-items-center justify-content-center">
+			<div class="authentication_block">
+				<p class="authentication_title">
 					Авторизация
 				</p>
 				
-				<div class="input_block">
-					<p class="input_title">
-						Почта
-					</p>
-					<input type="text" placeholder="Введите почту" class="authorization_input">
-				</div>
-
-				<div class="input_block">
-					<div class="input_text_block d-flex justify-content-between">
-						<p class="input_title mb-0">
-							Пароль
+				<form action="#" class="authentication_form_block">
+					<div class="authentication_input_block">
+						<p class="authentication_input_title">
+							Почта
 						</p>
-
-						<a href="#" class="forgot_password_link">
-							Забыли пароль?
-						</a>
+						<input required type="email" placeholder="Введите почту" class="authentication_input">
 					</div>
 
-					<input type="password" placeholder="Введите пароль" class="authorization_input">
-				</div>
+					<div class="authentication_input_block">
+						<div class="authentication_input_text_block d-flex justify-content-between">
+							<p class="authentication_input_title mb-0">
+								Пароль
+							</p>
 
-				<!-- Кнопка авторизации -->
-				<div class="login_button_block d-flex justify-content-center">
-					<!-- {% url "articlesPage" as articlesUrl %} -->
-	                {% include "buttons/button_black_background.html" with name="Войти" %}
-				</div>
+							<a href="{% url 'passwordResetEnterMail' %}" class="authentication_link">
+								Забыли пароль?
+							</a>
+						</div>
 
-				<hr class="authorization_line">
+						<input required type="password" placeholder="Введите пароль" class="authentication_input">
+					</div>
 
-				<div class="create_accaunt_block d-flex justify-content-between align-items-center">
-					<p class="authorization_text mb-0">
-						У вас ещё нет аккаунта?
+					<!-- Кнопка авторизации -->
+					<div class="authentication_button_block d-flex justify-content-center">
+						<!-- {% url "articlesPage" as articlesUrl %} -->
+		                {% include "buttons/button_black_background.html" with name="Войти" %}
+					</div>
+				</form>
+
+				<hr class="authentication_line">
+
+				<div class="authentication_create_account_block d-flex justify-content-between align-items-center">
+					<p class="authentication_text mb-0">
+						У Вас ещё нет аккаунта?
 					</p>
 
 					<!-- Кнопка регистрации -->
-					<!-- {% url "articlesPage" as articlesUrl %} -->
-					{% include "buttons/button_white_background.html" with name="Регистрация" %}
+					{% url "registrationUser" as registrationUserURL %}
+					{% include "buttons/button_white_background.html" with name="Регистрация" url_name=registrationUserURL %}
 				</div>
 			</div>
 		</div>

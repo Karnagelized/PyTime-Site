@@ -42,8 +42,6 @@ p {
 
 
 
-
-
 /* ===== */
 /* Fonts */
 /* ===== */
@@ -87,7 +85,7 @@ p {
 /* ====== */
 /* Images */
 /* ====== */
-.error_404_img,
+.error_right_side_img,
 .main_skills_img,
 .about_developer_road_img,
 .developer_hard_skills_img,
@@ -166,7 +164,7 @@ p {
 .feedback_publish_button,
 .agreement_link,
 .agreement_underline,
-.forgot_password_link {
+.authentication_link {
     transition: all ease .4s;
 }
 
@@ -193,15 +191,15 @@ p {
 /* ====== */
 /* Errors */
 /* ====== */
-.error_404 {    
+.error_block {    
     height: 730px;
 }
 
-.error_404_left_side {
-    width: 590px;
+.error_block_left_side {
+    width: 650px;
 }
 
-.error_404_text {
+.error_block_text {
     margin-top: 50px;
 }
 
@@ -210,9 +208,9 @@ p {
     margin-bottom: 50px;
 }
 
-.selection_empty_underline {
+/*.selection_empty_underline {
     
-}
+}*/
 
 
 
@@ -242,7 +240,8 @@ p {
 .footer_agreements_item_text,
 .footer_agreements_item_link,
 .footer_site_email_link,
-.footer_site_email_link:hover {
+.footer_site_email_link:hover,
+.authentication_short_description {
     color: #707070;
 }
 
@@ -264,7 +263,7 @@ p {
 .article_card_view_link:hover,
 .agreement_link:hover,
 .agreement_underline:hover,
-.forgot_password_link:hover {
+.authentication_link:hover {
     color: #59A5F5;
 }
 
@@ -570,7 +569,8 @@ p {
 .footer_agreements_item_text,
 .feedback_agreement,
 .project_card_text,
-.article_card_text {
+.article_card_text,
+.authentication_agreement_text {
     font-size: 16px;
 }
 
@@ -677,11 +677,9 @@ p {
 /* ========== */
 /* Agreements */
 /* ========== */
-.agreement_link {
-    color: #212529;
-}
-
-.agreement_underline {
+.agreement_link,
+.agreement_underline,
+.authentication_link {
     color: #212529;
 }
 
@@ -738,63 +736,88 @@ p {
 /* ============= */
 /* Authorization */
 /* ============= */
-.authorization_content {
+.authentication_content {
     height: 730px;
 }
 
-.authorization_block {
+.authentication_block {
     border: solid;
     border-width: 1px;
-    border-radius: 10px;
+    border-radius: 20px;
     width: 420px;
     padding: 30px;
 }
 
-.authorization_title {
+.authentication_title {
     font-size: 24px;
     font-weight: bold;
     margin-bottom: 20px;
 }
 
-.input_title {
+.authentication_input_title {
     font-size: 16px;
 }
 
-.input_title,
-.input_text_block {
+.authentication_input_title,
+.authentication_input_block,
+.authentication_input_text_block {
     margin-bottom: 5px;
 }
 
-.authorization_input {
+.authentication_input_block {
+    margin-bottom: 20px;
+}
+
+.authentication_input {
+    padding: 5px;
     text-indent: 5px;
     border: solid;
     border-color: #AFAFAF;
     border-width: 1px;
     border-radius: 5px;
     background-color: #F3F3F3;
-    margin-bottom: 20px;
     width: 100%;
 }
 
-.authorization_line {
+.authentication_line {
+    margin-top: 20px;
+    margin-bottom: 20px;
     color: #707070;
     border: solid;
     border-width: 1px;
     border-radius: 5px;
 }
 
-.forgot_password_link {
-    color: #212529;
-}
-
-.create_accaunt_block .block_button_white_background {
+.authentication_create_account_block .block_button_white_background {
     width: 120px;
     height: 40px;
 }
 
+.authentication_login_account_block .block_button_white_background {
+    width: 120px;
+    height: 40px;
+}
 
+.authentication_agreement_text {
+    text-align: center;
+    margin-top: 20px;
+    font-size: 12px;
 
+    .agreement_link {
+        font-size: 12px;
+    }
+}
 
+.authentication_short_description {
+    font-size: 14px;
+    margin-bottom: 20px;
+}
+
+.authentication_create_account_block {
+    .authentication_link {
+        font-size: 18px;
+    }
+}
 
 
 
