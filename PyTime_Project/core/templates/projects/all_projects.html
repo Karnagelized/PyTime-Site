@@ -11,8 +11,8 @@
             {% include 'include/check_last_projects.html' %}
 			
 			{% if allProjects|length != 0 %}
-				<div class="preview_all_projects_bottom_side d-flex flex-column justify-content-between">
-					<div class="preview_all_projects_line d-flex align-content-center flex-wrap justify-content-between">
+				<div class="preview_all_projects_bottom_side">
+					<div class="preview_all_projects_line">
 	                    {% include 'include/cards/project_card.html' with projects=allProjects %}
 					</div>
 				</div>

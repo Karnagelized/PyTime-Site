@@ -11,8 +11,8 @@
             {% include 'include/check_last_articles.html' %}
 			
             {% if allArticles|length != 0 %}
-				<div class="preview_all_articles_bottom_side d-flex flex-column justify-content-between">
-					<div class="preview_all_articles_line d-flex align-content-center flex-wrap justify-content-between">
+				<div class="preview_all_articles_bottom_side">
+					<div class="preview_all_articles_line">
 	                    {% include 'include/cards/article_card.html' with articles=allArticles %}
 					</div>
 				</div>

@@ -29,6 +29,7 @@ def resumePage(request: HttpRequest) -> HttpResponse:
     return render(request, 'resume.html', context=pageData)
 
 
+# Страница с профилем Пользователя
 def profilePage(request: HttpRequest) -> HttpResponse:
     return render(request, 'profile.html')
 
@@ -201,3 +202,6 @@ def pageNotFound(request: HttpRequest, exception=None) -> HttpResponse:
 def internalServerError(request: HttpRequest, exception=None) -> HttpResponse:
     return render(request, 'errors/500.html', status=500)
 
+# Страница с ошибкой 503
+def serviceUnavailable(request: HttpRequest, exception=None) -> HttpResponse:
+    return render(request, 'errors/503.html', status=503)

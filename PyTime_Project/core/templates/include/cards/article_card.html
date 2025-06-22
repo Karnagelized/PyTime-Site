@@ -2,11 +2,11 @@
 
 {% for article in articles %}
     <div class="article_card d-flex flex-column">
-        <div class="article_card_img_block w-100">
+        <div class="article_card_img_block">
             {% if article.image %}
-                <img src="{{ article.image.url }}" class="article_card_img w-100 h-100">
+                <img src="{{ article.image.url }}" class="article_card_img">
             {% else %}
-                <img src="{% static 'img/404_IMG.png' %}" class="article_card_img w-100 h-100">
+                <img src="{% static 'img/404_IMG.png' %}" class="article_card_img">
             {% endif %}
         </div>
 

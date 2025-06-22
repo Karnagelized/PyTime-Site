@@ -1,0 +1,39 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}
+	PyTime - Профиль
+{% endblock title %}
+
+{% block main-container %}
+	<div class="main_content">
+		<div class="profile_block d-flex justify-content-center align-items-center">
+			<div class="profile_left_side">
+				<img class="profile_avatar" src="{% static '\img\404_IMG.png' %}">
+			</div>
+			<div class="profile_right_side">
+				<form action="#" class="authentication_form_block">
+					<div class="profile_input_block">
+						<p class="profile_input_title">
+							Отображаемое имя
+						</p>
+						<input type="text" placeholder="Введите отображаемое имя" class="profile_input">
+					</div>
+
+					<div class="profile_input_block">
+						<p class="profile_input_title">
+							Обо мне
+						</p>
+						<textarea placeholder="Расскажите о себе" class="profile_area_input"></textarea>
+					</div>
+
+					<!-- Кнопка сохранения данных -->
+					<div class="authentication_button_block d-flex justify-content-center">
+						<!-- {% url "articlesPage" as articlesUrl %} -->
+		                {% include "buttons/button_white_background.html" with name="Сохранить" %}
+					</div>
+				</form>
+			</div>
+		</div>
+	</div>
+{% endblock main-container%}

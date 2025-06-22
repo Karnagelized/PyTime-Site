@@ -2,11 +2,11 @@
 
 {% for project in projects %}
     <div class="project_card d-flex flex-column">
-        <div class="project_card_img_block w-100">
+        <div class="project_card_img_block">
             {% if project.image %}
-                <img src="{{ project.image.url }}" class="project_card_img w-100 h-100">
+                <img src="{{ project.image.url }}" class="project_card_img">
             {% else %}
-                <img src="{% static 'img/404_IMG.png' %}" class="project_card_img w-100 h-100">
+                <img src="{% static 'img/404_IMG.png' %}" class="project_card_img">
             {% endif %}
         </div>
 

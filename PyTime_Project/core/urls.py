@@ -1,13 +1,14 @@
 
 from django.urls import path
 from core.views import (
-    mainPage, resumePage,
+    mainPage, resumePage, profilePage,
     articlesPreviewPage, allArticlesPreviewPage, articlePage,
     projectsPreviewPage, allProjectsPreviewPage, projectPage,
     loginUser, registrationUser, passwordResetEnterMail,
     passwordResetEnterCode, passwordResetEnterNewPassword,
     userAgreement, privacy,
-    badRequest, forbidden, pageNotFound, internalServerError
+    badRequest, forbidden, pageNotFound, internalServerError,
+    serviceUnavailable
 )
 
 # Маршруты приложения "core"
@@ -15,6 +16,7 @@ urlpatterns = [
     # Основные страницы
     path('', mainPage, name='mainPage'),
     path('resume', resumePage, name='resumePage'),
+    path('profile', profilePage, name='profilePage'),
     # Статьи
     path('articles', articlesPreviewPage, name='articlesPage'),
     path('all-articles', allArticlesPreviewPage, name='allArticlesPage'),
@@ -37,4 +39,5 @@ urlpatterns = [
     path('errors/403', forbidden, name='forbidden'),
     path('errors/404', pageNotFound, name='pageNotFound'),
     path('errors/500', internalServerError, name='internalServerError'),
+    path('errors/503', serviceUnavailable, name='serviceUnavailable'),
 ]

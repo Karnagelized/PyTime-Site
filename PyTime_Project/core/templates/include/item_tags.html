@@ -1,7 +1,9 @@
-<ul class="project_card_tags mb-0 list-unstyled d-flex flex-wrap ">
+<ul class="card_tags mb-0 list-unstyled d-flex flex-wrap ">
     {% for tag in itemData.tags.all %}
         <li class="card_tags_item">
         	{{ tag }}
         </li>
     {% endfor %}
+
+    <li class="card_tags_item_more">...</li>
 </ul>

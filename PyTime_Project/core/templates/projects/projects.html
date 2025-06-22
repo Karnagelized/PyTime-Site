@@ -12,8 +12,8 @@
 			{% include 'include/check_last_projects.html' %}
 			
             {% if lastProjects|length != 0 %}
-                <div class="preview_projects_bottom_side d-flex flex-column justify-content-between">
-                    <div class="preview_projects_line d-flex justify-content-around">
+                <div class="preview_projects_bottom_side">
+                    <div class="preview_projects_line d-flex justify-content-between">
     					{% include 'include/cards/project_card.html' with projects=lastProjects %}
     				</div>
 
@@ -54,9 +54,9 @@
                 <!-- Img block -->
                 <div class="preview_last_project_right_side">
                     {% if lastProject.image %}
-                        <img src="{{ lastProject.image.url }}" class="project_card_img w-100 h-100">
+                        <img src="{{ lastProject.image.url }}" class="preview_last_project_card_img">
                     {% else %}
-                        <img src="{% static 'img/404_IMG.png' %}" class="project_card_img w-100 h-100">
+                        <img src="{% static 'img/404_IMG.png' %}" class="preview_last_project_card_img">
                     {% endif %}
                 </div>
     		</div>
