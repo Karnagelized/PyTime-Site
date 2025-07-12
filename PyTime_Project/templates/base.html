@@ -4,6 +4,8 @@
 <html lang="ru">
     <head>
         <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
         <title>
             {% block title %}
             {% endblock title %}
@@ -21,31 +23,13 @@
         <link rel="icon" type="image/png" sizes="16x16" href="{% static 'img/icon/favicon-16x16.png' %}">
 
         <!--   Записана как ошибка    -->
-        <!--        <link rel="manifest" href="{% static 'img/icon/site.webmanifest' %}">-->
+        <link rel="manifest" href="{% static 'img/icon/site.webmanifest' %}">
     </head>
 
     <body>
         <!-- Header -->
-        <header class="header d-flex justify-content-between">
-            <div class="header_left_side_block d-flex justify-content-between">
-                <!-- Logo -->
-                <div class="header_logo d-flex align-items-center">
-                    <a class="logo_link" href="{% url 'mainPage' %}" >
-                        <img class="logo_img" src="{% static 'img/logo/logo.svg' %}">
-                    </a>
-                </div>
-
-                <!-- Header menu -->
-                {% include './include/header_menu.html' %}
-            </div>
-
-            <div class="header_right_side_block d-flex align-items-center">
-                <div class="header_authorization d-flex justify-content-center">
-                    <a class="header_authorization_link d-flex justify-content-center align-items-center" href="{% url 'authorizationUser' %}">
-                        Войти
-                    </a>
-                </div>
-            </div>
+        <header class="header d-flex">
+            {% include './header/header.html' %}
         </header>
 
         <!-- Main container -->
@@ -58,66 +42,8 @@
         <hr class="base_content_separator">
 
         <!-- Footer -->
-        <footer class="footer d-flex justify-content-between">
-            <!-- Logo -->
-            <div class="footer_logo d-flex align-items-center">
-                <a class="logo_link " href="{% url 'mainPage' %}" >
-                    <img class="logo_img" src="{% static 'img/logo/logo.svg' %}">
-                </a>
-            </div>
-
-            <!-- Agreements -->
-            <ul class="footer_agreements m-0 d-flex justify-content-between">
-                <li class="footer_agreements_item d-flex align-items-center justify-content-center">
-                    <p class="footer_agreements_item_text p-0 m-0">
-                        © 2025 Все права защищены
-                    </p>
-                </li>
-                <li class="footer_agreements_item d-flex align-items-center justify-content-center">
-                    <a class="footer_agreements_item_link p-0" href="{% url 'userAgreement' %}">
-                        Пользовательское соглашение
-                    </a>
-                </li>
-                <li class="footer_agreements_item d-flex align-items-center justify-content-center">
-                    <a class="footer_agreements_item_link p-0" href="{% url 'privacy' %}">
-                        Политика конфиденциальности
-                    </a>
-                </li>
-            </ul>
-
-            <!-- Link's and Email -->
-            <div class="footer_feedback d-flex flex-column justify-content-center">
-                <div class="footer_social_links d-flex align-items-center justify-content-between">
-                    <!-- VK -->
-                    <a href="https://vk.com/id318377923" target="_blank" class="footer_social_link_svg">
-                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
-                            <path d="M12 2c5.514 0 10 4.486 10 10s-4.486 10-10 10-10-4.486-10-10 4.486-10 10-10zm0-2c-6.627 0-12 5.373-12 12s5.373 12 12 12 12-5.373 12-12-5.373-12-12-12zm.581 15.997c.304 0 .429-.204.425-.458-.016-.958.356-1.474 1.03-.802.744.744.896 1.26 1.801 1.26h1.601c.403 0 .562-.13.562-.334 0-.432-.711-1.194-1.312-1.752-.844-.783-.882-.802-.156-1.744.9-1.169 2.079-2.667 1.037-2.667h-1.991c-.387 0-.414.217-.551.542-.498 1.173-1.443 2.693-1.803 2.461-.377-.243-.204-1.203-.175-2.63.008-.377.006-.636-.571-.77-.314-.073-.621-.103-.903-.103-1.137 0-1.922.477-1.477.56.785.146.711 1.846.527 2.58-.319 1.278-1.518-1.012-2.018-2.152-.12-.275-.155-.488-.586-.488h-1.627c-.247 0-.394.08-.394.258 0 .301 1.479 3.36 2.892 4.885 1.379 1.487 2.742 1.354 3.689 1.354z"/>
-                        </svg>
-                        
-                    </a>
-
-                    <!-- Git -->
-                    <a href="https://github.com/Karnagelized" target="_blank" class="footer_social_link_svg">
-                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
-                            <path d="M12 2c5.514 0 10 4.486 10 10s-4.486 10-10 10-10-4.486-10-10 4.486-10 10-10zm0-2c-6.627 0-12 5.373-12 12s5.373 12 12 12 12-5.373 12-12-5.373-12-12-12zm0 6c-3.313 0-6 2.686-6 6 0 2.651 1.719 4.9 4.104 5.693.3.056.396-.13.396-.289v-1.117c-1.669.363-2.017-.707-2.017-.707-.272-.693-.666-.878-.666-.878-.544-.373.041-.365.041-.365.603.042.92.619.92.619.535.917 1.403.652 1.746.499.054-.388.209-.652.381-.802-1.333-.152-2.733-.667-2.733-2.965 0-.655.234-1.19.618-1.61-.062-.153-.268-.764.058-1.59 0 0 .504-.161 1.65.615.479-.133.992-.199 1.502-.202.51.002 1.023.069 1.503.202 1.146-.776 1.648-.615 1.648-.615.327.826.121 1.437.06 1.588.385.42.617.955.617 1.61 0 2.305-1.404 2.812-2.74 2.96.216.186.412.551.412 1.111v1.646c0 .16.096.347.4.288 2.383-.793 4.1-3.041 4.1-5.691 0-3.314-2.687-6-6-6z"/>
-                        </svg>
-                        
-                    </a>
-
-                    <!-- TG -->
-                    <a href="https://t.me/masikantonov" target="_blank" class="footer_social_link_svg">
-                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
-                            <path d="M12,0c-6.627,0 -12,5.373 -12,12c0,6.627 5.373,12 12,12c6.627,0 12,-5.373 12,-12c0,-6.627 -5.373,-12 -12,-12Zm0,2c5.514,0 10,4.486 10,10c0,5.514 -4.486,10 -10,10c-5.514,0 -10,-4.486 -10,-10c0,-5.514 4.486,-10 10,-10Zm2.692,14.889c0.161,0.115 0.368,0.143 0.553,0.073c0.185,-0.07 0.322,-0.228 0.362,-0.42c0.435,-2.042 1.489,-7.211 1.884,-9.068c0.03,-0.14 -0.019,-0.285 -0.129,-0.379c-0.11,-0.093 -0.263,-0.12 -0.399,-0.07c-2.096,0.776 -8.553,3.198 -11.192,4.175c-0.168,0.062 -0.277,0.223 -0.271,0.4c0.006,0.177 0.125,0.33 0.296,0.381c1.184,0.354 2.738,0.847 2.738,0.847c0,0 0.725,2.193 1.104,3.308c0.047,0.139 0.157,0.25 0.301,0.287c0.145,0.038 0.298,-0.001 0.406,-0.103c0.608,-0.574 1.548,-1.461 1.548,-1.461c0,0 1.786,1.309 2.799,2.03Zm-5.505,-4.338l0.84,2.769l0.186,-1.754c0,0 3.243,-2.925 5.092,-4.593c0.055,-0.048 0.062,-0.13 0.017,-0.188c-0.045,-0.057 -0.126,-0.071 -0.188,-0.032c-2.143,1.368 -5.947,3.798 -5.947,3.798Z"/>
-                        </svg>
-                    </a>
-                </div>
-
-                <div class="footer_site_email d-flex justify-content-center">
-                    <a class="footer_site_email_link p-0 d-flex align-items-center" href="mailto:pytime@mail.ru">
-                        pytime@mail.ru
-                    </a>
-                </div>
-            </div>
+        <footer class="footer">
+            {% include './footer/footer.html' %}
         </footer>
 
         <!-- JS for Bootstrap -->

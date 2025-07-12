@@ -1,9 +1,19 @@
-<ul class="card_tags mb-0 list-unstyled d-flex flex-wrap ">
+<ul class="card_tags mb-0 list-unstyled text-center">
     {% for tag in itemData.tags.all %}
-        <li class="card_tags_item">
-        	{{ tag }}
-        </li>
+        {% if getAllTags %}
+            <li class="card_tags_item">
+                {{ tag }}
+            </li>
+        {% else %}
+            {% if forloop.counter < 6 %}
+                <li class="card_tags_item">
+                    {{ tag }}
+                </li>
+            {% endif %}
+        {% endif %}
     {% endfor %}
 
-    <li class="card_tags_item_more">...</li>
+    {% if itemData.tags.all|length > 5 and not getAllTags%}
+        <li class="card_tags_item_more">...</li>
+    {% endif %}
 </ul>

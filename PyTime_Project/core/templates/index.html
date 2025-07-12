@@ -6,14 +6,14 @@
 {% endblock title %}
 
 {% block main-container %}
-	<!-- Greeting block -->
-	<div class="main_greeting w-100 d-flex">
-		<div class="main_greeting_left_side d-flex flex-column justify-content-center">
-			<h1 class="main_greeting_title m-0 p-0">
+	<!-- Greeting container -->
+	<div class="main_greeting d-flex">
+		<div class="container_left_side d-flex flex-column justify-content-center">
+			<h1 class="container_title p-0">
 				Добро пожаловать в мир Python разработки!
 			</h1>
 			
-			<p class="main_greeting_about p-0">
+			<p class="container_text p-0">
 				На этом сайте Вы найдете портфолио проектов, статьи и полезные ресурсы, которые помогут Вам лучше понять мои навыки. Я стремлюсь к постоянному развитию и готов поделиться своим опытом с вами.
 			</p>
 
@@ -26,7 +26,35 @@
 				</div>
 				
 				<div class="main_greeting_contact d-flex justify-content-center">
-					<a href="#footer_id" class="main_greeting_contact_link w-100 d-flex justify-content-center align-items-center">
+					<a href="{% url 'serviceUnavailable' %}" class="main_greeting_contact_link w-100 d-flex justify-content-center align-items-center">
+						Связаться
+					</a>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<!-- Greeting container Mobile version -->
+	<div class="main_greeting_tablet d-flex">
+		<div class="container_up_side d-flex flex-column justify-content-center text-center">
+			<h1 class="container_title p-0">
+				Добро пожаловать в мир Python разработки!
+			</h1>
+			
+			<p class="container_text p-0">
+				На этом сайте Вы найдете портфолио проектов, статьи и полезные ресурсы, которые помогут Вам лучше понять мои навыки. Я стремлюсь к постоянному развитию и готов поделиться своим опытом с вами.
+			</p>
+
+			<!-- Buttons -->
+			<div class="main_greeting_buttons w-100 d-flex justify-content-evenly">
+				<div class="main_greeting_know_more d-flex justify-content-center">
+					<a href="{% url 'projectsPage' %}" class="main_greeting_know_more_link w-100 d-flex justify-content-center align-items-center">
+						Узнать больше
+					</a>
+				</div>
+				
+				<div class="main_greeting_contact d-flex justify-content-center">
+					<a href="{% url 'serviceUnavailable' %}" class="main_greeting_contact_link w-100 d-flex justify-content-center align-items-center">
 						Связаться
 					</a>
 				</div>
@@ -35,22 +63,47 @@
 	</div>
 
 	<div class="main_content">
-		<!-- Show my skills block -->
-		<div class="main_skills d-flex justify-content-between align-items-center">
-			<div class="main_skills_left_side ">
-				<h2 class="main_skills_left_side_title m-0">
+		<!-- Show my Hard skills container -->
+		<div class="content_container d-flex justify-content-between align-items-center">
+			<div class="container_left_side">
+				<h2 class="container_title">
 					Ключевые навыки и умения Python разработчика для успешной карьеры в IT
 				</h2>
 
-				<p class="main_skills_left_side_text">
+				<p class="container_text">
 					Я обладаю глубокими знаниями в Python и опытом работы с различными фреймворками. Мои навыки включают разработку Web-приложений, работу с базами данных и тестирование кода.
 				</p>
 
 				<!-- Skills -->
 				{% include 'include/hard_skills.html' %}
 			</div>
-			
-			<img class="main_skills_img" src="{% static 'img/main_page/skills.jpg' %}">
+
+			<img class="container_image" src="{% static 'img/main_page/skills.jpg' %}">
+		</div>
+
+		<!-- Show my Hard skills container. Tablet/mobile version -->
+		<div class="content_container_tablet h-auto d-flex flex-column justify-content-center">
+			<div class="container_up_side text-center">
+				<h2 class="container_title">
+					Ключевые навыки и умения Python разработчика для успешной карьеры в IT
+				</h2>
+
+				<p class="container_text">
+					Я обладаю глубокими знаниями в Python и опытом работы с различными фреймворками. Мои навыки включают разработку Web-приложений, работу с базами данных и тестирование кода.
+				</p>
+			</div>
+
+			<div class="container_bottom_side d-flex justify-content-between align-items-center">
+				<div class="container_left_side">
+					{% include 'include/hard_skills.html' with skillsData=hardSkills %}
+				</div>
+
+				<img class="container_image" src="{% static 'img/main_page/skills.jpg' %}">
+			</div>
+
+			<div class="block_image_tablet mb-0 d-flex justify-content-center">
+				<img class="container_image_tablet" src="{% static 'img/main_page/skills.jpg' %}">
+			</div>
 		</div>
 
 		<!-- Separator line -->

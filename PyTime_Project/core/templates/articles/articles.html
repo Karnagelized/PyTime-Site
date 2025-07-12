@@ -9,12 +9,12 @@
 	<div class="main_content">
 		<!-- Preview 4 last articles -->
 		<div class="preview_articles">
-			{% include 'include/check_last_articles.html' %}
+			{% include 'articles/check_last_articles.html' %}
 			
             {% if lastArticles|length != 0 %}
-                <div class="preview_articles_bottom_side">
-                    <div class="preview_articles_line d-flex justify-content-between">
-                        {% include 'include/cards/article_card.html' with articles=lastArticles %}
+                <div class="contaner_bottom_side">
+                    <div class="preview_articles_line d-flex justify-content-center">
+                        {% include 'articles/article_card.html' with articles=lastArticles %}
                     </div>
 
                     <div class="view_all_articles d-flex justify-content-center">
@@ -33,17 +33,17 @@
 
 		<!-- Preview last article -->
 		{% if lastArticle is not None %}
-            <div class="preview_last_article d-flex justify-content-between align-items-center">
-                <div class="preview_last_article_left_side d-flex flex-column justify-content-center">
-                    <p class="preview_last_article_short_block_name mb-0">
+            <div class="content_container d-flex justify-content-between align-items-center">
+                <div class="container_left_side">
+                    <p class="one_word_description">
                         Последняя публикация
                     </p>
                     
-                    <h2 class="preview_last_article_title">
+                    <h2 class="container_title">
                         {{ lastArticle.title }}
                     </h2>
                     
-                    <p class="preview_last_article_text">
+                    <p class="container_text">
                         {{ lastArticle.text|truncatechars:800 }}
                     </p>
 
@@ -51,15 +51,54 @@
                     {% include "buttons/button_black_background.html" with name="Узнать больше" url_name=lastArticle.get_absolute_url %}
                 </div>
 
-                <!-- Img block -->
-                <div class="preview_last_article_right_side">
+                {% if lastArticle.image %}
+                    <img src="{{ lastArticle.image.url }}" class="container_image">
+                {% else %}
+                    <img src="{% static 'img\errors\imageNotFound.png' %}" class="container_image">
+                {% endif %}
+    		</div>
+
+            <!-- Preview last article. Tablet/mobile version -->
+            <div class="content_container_tablet d-flex flex-column justify-content-center">
+                <div class="container_up_side text-center">
+                    <p class="one_word_description">
+                        Последняя публикация
+                    </p>
+                    
+                    <h2 class="container_text">
+                        {{ lastArticle.title }}
+                    </h2>
+                </div>
+
+                <div class="container_bottom_side d-flex justify-content-between align-items-center">
+                    <div class="container_left_side">
+                        <p class="container_text mb-0 text-center">
+                            {{ lastArticle.text|truncatechars:800 }}
+                        </p>
+                    </div>
+
                     {% if lastArticle.image %}
-                        <img src="{{ lastArticle.image.url }}" class="preview_last_article_card_img">
+                        <img src="{{ lastArticle.image.url }}" class="container_image">
                     {% else %}
-                        <img src="{% static 'img/404_IMG.png' %}" class="preview_last_article_card_img">
+                        <img src="{% static 'img\errors\imageNotFound.png' %}" class="container_image">
                     {% endif %}
                 </div>
-    		</div>
+                
+                {% if lastArticle.image %}
+                    <div class="block_image_tablet mb-0 d-flex justify-content-center">
+                        <img class="container_image_tablet" src="{{ lastArticle.image.url }}">
+                    </div>
+                {% else %}
+                    <div class="block_image_tablet mb-0 d-flex justify-content-center">
+                        <img class="container_image_tablet" src="{% static 'img\errors\imageNotFound.png' %}">
+                    </div>
+                {% endif %}
+
+                <!-- Button -->
+                <div class="block_buttons mt-4 d-flex justify-content-evenly w-100">
+                    {% include "buttons/button_black_background.html" with name="Узнать больше" url_name=lastArticle.get_absolute_url %}
+                </div>
+            </div>
 
             <!-- Separator line -->
             <hr class="content_separator">

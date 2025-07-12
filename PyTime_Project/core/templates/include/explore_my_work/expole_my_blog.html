@@ -1,17 +1,39 @@
-<div class="explore_my_blog d-flex justify-content-between align-items-center">
-	<div class="explore_my_blog_left_side">
-		<h2 class="explore_my_blog_left_side_title m-0">
+<div class="short_content_container d-flex justify-content-between align-items-center align-content-center">
+	<div class="container_left_side">
+		<h2 class="container_title mb-0">
 			Исследуйте мои статьи
 		</h2>
 	</div>
 
-	<div class="explore_my_blog_right_side">
-		<p class="explore_my_blog_right_side_text">
+	<div class="container_right_side">
+		<p class="container_text">
 			Погрузитесь в мир IT! В моих статьях - полезные советы, разборы кейсов и актуальные новости. Читайте, применяйте, развивайтесь! Не забудьте оставить свой комментарий и поделиться своим опытом.
 		</p>
 
 		<!-- Buttons -->
-		<div class="block_duo_buttons d-flex justify-content-between">
+		<div class="block_buttons d-flex justify-content-between">
+            {% url "articlesPage" as articlesUrl %}
+
+            {% include "buttons/button_white_background.html" with name="Читать" url_name=articlesUrl %}
+		</div>
+	</div>
+</div>
+
+<!-- Tablet/mobile version -->
+<div class="short_content_container_tablet d-flex flex-column text-center align-items-center align-content-center">
+	<div class="container_up_side">
+		<h2 class="container_title">
+			Исследуйте мои статьи
+		</h2>
+
+		<p class="container_text">
+			Погрузитесь в мир IT! В моих статьях - полезные советы, разборы кейсов и актуальные новости. Читайте, применяйте, развивайтесь! Не забудьте оставить свой комментарий и поделиться своим опытом.
+		</p>
+	</div>
+
+	<div class="container_bottom_side">
+		<!-- Buttons -->
+		<div class="block_buttons d-flex justify-content-between">
             {% url "articlesPage" as articlesUrl %}
 
             {% include "buttons/button_white_background.html" with name="Читать" url_name=articlesUrl %}

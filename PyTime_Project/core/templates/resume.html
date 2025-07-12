@@ -7,16 +7,16 @@
 
 {% block main-container %}
     <div class="main_content">
-        <div class="brief_information_block d-flex flex-column justify-content-center">
-            <p class="brief_information_short_name mb-0">
+        <div class="short_content_container">
+            <p class="one_word_description">
                 Кодер
             </p>
             
-            <h2 class="brief_information_title">
+            <h2 class="container_text">
                 Python Backend Разработчик
             </h2>
             
-            <p class="brief_information_text">
+            <p class="container_text">
                 Создаю эффективные решения с использованием Python, чтобы помочь вашему бизнесу достичь новых высот.
             </p>
 
@@ -30,20 +30,46 @@
             </div>
         </div>
 
+        <div class="short_content_container_tablet d-flex flex-column text-center align-content-center">
+            <p class="one_word_description">
+                Кодер
+            </p>
+            
+            <h2 class="container_text">
+                Python Backend Разработчик
+            </h2>
+            
+            <p class="container_text">
+                Создаю эффективные решения с использованием Python, чтобы помочь вашему бизнесу достичь новых высот.
+            </p>
+
+            <!-- Buttons -->
+            <div class="container_bottom_side d-flex justify-content-center">
+                <div class="block_duo_buttons d-flex justify-content-between">
+                    {% url "projectsPage" as projectsUrl %}
+                    {% url "articlesPage" as articlesUrl %}
+
+                    {% include "buttons/button_white_background.html" with name="Узнать больше" url_name=projectsUrl %}
+                    {% include "buttons/button_black_background.html" with name="Читать" url_name=articlesUrl %}
+                </div>
+            </div> 
+        </div>
+
         <!-- Separator line -->
         <hr class="content_separator">
 
-        <div class="about_developer_road d-flex align-items-center justify-content-between">
-            <div class="about_developer_road_left_side d-flex flex-column justify-content-center">
-                <p class="brief_information_short_block_name mb-0">
+        <!-- About Creator -->
+        <div class="content_container d-flex align-items-center justify-content-between">
+            <div class="container_left_side">
+                <p class="one_word_description">
                     Профессионал
                 </p>
                 
-                <h2 class="brief_information_title">
+                <h2 class="container_text">
                     Краткая информация о разработчике и его пути
                 </h2>
                 
-                <p class="brief_information_text">
+                <p class="container_text">
                     Будучи студентом 3 курса технической специальности, я обладаю более чем 3-х летним опытом разработки учебных и личных проектов на Python. Начинал свою карьеру с PHP, однако в дальнейшем отдал предпочтение Python, который считаю мощным и универсальным инструментом для решения большинства задач. Непрерывно совершенствую свои навыки, активно изучая литературу, статьи и видеоматериалы. Убежден, что программирование – это процесс, требующий постоянного саморазвития.
                 </p>
 
@@ -57,44 +83,133 @@
                 </div>
             </div>
 
-            <img class="about_developer_road_img" src="{% static 'img/resume/avatar.jpg' %}">
+            <img class="container_image" src="{% static 'img/resume/avatar.jpg' %}">
+        </div>
+
+        <!-- About Creator container. Tablet/mobile version -->
+        <div class="content_container_tablet d-flex flex-column justify-content-center">
+            <div class="container_up_side text-center">
+                <p class="one_word_description">
+                    Профессионал
+                </p>
+                
+                <h2 class="container_text">
+                    Краткая информация о разработчике и его пути
+                </h2>
+            </div>
+
+            <div class="container_bottom_side d-flex justify-content-between align-items-center">
+                <div class="container_left_side d-flex flex-column align-items-center">
+                    <p class="container_text mb-0 text-center">
+                        Будучи студентом 3 курса технической специальности, я обладаю более чем 3-х летним опытом разработки учебных и личных проектов на Python. Начинал свою карьеру с PHP, однако в дальнейшем отдал предпочтение Python, который считаю мощным и универсальным инструментом для решения большинства задач. Непрерывно совершенствую свои навыки, активно изучая литературу, статьи и видеоматериалы. Убежден, что программирование – это процесс, требующий постоянного саморазвития.
+                    </p>
+
+                    <div class="block_image_tablet d-flex justify-content-center">
+                        <img class="container_image_tablet" src="{% static 'img/resume/avatar.jpg' %}">
+                    </div>
+                </div>
+
+                <img class="container_image" src="{% static 'img/resume/avatar.jpg' %}">
+            </div>
+
+            <div class="container_bottom_side mt-4 d-flex justify-content-center">
+                <!-- Buttons -->
+                <div class="block_duo_buttons d-flex justify-content-between">
+                    {% url "projectsPage" as projectsUrl %}
+                    {% url "mainPage" as mainUrl %}
+
+                    {% include "buttons/button_white_background.html" with name="Узнать больше" url_name=projectsUrl %}
+                    {% include "buttons/button_black_background.html" with name="Связаться" id_name="footer_id" %}
+                </div> 
+            </div>
         </div>
 
         <!-- Separator line -->
         <hr class="content_separator">
 
-        <div class="developer_hard_skills d-flex align-items-center justify-content-between">
-            <img class="developer_hard_skills_img" src="{% static 'img/resume/hardSkills.jpg' %}">
+        <!-- Show my Hard skills container -->
+        <div class="content_container d-flex align-items-center justify-content-between">
+            <img class="container_image" src="{% static 'img/resume/hardSkills.jpg' %}">
 
-            <div class="developer_hard_skills_right_side d-flex flex-column justify-content-center">
-                <h2 class="developer_hard_skills_title mb-0">
-                    Ключевые <u class="developer_hard_skills_underline_title">Hard</u> навыки и умения
+            <div class="container_right_side">
+                <h2 class="container_title">
+                    Ключевые <u class="underline_title">Hard</u> навыки и умения
                 </h2>
                 
-                <p class="developer_hard_skills_text">
+                <p class="container_text">
                     Я обладаю знаниями в Python и опытом работы с различными фреймворками. Мои навыки включают разработку Web-приложений, работу с базами данных и тестирование кода.
                 </p>
 
                 <!-- Skills -->
-                {% include 'include/hard_skills.html' %}
+                {% include 'include/hard_skills.html' with skillsData=hardSkills %}
+            </div>
+        </div>
+
+        <!-- Show my Hard skills container. Tablet/mobile version -->
+        <div class="content_container_tablet d-flex flex-column justify-content-center">
+            <div class="container_up_side text-center">
+                <h2 class="container_text">
+                    Ключевые <u class="underline_title">Hard</u> навыки и умения
+                </h2>
+
+                <p class="container_text">
+                    Я обладаю знаниями в Python и опытом работы с различными фреймворками. Мои навыки включают разработку Web-приложений, работу с базами данных и тестирование кода.
+                </p>
+            </div>
+
+            <div class="container_bottom_side d-flex justify-content-between align-items-center">
+                <img class="container_image" src="{% static 'img/resume/hardSkills.jpg' %}">
+
+                <div class="container_right_side">
+                    <!-- Skills -->
+                    {% include 'include/hard_skills.html' %}
+                </div>
+            </div>
+
+            <div class="block_image_tablet mb-0 d-flex justify-content-center">
+                <img class="container_image_tablet" src="{% static 'img/resume/hardSkills.jpg' %}">
             </div>
         </div>
 
         <!-- Separator line -->
         <hr class="content_separator">
 
-        <div class="developer_soft_skills d-flex align-items-center justify-content-between">
-            <div class="developer_soft_skills_right_side d-flex flex-column justify-content-center">
-                <h2 class="developer_soft_skills_title mb-0">
-                    Ключевые <u class="developer_soft_skills_underline_title">Soft</u> навыки и умения
+        <!-- Show my Soft skills container -->
+        <div class="content_container d-flex align-items-center justify-content-between">
+            <div class="container_left_side">
+                <h2 class="container_title">
+                    Ключевые <u class="underline_title">Soft</u> навыки и умения
                 </h2>
                 
-                <p class="developer_soft_skills_text mb-0">
+                <p class="container_text mb-0">
                     Я постоянно работаю над собой, чтобы быть не только сильным программистом, но и эффективным членом команды. Четко выражаю свои мысли и умею слушать других, обеспечивая продуктивную коммуникацию. Легко нахожу общий язык с коллегами, стремлюсь к сотрудничеству и помогаю в решении проблем. Понимаю важность самоорганизации, поэтому умело планирую время и выполняю задачи в срок. И, конечно, не останавливаюсь в развитии, постоянно изучаю новое и адаптируюсь к изменениям в индустрии.
                 </p>
             </div>
 
-            <img class="developer_soft_skills_img" src="{% static 'img/resume/softSkills.jpg' %}">
+            <img class="container_image" src="{% static 'img/resume/softSkills.jpg' %}">
+        </div>
+
+        <!-- Show my Soft skills container. Tablet/mobile version -->
+        <div class="content_container_tablet d-flex flex-column justify-content-center">
+            <div class="container_up_side text-center">
+                <h2 class="container_text">
+                    Ключевые <u class="underline_title">Soft</u> навыки и умения
+                </h2>
+            </div>
+
+            <div class="container_bottom_side d-flex justify-content-between align-items-center">
+                <div class="container_left_side">
+                    <p class="container_text mb-0 text-center">
+                    Я постоянно работаю над собой, чтобы быть не только сильным программистом, но и эффективным членом команды. Четко выражаю свои мысли и умею слушать других, обеспечивая продуктивную коммуникацию. Легко нахожу общий язык с коллегами, стремлюсь к сотрудничеству и помогаю в решении проблем. Понимаю важность самоорганизации, поэтому умело планирую время и выполняю задачи в срок. И, конечно, не останавливаюсь в развитии, постоянно изучаю новое и адаптируюсь к изменениям в индустрии.
+                    </p>  
+                </div>
+                
+                <img class="container_image" src="{% static 'img/resume/softSkills.jpg' %}">
+            </div>
+
+            <div class="block_image_tablet mb-0 d-flex justify-content-center">
+                <img class="container_image_tablet" src="{% static 'img/resume/softSkills.jpg' %}">
+            </div>
         </div>
 
         <!-- Separator line -->

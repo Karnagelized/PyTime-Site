@@ -6,18 +6,35 @@
 
 {% block main-container %}
 	<div class="main_content">
-		<div class="preview_project d-flex justify-content-between align-items-center">
-			<div class="preview_project_left_side d-flex flex-column align-content-center">
-				<h2 class="project_title">
+		<div class="content_page_container d-flex justify-content-between align-items-center">
+			<div class="container_left_side">
+				<h2 class="container_title text-center">
 					{{ projectData.title }}
 				</h2>
 
 				<!-- Tags -->
-				{% include 'include/item_tags.html' with itemData=projectData %}
+				{% include 'include/item_tags.html' with itemData=projectData getAllTags=True %}
 			</div>
 
-			<div class="preview_project_right_side">
-				<p class="project_text mb-0">
+			<div class="container_right_side">
+				<p class="container_text mb-0">
+					{{ projectData.description }}
+				</p>
+			</div>
+		</div>
+
+		<div class="content_page_container_tablet d-flex flex-column justify-content-between align-items-center">
+			<div class="container_up_side w-100 mb-3">
+				<h2 class="container_title text-center">
+					{{ projectData.title }}
+				</h2>
+
+				<!-- Tags -->
+				{% include 'include/item_tags.html' with itemData=projectData getAllTags=True %}
+			</div>
+
+			<div class="container_bottom_side">
+				<p class="container_text mb-0">
 					{{ projectData.description }}
 				</p>
 			</div>
@@ -27,11 +44,9 @@
         <hr class="content_separator">
 
 		<div class="body_project">
-			<div class="project_text_block">
-				<p class="project_text mb-0">
-					{{ projectData.text }}
-				</p>
-			</div>
+			<p class="container_text mb-0">
+				{{ projectData.text }}
+			</p>
 		</div>
 
         <!-- Separator line -->

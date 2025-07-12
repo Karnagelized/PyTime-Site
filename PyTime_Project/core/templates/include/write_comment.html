@@ -1,19 +1,49 @@
 <div class="feedback_container d-flex flex-column justify-content-center align-items-center">
-	<div class="feedback_block">
-		<h2 class="feedback_title">
-			Оставьте свой комментарий
-		</h2>
+	<h2 class="container_title">
+		Оставьте свой комментарий
+	</h2>
 
-		<form action="" class="feedback_form">
-			<textarea class="feedback_input w-100" placeholder="Комментарий"></textarea>
+	<form action="#" class="feedback_form">
+		<textarea class="feedback_input w-100" placeholder="Комментарий"></textarea>
 
-			<div class="feedback_publish_block d-flex justify-content-between align-items-center">
-				<p class="feedback_agreement mb-0">
-					Оставляя комментарий, Вы соглашаетесь с условиями <u class="agreement_underline"><a class="agreement_link" href="{% url 'privacy' %}">политики конфиденциальности</a></u> и <u class="agreement_underline"><a class="agreement_link" href="{% url 'userAgreement' %}">пользовательского соглашения</a></u>.
-				</p>
+		<div class="feedback_publish_container d-flex justify-content-between align-items-center">
+			<p class="feedback_agreement mb-0">
+				Оставляя комментарий, Вы соглашаетесь с условиями
+				<a class="container_link" href="{% url 'privacy' %}">
+					<u> политики конфиденциальности </u>
+				</a>
+			 	и
+			 	<a class="container_link" href="{% url 'userAgreement' %}">
+			 		<u> пользовательского соглашения</u>.
+			 	</a>
+			</p>
 
-				<input type="submit" value="Опубликовать" class="feedback_publish_button">
-			</div>
-		</form>
-	</div>
+			<input type="submit" value="Опубликовать" class="feedback_publish_button">
+		</div>
+	</form>
+</div>
+
+<div class="feedback_container_tablet d-flex flex-column justify-content-center align-items-center">
+	<h2 class="container_title text-center">
+		Оставьте свой комментарий
+	</h2>
+
+	<form action="#" class="feedback_form w-100">
+		<textarea class="feedback_input w-100" placeholder="Комментарий"></textarea>
+
+		<p class="feedback_agreement w-100">
+			Оставляя комментарий, Вы соглашаетесь с условиями
+			<a class="container_link" href="{% url 'privacy' %}">
+				<u> политики конфиденциальности </u>
+			</a>
+		 	и
+		 	<a class="container_link" href="{% url 'userAgreement' %}">
+		 		<u> пользовательского соглашения</u>.
+		 	</a>
+		</p>
+
+		<div class="input_block d-flex justify-content-center">
+    		<input type="submit" value="Опубликовать" class="feedback_publish_button">
+		</div>
+	</form>
 </div>

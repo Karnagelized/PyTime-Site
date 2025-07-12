@@ -6,7 +6,7 @@
             {% if project.image %}
                 <img src="{{ project.image.url }}" class="project_card_img">
             {% else %}
-                <img src="{% static 'img/404_IMG.png' %}" class="project_card_img">
+                <img src="{% static 'img\errors\imageNotFound.png' %}" class="project_card_img">
             {% endif %}
         </div>
 
@@ -20,10 +20,10 @@
             </p>
 
             <!-- Tags -->
-            {% include 'include/item_tags.html' with itemData=project %}
+            {% include 'include/item_tags.html' with itemData=project getAllTags=False %}
         </div>
 
-        <div class="project_card_view_block mt-auto d-flex justify-content-between">
+        <div class="project_card_view_block h-100 d-flex justify-content-between align-items-end">
             <a href="{{ project.get_absolute_url }}" class="project_card_view_link">
                 Читать ❯
             </a>
@@ -31,6 +31,16 @@
             <p class="project_card_datetime_published mb-0">
                 {{ project.datetimeCreate }}
             </p>
+        </div>
+
+        <div class="project_card_view_block_tablet h-100 d-flex flex-column justify-content-end">
+            <p class="project_card_datetime_published mb-0">
+                {{ project.datetimeCreate }}
+            </p>
+
+            <a href="{{ project.get_absolute_url }}" class="project_card_view_link">
+                Читать ❯
+            </a>
         </div>
     </div>
 {% endfor %}

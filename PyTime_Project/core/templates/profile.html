@@ -9,15 +9,15 @@
 	<div class="main_content">
 		<div class="profile_block d-flex justify-content-center align-items-center">
 			<div class="profile_left_side">
-				<img class="profile_avatar" src="{% static '\img\404_IMG.png' %}">
+				<img class="profile_avatar" src="{% static 'img\errors\imageNotFound.png' %}">
 			</div>
 			<div class="profile_right_side">
 				<form action="#" class="authentication_form_block">
 					<div class="profile_input_block">
 						<p class="profile_input_title">
-							Отображаемое имя
+							Приветствую {{ userData.username }}!
 						</p>
-						<input type="text" placeholder="Введите отображаемое имя" class="profile_input">
+						<input type="text" placeholder="Введите отображаемое имя" class="profile_input" value="{{ userData.username }}">
 					</div>
 
 					<div class="profile_input_block">

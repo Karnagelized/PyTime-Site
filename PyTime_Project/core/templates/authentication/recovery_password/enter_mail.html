@@ -7,40 +7,41 @@
 
 {% block main-container %}
 	<div class="main_content">
-		<div class="authentication_content d-flex align-items-center justify-content-center">
+		<div class="authentication_container d-flex align-items-center justify-content-center">
 			<div class="authentication_block">
-				<p class="authentication_title">
+				<p class="container_title">
 					Восстановление доступа
 				</p>
 
-				<p class="authentication_short_description">
+				<p class="container_short_text">
 					Введите свой адрес электронной почты ниже, Вам придет код для сброса пароля.
 				</p>
 
-				<form action="#" class="authentication_form_block">				
-					<div class="authentication_input_block">
-						<p class="authentication_input_title">
-							Почта
-						</p>
-						<input required type="email" placeholder="Введите почту" class="authentication_input">
-					</div>
+				<form action="#" class="container_form_block">				
+					<p class="container_form_title">
+						Почта
+					</p>
+					
+					<input required type="email" placeholder="Введите почту" class="container_form_input w-100">
 
 					<!-- Кнопка отправки кода -->
 					<div class="authentication_button_block d-flex justify-content-center">
-						<!-- {% url "articlesPage" as articlesUrl %} -->
-		                {% include "buttons/button_black_background.html" with name="Отправить код" %}
+						{% url "serviceUnavailable" as serviceUnavailableUrl %}
+
+		                {% include "buttons/button_black_background.html" with name="Отправить код" url_name=serviceUnavailableUrl %}
 					</div>
 				</form>
 
-				<hr class="authentication_line">
+				<hr class="base_content_separator mx-0">
 
-				<div class="authentication_create_account_block d-flex justify-content-between align-items-center">
-					<p class="authentication_text mb-0">
+				<div class="container_remember_password d-flex justify-content-between align-items-center">
+					<p class="container_text mb-0">
 						Помните свой пароль?
 					</p>
 
 					<!-- Кнопка регистрации -->
 					{% url "authorizationUser" as authorizationUserURl %}
+					
 					{% include "buttons/button_white_background.html" with name="Войти" url_name=authorizationUserURl %}
 				</div>
 			</div>

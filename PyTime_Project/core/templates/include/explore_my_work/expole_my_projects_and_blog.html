@@ -1,15 +1,39 @@
-<div class="explore_my_projects_and_blog d-flex justify-content-between align-items-center">
-	<div class="explore_my_projects_and_blog_left_side">
-		<h2 class="explore_my_projects_and_blog_left_side_title m-0">
+<div class="short_content_container d-flex justify-content-between align-items-center align-content-center">
+	<div class="container_left_side">
+		<h2 class="container_title m-0">
 			Исследуйте мои проекты и статьи
 		</h2>
 	</div>
 
-	<div class="explore_my_projects_and_blog_right_side">
-		<p class="explore_my_projects_and_blog_right_side_text">
+	<div class="container_right_side">
+		<p class="container_text">
 			Здесь вы найдете тщательно проработанные проекты — от чистого кода до элегантных решений сложных задач. Мои статьи раскрывают свежие решения, разборы реальных кейсов и свежие тренды в разработке. Применяйте идеи, делитесь мнением в комментариях — давайте расти вместе в профессии!
 		</p>
 
+		<!-- Buttons -->
+		<div class="block_duo_buttons d-flex justify-content-between">
+			{% url "projectsPage" as projectsUrl %}
+			{% url "articlesPage" as articlesUrl %}
+
+			{% include "buttons/button_white_background.html" with name="Узнать больше" url_name=projectsUrl %}
+			{% include "buttons/button_black_background.html" with name="Читать" url_name=articlesUrl %}
+		</div>
+	</div>
+</div>
+
+<!-- Tablet/mobile version -->
+<div class="short_content_container_tablet d-flex flex-column text-center align-items-center align-content-center">
+	<div class="container_up_side">
+		<h2 class="container_title">
+			Исследуйте мои проекты и статьи
+		</h2>
+
+		<p class="container_text">
+			Здесь вы найдете тщательно проработанные проекты — от чистого кода до элегантных решений сложных задач. Мои статьи раскрывают свежие решения, разборы реальных кейсов и свежие тренды в разработке. Применяйте идеи, делитесь мнением в комментариях — давайте расти вместе в профессии!
+		</p>
+	</div>
+
+	<div class="container_bottom_side">
 		<!-- Buttons -->
 		<div class="block_duo_buttons d-flex justify-content-between">
 			{% url "projectsPage" as projectsUrl %}

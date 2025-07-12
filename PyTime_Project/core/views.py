@@ -2,8 +2,7 @@
 from os import path
 from django.http import HttpRequest, Http404
 from django.shortcuts import render, HttpResponse
-from .models import Article, Project
-
+from core.models import Article, Project, HardSkillsCategory
 
 """
     Основные страницы 
@@ -11,9 +10,12 @@ from .models import Article, Project
 
 # Главная страница сайта
 def mainPage(request: HttpRequest) -> HttpResponse:
+    # Получаем Hard скиллы
+    skillsCategory = HardSkillsCategory.visibleCategory.all()
+
     # Выбор раздела навигации
     pageData = {
-        'navigationSelected': 0,
+        'skillsCategoryData': skillsCategory,
     }
 
     return render(request, 'index.html', context=pageData)
@@ -21,9 +23,13 @@ def mainPage(request: HttpRequest) -> HttpResponse:
 
 # Страница с резюме
 def resumePage(request: HttpRequest) -> HttpResponse:
+    # Получаем Hard скиллы
+    skillsCategory = HardSkillsCategory.visibleCategory.all()
+
     # Выбор раздела навигации
     pageData = {
-        'navigationSelected': 3,
+        'navigationSelected': 'Resume',
+        'skillsCategoryData': skillsCategory,
     }
 
     return render(request, 'resume.html', context=pageData)
@@ -48,7 +54,7 @@ def articlesPreviewPage(request: HttpRequest) -> HttpResponse:
             article.image = ''
 
     pageData = {
-        'navigationSelected': 2,
+        'navigationSelected': 'Articles',
         'lastArticles': lastArticles,
         'lastArticle': lastArticles[0] if len(lastArticles) > 0 else None,
     }
@@ -96,7 +102,7 @@ def projectsPreviewPage(request: HttpRequest) -> HttpResponse:
             project.image = ''
 
     pageData = {
-        'navigationSelected': 1,
+        'navigationSelected': 'Projects',
         'lastProjects': lastProjects,
         'lastProject': lastProjects[0] if len(lastProjects) > 0 else None,
     }
@@ -136,7 +142,11 @@ def projectPage(request: HttpRequest, projectSlug: int) -> HttpResponse:
 
 # Страница для авторизации Пользователя
 def loginUser(request: HttpRequest) -> HttpResponse:
-    return render(request, 'authentication/authorization.html')
+    pageData = {
+        'navigationSelected': 'Authorization',
+    }
+
+    return render(request, 'authentication/authorization.html', context=pageData)
 
 
 # Страница для регистрации Пользователя
@@ -146,17 +156,17 @@ def registrationUser(request: HttpRequest) -> HttpResponse:
 
 # Страница для восстановления пароля Пользователя - Ввод почты
 def passwordResetEnterMail(request: HttpRequest) -> HttpResponse:
-    return render(request, 'recovery_password/enter_mail.html')
+    return render(request, 'authentication/recovery_password/enter_mail.html')
 
 
 # Страница для восстановления пароля Пользователя - Ввод кода
 def passwordResetEnterCode(request: HttpRequest) -> HttpResponse:
-    return render(request, 'recovery_password/confirm_mail_by_code.html')
+    return render(request, 'authentication/recovery_password/confirm_mail_by_code.html')
 
 
 # Страница для восстановления пароля Пользователя - Ввод нового пароля
 def passwordResetEnterNewPassword(request: HttpRequest) -> HttpResponse:
-    return render(request, 'recovery_password/enter_new_password.html')
+    return render(request, 'authentication/recovery_password/enter_new_password.html')
 
 
 

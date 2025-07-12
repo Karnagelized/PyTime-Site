@@ -7,13 +7,13 @@
 {% block main-container %}
 	<div class="main_content">
 		<!-- Preview all projects -->
-		<div class="all_preview_projects h-auto">
-            {% include 'include/check_last_projects.html' %}
+		<div class="all_preview_projects">
+            {% include 'projects/check_last_projects.html' %}
 			
 			{% if allProjects|length != 0 %}
 				<div class="preview_all_projects_bottom_side">
 					<div class="preview_all_projects_line">
-	                    {% include 'include/cards/project_card.html' with projects=allProjects %}
+	                    {% include 'projects/project_card.html' with projects=allProjects %}
 					</div>
 				</div>
             {% else %}

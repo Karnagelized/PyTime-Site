@@ -7,13 +7,13 @@
 {% block main-container %}
 	<div class="main_content">
 		<!-- Preview all articles -->
-		<div class="all_preview_articles h-auto">
-            {% include 'include/check_last_articles.html' %}
+		<div class="all_preview_articles">
+            {% include 'articles/check_last_articles.html' %}
 			
             {% if allArticles|length != 0 %}
 				<div class="preview_all_articles_bottom_side">
 					<div class="preview_all_articles_line">
-	                    {% include 'include/cards/article_card.html' with articles=allArticles %}
+	                    {% include 'articles/article_card.html' with articles=allArticles %}
 					</div>
 				</div>
             {% else %}

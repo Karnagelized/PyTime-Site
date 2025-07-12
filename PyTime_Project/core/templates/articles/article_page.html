@@ -6,18 +6,35 @@
 
 {% block main-container %}
 	<div class="main_content">
-		<div class="preview_article d-flex justify-content-between align-items-center">
-			<div class="preview_article_left_side d-flex flex-column align-content-center">
-				<h2 class="article_title">
+		<div class="content_page_container d-flex justify-content-between align-items-center">
+			<div class="container_left_side">
+				<h2 class="container_title text-center">
 					{{ articleData.title }}
 				</h2>
 
 				<!-- Tags -->
-				{% include 'include/item_tags.html' with itemData=articleData %}
+				{% include 'include/item_tags.html' with itemData=articleData getAllTags=True %}
 			</div>
 
-			<div class="preview_article_right_side">
-				<p class="article_text mb-0">
+			<div class="container_right_side">
+				<p class="container_text mb-0">
+					{{ articleData.description }}
+				</p>
+			</div>
+		</div>
+
+		<div class="content_page_container_tablet d-flex flex-column justify-content-between align-items-center">
+			<div class="container_up_side w-100 mb-3">
+				<h2 class="container_title text-center">
+					{{ articleData.title }}
+				</h2>
+
+				<!-- Tags -->
+				{% include 'include/item_tags.html' with itemData=articleData getAllTags=True %}
+			</div>
+
+			<div class="container_bottom_side">
+				<p class="container_text mb-0">
 					{{ articleData.description }}
 				</p>
 			</div>
@@ -27,11 +44,9 @@
         <hr class="content_separator">
 
 		<div class="body_article">
-			<div class="article_text_block">
-				<p class="article_text mb-0">
-					{{ articleData.text }}
-				</p>
-			</div>
+			<p class="container_text mb-0">
+				{{ articleData.text }}
+			</p>
 		</div>
 
         <!-- Separator line -->

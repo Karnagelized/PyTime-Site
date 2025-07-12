@@ -4,7 +4,7 @@
   {% url "resumePage" as resumeUrl %}
 
   <li class="header_menu_nav_item">
-    {% if navigationSelected != 1 %}
+    {% if navigationSelected != "Projects" %}
       <a class="header_menu_link nav-link mx-2 p-0 d-flex justify-content-center" href="{{ projectsUrl }}">
           Проекты
       </a>
@@ -16,7 +16,7 @@
   </li>
   
   <li class="header_menu_nav_item">
-    {% if navigationSelected != 2 %}
+    {% if navigationSelected != "Articles" %}
       <a class="header_menu_link nav-link mx-2 p-0 d-flex align-items-center justify-content-center" href="{{ articlesUrl }}">
         Статьи
     </a>
@@ -28,7 +28,7 @@
   </li>
 
   <li class="header_menu_nav_item">
-    {% if navigationSelected != 3 %}
+    {% if navigationSelected != "Resume" %}
       <a class="header_menu_link nav-link mx-2 p-0 d-flex align-items-center justify-content-center" href="{{ resumeUrl }}">
         Резюме
     </a>

@@ -7,58 +7,67 @@
 
 {% block main-container %}
 	<div class="main_content">
-		<div class="authentication_content d-flex align-items-center justify-content-center">
+		<div class="authentication_container d-flex align-items-center justify-content-center">
 			<div class="authentication_block">
-				<p class="authentication_title">
+				<p class="container_title">
 					Регистрация
 				</p>
 				
-				<form action="#" class="authentication_form_block">
-					<div class="authentication_input_block">
-						<p class="authentication_input_title">
-							Имя пользователя
-						</p>
-						<input required type="text" placeholder="Введите имя пользователя" class="authentication_input">
-					</div>
+				<form action="#" class="authentication_form_block" method="post">
+                    {% csrf_token %}
+                    {{ registrationForm }}
 
-					<div class="authentication_input_block">
-						<p class="authentication_input_title">
-							Почта
-						</p>
-						<input required type="email" placeholder="Введите почту" class="authentication_input">
-					</div>
+                    <input type="submit" value="Submit">
+{#					<p class="container_form_title ">#}
+{#						Имя пользователя#}
+{#					</p>#}
+{#					#}
+{#					<input required type="text" placeholder="Введите имя пользователя" class="container_form_input w-100">#}
+{##}
+{#					<p class="container_form_title">#}
+{#						Почта#}
+{#					</p>#}
+{#					#}
+{#					<input required type="email" placeholder="Введите почту" class="container_form_input w-100">#}
+{##}
+{#					<p class="container_form_title">#}
+{#						Пароль#}
+{#					</p>#}
+{#					#}
+{#					<input required type="password" placeholder="Введите пароль" class="container_form_input w-100">#}
+{##}
+{#					<!-- Кнопка регистрации -->#}
+{#					<div class="authentication_button_block d-flex justify-content-center">#}
+{#						{% url "serviceUnavailable" as serviceUnavailableUrl %}#}
+{##}
+{#		                {% include "buttons/button_black_background.html" with name="Создать аккаунт" url_name=serviceUnavailableUrl %}#}
+{#					</div>#}
 
-					<div class="authentication_input_block">
-						<p class="authentication_input_title">
-							Пароль
-						</p>
-						<input required type="password" placeholder="Введите пароль" class="authentication_input">
-					</div>
-
-					<!-- Кнопка регистрации -->
-					<div class="authentication_button_block d-flex justify-content-center">
-						<!-- {% url "articlesPage" as articlesUrl %} -->
-		                {% include "buttons/button_black_background.html" with name="Создать аккаунт" %}
-					</div>
-
-					<div class="authentication_agreement_block">
-						<p class="authentication_agreement_text mb-0">
+					<div class="authentication_agreement_block text-center">
+						<p class="container_text mb-0">
 							Регистрируясь, Вы соглашаетесь с условиями
-							
-							<u class="agreement_underline"><a class="agreement_link" href="{% url 'privacy' %}">политики конфиденциальности</a></u> и <u class="agreement_underline"><a class="agreement_link" href="{% url 'userAgreement' %}">пользовательского соглашения</a></u>
+
+							<a class="container_link" href="{% url 'privacy' %}">
+								<u>политики конфиденциальности</u>
+							</a>
+							и
+							<a class="container_link" href="{% url 'userAgreement' %}">
+								<u>пользовательского соглашения</u>
+							</a>
 						</p>
 					</div>
 				</form>
 
-				<hr class="authentication_line">
+				<hr class="base_content_separator mx-0">
 
-				<div class="authentication_login_account_block d-flex justify-content-between align-items-center">
-					<p class="authentication_text mb-0">
+				<div class="container_login_account d-flex justify-content-between align-items-center">
+					<p class="container_text mb-0">
 						У Вас уже есть аккаунт?
 					</p>
 
 					<!-- Кнопка регистрации -->
 					{% url "authorizationUser" as authorizationUserURl %}
+					
 					{% include "buttons/button_white_background.html" with name="Войти" url_name=authorizationUserURl %}
 				</div>
 			</div>

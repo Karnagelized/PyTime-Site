@@ -7,18 +7,34 @@
 
 {% block main-container %}
     <div class="main_content">
-        <div class="error_block d-flex align-items-center justify-content-between">
-            <div class="error_block_left_side d-flex flex-column justify-content-center">
-                <h2 class="error_block_title mb-0">
+        <div class="error_container d-flex align-items-center justify-content-between">
+            <div class="container_left_side">
+                <h2 class="container_title">
                     Ошибка 500
                 </h2>
                 
-                <p class="error_block_text mb-0">
-                    Сервис временно недоступен. Мы уже в курсе и исправляем ошибку. Обновите страницу через несколько минут. Если проблема не решится, напишите нам на почту.
+                <p class="container_text mb-0">
+                    Извините, сервис временно недоступен. Мы уже в курсе и исправляем ошибку. Обновите страницу через несколько минут. Если проблема не решится, напишите нам на почту.
                 </p>
             </div>
 
-            <img class="error_right_side_img" src="{% static 'img/errors/404.jpg' %}">
+            <img class="container_image" src="{% static 'img/errors/error.jpg' %}">
+        </div>
+
+        <div class="error_container_tablet d-flex flex-column align-items-center justify-content-center">
+            <div class="container_up_side text-center">
+                <h2 class="container_title">
+                    Ошибка 500
+                </h2>
+                
+                <p class="container_text">
+                    Извините, сервис временно недоступен. Мы уже в курсе и исправляем ошибку. Обновите страницу через несколько минут. Если проблема не решится, напишите нам на почту.
+                </p>
+            </div>
+
+            <div class="container_bottom_side">
+                <img class="container_image_tablet" src="{% static 'img/errors/error.jpg' %}">
+            </div>
         </div>
     </div>
 {% endblock main-container %}
