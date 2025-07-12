@@ -31,7 +31,6 @@ ALLOWED_HOSTS = [
     'localhost',
 ]
 
-
 # Application definition
 INSTALLED_APPS = [
     'django.contrib.admin',
@@ -42,6 +41,8 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'core',
 ]
+
+AUTH_USER_MODEL = 'core.CustomUser'
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',

@@ -1,6 +1,19 @@
 
+from django.contrib.auth.models import AbstractUser
 from django.urls import reverse
 from django.db import models
+
+
+class CustomUser(AbstractUser):
+
+    class Meta:
+        db_table = 'custom_user'
+        verbose_name = 'Пользователь'
+        verbose_name_plural = 'Пользователи'
+
+    def __str__(self):
+        return self.username
+
 
 
 # Класс, описывающий "Теги"

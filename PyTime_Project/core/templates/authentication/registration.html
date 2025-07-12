@@ -13,35 +13,48 @@
 					Регистрация
 				</p>
 				
-				<form action="#" class="authentication_form_block" method="post">
+				<form class="authentication_form w-100" method="post">
                     {% csrf_token %}
-                    {{ registrationForm }}
 
-                    <input type="submit" value="Submit">
-{#					<p class="container_form_title ">#}
-{#						Имя пользователя#}
-{#					</p>#}
-{#					#}
-{#					<input required type="text" placeholder="Введите имя пользователя" class="container_form_input w-100">#}
-{##}
-{#					<p class="container_form_title">#}
-{#						Почта#}
-{#					</p>#}
-{#					#}
-{#					<input required type="email" placeholder="Введите почту" class="container_form_input w-100">#}
-{##}
-{#					<p class="container_form_title">#}
-{#						Пароль#}
-{#					</p>#}
-{#					#}
-{#					<input required type="password" placeholder="Введите пароль" class="container_form_input w-100">#}
-{##}
-{#					<!-- Кнопка регистрации -->#}
-{#					<div class="authentication_button_block d-flex justify-content-center">#}
-{#						{% url "serviceUnavailable" as serviceUnavailableUrl %}#}
-{##}
-{#		                {% include "buttons/button_black_background.html" with name="Создать аккаунт" url_name=serviceUnavailableUrl %}#}
-{#					</div>#}
+                    <div class="authentication_form_block d-flex flex-column">
+                        {% for field in registrationForm %}
+                        	<label for="{{ field.id_for_label }}" class="container_form_label">
+                        		{{ field.label }}
+                        	</label>
+							
+							{{ field.errors }}
+                            {{ field }}
+                        {% endfor %}
+                    </div>
+
+                    <div class="authentication_button_block d-flex justify-content-center">
+                    	<input type="submit" value="Создать аккаунт" class="button_submit mb-0">
+                    </div>
+
+
+<!-- 					<p class="container_form_title ">
+						Имя пользователя
+					</p>
+
+					<input required type="text" placeholder="Введите имя пользователя" class="container_form_input w-100">
+
+					<p class="container_form_title">
+						Почта
+					</p>
+
+					<input required type="email" placeholder="Введите почту" class="container_form_input w-100">
+
+					<p class="container_form_title">
+						Пароль
+					</p>
+
+					<input required type="password" placeholder="Введите пароль" class="container_form_input w-100">
+
+					<div class="authentication_button_block d-flex justify-content-center">
+						{% url "serviceUnavailable" as serviceUnavailableUrl %}
+
+		                {% include "buttons/button_black_background.html" with name="Создать аккаунт" url_name=serviceUnavailableUrl %}
+					</div> -->
 
 					<div class="authentication_agreement_block text-center">
 						<p class="container_text mb-0">

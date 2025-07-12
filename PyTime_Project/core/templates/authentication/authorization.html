@@ -13,8 +13,14 @@
 					Авторизация
 				</p>
 				
-				<form action="#" class="authentication_form_block">
-					<p class="container_form_title">
+				<form class="authentication_form" method="POST">
+					<!-- <label class="container_form_label"> -->
+						<!-- Почта -->
+					<!-- </label> -->
+
+					<!-- <input required type="email" placeholder="Введите почту" class="container_form_input w-100"> -->
+					
+					<!-- <p class="container_form_title">
 						Почта
 					</p>
 						
@@ -32,12 +38,11 @@
 
 					<input required type="password" placeholder="Введите пароль" class="container_form_input w-100">
 
-					<!-- Кнопка авторизации -->
 					<div class="authentication_button_block d-flex justify-content-center">
 						{% url "serviceUnavailable" as serviceUnavailableUrl %}
 
 		                {% include "buttons/button_black_background.html" with name="Войти" url_name=serviceUnavailableUrl %}
-					</div>
+					</div> -->
 				</form>
 
 				<hr class="base_content_separator mx-0">

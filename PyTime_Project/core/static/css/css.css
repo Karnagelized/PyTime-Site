@@ -95,11 +95,6 @@ p {
     margin-bottom: 20px;
 }
 
-.container_form_title {
-    font-size: 16px;
-    margin-bottom: 5px;
-}
-
 .preview_projects_line,
 .preview_all_projects_bottom_side,
 .preview_articles_line,
@@ -694,17 +689,6 @@ p {
     margin-bottom: 5px;
 }
 
-.container_form_input {
-    padding: 5px;
-    margin-bottom: 20px;
-    text-indent: 5px;
-    border: solid;
-    border-color: var(--input-border-color);
-    border-width: 1px;
-    border-radius: 5px;
-    background-color: var(--input-bg-color);
-}
-
 .authentication_agreement_block {
     margin-top: 20px;
 
@@ -737,6 +721,64 @@ p {
 }
 
 
+
+
+
+
+
+
+
+.authentication_form {
+    .container_form_label {
+        font-size: 16px;
+        margin-bottom: 5px;
+    }
+
+    .container_form_input {
+        padding: 5px;
+        margin-bottom: 20px;
+        text-indent: 5px;
+        border: solid;
+        border-color: var(--input-border-color);
+        border-width: 1px;
+        border-radius: 5px;
+        background-color: var(--input-bg-color);
+    }
+
+    .container_form_input[aria-invalid="true"] {
+        border-color: #f06060;
+    }
+
+    ul {
+        margin-bottom: 5px;
+
+        li {
+            list-style-type: none;
+            text-decoration: underline;
+            color: #f06060;
+        } 
+    }
+    
+
+    .button_submit {
+        width: 160px;
+        height: 50px;
+        color: #FFFFFF;
+        background-color: #000000;
+
+        border: solid;
+        border-width: 2px;
+        border-color: #000000;
+        border-radius: 5px;
+        border-width: 2px;
+        transition: all ease .4s;
+    }
+
+    .button_submit:hover {
+        background-color: #FFFFFF;
+        color: #000000;
+    }
+}
 
 
 

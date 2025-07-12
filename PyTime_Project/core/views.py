@@ -1,8 +1,11 @@
 
 from os import path
+
+import django.forms
 from django.http import HttpRequest, Http404
 from django.shortcuts import render, HttpResponse
 from core.models import Article, Project, HardSkillsCategory
+from core.forms import UserRegistrationForm
 
 """
     Основные страницы 
@@ -151,7 +154,32 @@ def loginUser(request: HttpRequest) -> HttpResponse:
 
 # Страница для регистрации Пользователя
 def registrationUser(request: HttpRequest) -> HttpResponse:
-    return render(request, 'authentication/registration.html')
+    if request.method == 'POST':
+        registrationForm = UserRegistrationForm(request.POST)
+
+        if registrationForm.is_valid():
+            # Создаём объект Пользователя без сохранения в БД
+            newUser = registrationForm.save(commit=False)
+            newUser.set_password(registrationForm.cleaned_data['password'])
+            newUser.save()
+
+            pageData = {
+                'userData': newUser,
+            }
+
+            return render(request, 'authentication/authorization.html', context=pageData)
+    else:
+        registrationForm = UserRegistrationForm()
+
+    print(registrationForm)
+
+    return render(
+        request,
+        'authentication/registration.html',
+        context={
+            'registrationForm': registrationForm
+        }
+    )
 
 
 # Страница для восстановления пароля Пользователя - Ввод почты
