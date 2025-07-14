@@ -3,8 +3,10 @@
 		Оставьте свой комментарий
 	</h2>
 
-	<form action="#" class="feedback_form">
-		<textarea class="feedback_input w-100" placeholder="Комментарий"></textarea>
+	<form action="#feedback_form_id" class="feedback_form" id="feedback_form_id" method="post">
+		{% csrf_token %}
+
+        {{ writeCommentForm }}
 
 		<div class="feedback_publish_container d-flex justify-content-between align-items-center">
 			<p class="feedback_agreement mb-0">
@@ -21,6 +23,44 @@
 			<input type="submit" value="Опубликовать" class="feedback_publish_button">
 		</div>
 	</form>
+
+	<div class="container_comments w-75">
+		{% if not comments %}
+			<div class="container_comment">
+				<div class="container_comment_up_side d-flex justify-content-start">
+					<p class="comment_username mb-0 mx-0">
+						Administrator
+					</p>
+				</div>
+
+				<div class="container_comment_bottom_side">
+					<p class="comment_content mb-0">
+						Эту тему еще никто не комментировал. Может, именно Вы зададите тон обсуждению? Что скажете? Оставьте комментарий — Ваше мнение важно для нас!
+					</p>
+				</div>
+			</div>
+		{% else %}
+			{% for comment in comments %}
+				<div class="container_comment">
+					<div class="container_comment_up_side d-flex justify-content-start">
+						<p class="comment_username mb-0">
+							{{ comment.author }}
+						</p>
+
+						<p class="comment_date_published mb-0">
+							{{ comment.dateCreate }}
+						</p>
+					</div>
+
+					<div class="container_comment_bottom_side">
+						<p class="comment_content mb-0">
+							{{ comment.text }}
+						</p>
+					</div>
+				</div>
+			{% endfor %}
+		{% endif %}
+	</div>
 </div>
 
 <div class="feedback_container_tablet d-flex flex-column justify-content-center align-items-center">
@@ -46,4 +86,42 @@
     		<input type="submit" value="Опубликовать" class="feedback_publish_button">
 		</div>
 	</form>
+
+	<div class="container_comments w-100">
+		{% if not comments %}
+			<div class="container_comment">
+				<div class="container_comment_up_side d-flex justify-content-start">
+					<p class="comment_username mb-0 mx-0">
+						Administrator
+					</p>
+				</div>
+
+				<div class="container_comment_bottom_side">
+					<p class="comment_content mb-0">
+						Эту тему еще никто не комментировал. Может, именно Вы зададите тон обсуждению? Что скажете? Оставьте комментарий — Ваше мнение важно для нас!
+					</p>
+				</div>
+			</div>
+		{% else %}
+			{% for comment in comments %}
+				<div class="container_comment">
+					<div class="container_comment_up_side d-flex justify-content-start">
+						<p class="comment_username mb-0">
+							{{ comment.author }}
+						</p>
+
+						<p class="comment_date_published mb-0">
+							{{ comment.dateCreate }}
+						</p>
+					</div>
+
+					<div class="container_comment_bottom_side">
+						<p class="comment_content mb-0">
+							{{ comment.text }}
+						</p>
+					</div>
+				</div>
+			{% endfor %}
+		{% endif %}
+	</div>
 </div>

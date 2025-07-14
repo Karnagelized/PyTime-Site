@@ -1,10 +1,11 @@
 
 from django import forms
 from django.contrib.auth.models import User
-from django.contrib.auth.forms import UserCreationForm, UserChangeForm, AdminUserCreationForm
+from django.contrib.auth.forms import (
+    UserCreationForm, UserChangeForm, AdminUserCreationForm
+)
 from django.core.exceptions import ValidationError
 from django.forms import TextInput
-
 from core.models import CustomUser, Comment
 
 
@@ -14,6 +15,7 @@ class CustomUserCreationForm(AdminUserCreationForm):
     class Meta(UserCreationForm):
         model = CustomUser
         fields =  ('username', 'email')
+
 
 # Форма для изменения Пользователя в Админке
 class CustomUserChangeForm(UserChangeForm):
@@ -51,6 +53,8 @@ class UserLoginForm(forms.ModelForm):
         model = CustomUser
         fields = ('email', 'password')
 
+
+    # Валидация данных при отправке POST запроса о авторизации
     def clean(self):
         cleaned_data = super().clean()
         email = self.cleaned_data.get('email')
@@ -99,11 +103,13 @@ class UserRegistrationForm(forms.ModelForm):
         )
     )
 
+
     class Meta:
         model = CustomUser
         fields = ('username', 'email', 'password',)
 
 
+    # Валидации имени Пользователя
     def clean_username(self):
         username = self.cleaned_data['username']
 
@@ -113,6 +119,7 @@ class UserRegistrationForm(forms.ModelForm):
         return username
 
 
+    # Валидация Email адреса Пользователя
     def clean_email(self):
         email = self.cleaned_data['email']
 
@@ -120,3 +127,25 @@ class UserRegistrationForm(forms.ModelForm):
             raise forms.ValidationError("Такой E-mail уже существует!")
 
         return email
+
+
+# Форма для блока с написанием комментария
+class WriteCommentForm(forms.ModelForm):
+    content = forms.CharField(
+        max_length=1500,
+        min_length=3,
+        label='',
+        strip=True,
+        widget=forms.Textarea(
+            attrs={
+                'class': 'feedback_input w-100',
+                'placeholder': 'Комментарий',
+            }
+        )
+    )
+
+
+    class Meta:
+        model = Comment
+        fields = ('content',)
+

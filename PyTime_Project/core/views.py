@@ -1,6 +1,5 @@
 
 from os import path
-
 from django.urls import reverse
 import django.forms
 from django.contrib.auth import authenticate, login, logout
@@ -10,9 +9,6 @@ from core.models import Article, Project, HardSkillsCategory, CustomUser, Commen
 from core.forms import UserLoginForm, UserRegistrationForm, WriteCommentForm
 from core.backends import EmailAuthBackend
 
-"""
-    Основные страницы 
-"""
 
 # Главная страница сайта
 def mainPage(request: HttpRequest) -> HttpResponse:
@@ -44,6 +40,11 @@ def resumePage(request: HttpRequest) -> HttpResponse:
 
 # Страница с профилем Пользователя
 def profilePage(request: HttpRequest) -> HttpResponse:
+    user = CustomUser.objects.all().filter(id=request.user.id).first()
+
+    if user is None or not user.is_authenticated:
+        return redirect('mainPage')
+
     # Выбор раздела навигации
     pageData = {
         'navigationSelected': 'Profile',
@@ -51,10 +52,6 @@ def profilePage(request: HttpRequest) -> HttpResponse:
 
     return render(request, 'profile.html', context=pageData)
 
-
-"""
-    Страницы для раздела со Статьями 
-"""
 
 # Страница описания статей
 def articlesPreviewPage(request: HttpRequest) -> HttpResponse:
@@ -87,6 +84,7 @@ def allArticlesPreviewPage(request: HttpRequest) -> HttpResponse:
 
 # Страница статьи
 def articlePage(request: HttpRequest, articleSlug: int) -> HttpResponse:
+    user = CustomUser.objects.all().filter(id=request.user.id).first()
     articleData = Article.published.filter(slug=articleSlug).first()
 
     # Проверка на существование
@@ -95,14 +93,33 @@ def articlePage(request: HttpRequest, articleSlug: int) -> HttpResponse:
 
     pageData = {
         'articleData': articleData,
+        'writeCommentForm': WriteCommentForm(),
+        'comments': Comment.getAllByTypeAndSlug(slug=articleSlug, postType='ARTICLE'),
     }
+
+    if request.POST:
+        commentForm = WriteCommentForm(request.POST)
+
+        if user and user.is_authenticated:
+            if commentForm.is_valid():
+                newComment = commentForm.save(commit=False)
+                newComment.contentSlug = articleSlug
+                newComment.contentType = 'ARTICLE'
+                newComment.author = user
+                newComment.text = commentForm.cleaned_data['content']
+                newComment.save()
+
+                pageData['comments'] = Comment.getAllByTypeAndSlug(slug=articleSlug, postType='ARTICLE')
+
+                return redirect(reverse('articlePage', kwargs={'articleSlug': articleSlug}))
+            else:
+                pageData['writeCommentForm'] = commentForm
+        else:
+            commentForm.add_error(field=None, error='Пользователь не авторизован!')
+            pageData['writeCommentForm'] = commentForm
 
     return render(request, 'articles/article_page.html', context=pageData)
 
-
-"""
-    Страницы для раздела с Проектами 
-"""
 
 # Страница описания проектов
 def projectsPreviewPage(request: HttpRequest) -> HttpResponse:
@@ -135,6 +152,7 @@ def allProjectsPreviewPage(request: HttpRequest) -> HttpResponse:
 
 # Страница статьи
 def projectPage(request: HttpRequest, projectSlug: int) -> HttpResponse:
+    user = CustomUser.objects.all().filter(id=request.user.id).first()
     projectData = Project.published.filter(slug=projectSlug).first()
 
     # Проверка на существование
@@ -143,14 +161,33 @@ def projectPage(request: HttpRequest, projectSlug: int) -> HttpResponse:
 
     pageData = {
         'projectData': projectData,
+        'writeCommentForm': WriteCommentForm(),
+        'comments': Comment.getAllByTypeAndSlug(slug=projectSlug, postType='PROJECT'),
     }
+
+    if request.POST:
+        commentForm = WriteCommentForm(request.POST)
+
+        if user and user.is_authenticated:
+            if commentForm.is_valid():
+                newComment = commentForm.save(commit=False)
+                newComment.contentSlug = projectSlug
+                newComment.contentType = 'PROJECT'
+                newComment.author = user
+                newComment.text = commentForm.cleaned_data['content']
+                newComment.save()
+
+                pageData['comments'] = Comment.getAllByTypeAndSlug(slug=projectSlug, postType='PROJECT')
+
+                return redirect(reverse('projectPage', kwargs={'projectSlug': projectSlug}))
+            else:
+                pageData['writeCommentForm'] = commentForm
+        else:
+            commentForm.add_error(field=None, error='Пользователь не авторизован!')
+            pageData['writeCommentForm'] = commentForm
 
     return render(request, 'projects/project_page.html', context=pageData)
 
-
-"""
-    Страницы аутентификации Пользователя 
-"""
 
 # Страница для авторизации Пользователя
 def loginUser(request: HttpRequest) -> HttpResponse:
@@ -216,31 +253,27 @@ def registrationUser(request: HttpRequest) -> HttpResponse:
 
 # Страница для восстановления пароля Пользователя - Ввод почты
 def passwordResetEnterMail(request: HttpRequest) -> HttpResponse:
+    # Заглушка - В реализации
+    return redirect('mainPage')
+
     return render(request, 'authentication/recovery_password/enter_mail.html')
 
 
 # Страница для восстановления пароля Пользователя - Ввод кода
 def passwordResetEnterCode(request: HttpRequest) -> HttpResponse:
+    # Заглушка - В реализации
+    return redirect('mainPage')
+
     return render(request, 'authentication/recovery_password/confirm_mail_by_code.html')
 
 
 # Страница для восстановления пароля Пользователя - Ввод нового пароля
 def passwordResetEnterNewPassword(request: HttpRequest) -> HttpResponse:
+    # Заглушка - В реализации
+    return redirect('mainPage')
+
     return render(request, 'authentication/recovery_password/enter_new_password.html')
 
-
-
-
-
-
-
-
-
-
-
-"""
-    Страницы Пользовательского соглашения и Политики конфиденциальности 
-"""
 
 # Страница Пользовательского соглашения
 def userAgreement(request: HttpRequest) -> HttpResponse:
@@ -252,26 +285,52 @@ def privacy(request: HttpRequest) -> HttpResponse:
     return render(request, 'agreements/privacy.html')
 
 
-"""
-    Страницы для переопределения ошибок 400, 403, 404, 500 
-"""
-
 # Страница с ошибкой 400
 def badRequest(request: HttpRequest, exception=None) -> HttpResponse:
+    user = CustomUser.objects.all().filter(id=request.user.id).first()
+
+    if user is None or not user.is_superuser:
+        return redirect('mainPage')
+
     return render(request, 'errors/400.html', status=400)
+
 
 # Страница с ошибкой 403
 def forbidden(request: HttpRequest, exception=None) -> HttpResponse:
+    user = CustomUser.objects.all().filter(id=request.user.id).first()
+
+    if user is None or not user.is_superuser:
+        return redirect('mainPage')
+
     return render(request, 'errors/403.html', status=403)
+
 
 # Страница с ошибкой 404
 def pageNotFound(request: HttpRequest, exception=None) -> HttpResponse:
+    user = CustomUser.objects.all().filter(id=request.user.id).first()
+
+    if user is None or not user.is_superuser:
+        return redirect('mainPage')
+
     return render(request, 'errors/404.html', status=404)
+
 
 # Страница с ошибкой 500
 def internalServerError(request: HttpRequest, exception=None) -> HttpResponse:
+    user = CustomUser.objects.all().filter(id=request.user.id).first()
+
+    if user is None or not user.is_superuser:
+        return redirect('mainPage')
+
     return render(request, 'errors/500.html', status=500)
+
 
 # Страница с ошибкой 503
 def serviceUnavailable(request: HttpRequest, exception=None) -> HttpResponse:
+    user = CustomUser.objects.all().filter(id=request.user.id).first()
+
+    if user is None or not user.is_superuser:
+        return redirect('mainPage')
+
     return render(request, 'errors/503.html', status=503)
+

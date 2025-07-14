@@ -1,8 +1,7 @@
-
-from django.contrib.auth.models import AbstractUser
-from django.db.models.fields import CharField
+from django.db.models import QuerySet
 from django.urls import reverse
 from django.db import models
+from django.contrib.auth.models import AbstractUser
 
 
 # Модель профиля Пользователя
@@ -12,6 +11,7 @@ class CustomUser(AbstractUser):
         db_table = 'custom_user'
         verbose_name = 'Пользователь'
         verbose_name_plural = 'Пользователи'
+
 
     def __str__(self):
         return self.username
@@ -23,9 +23,11 @@ class Tag(models.Model):
     datetimeCreate = models.DateTimeField(auto_now_add=True, verbose_name='Дата создания')
     datetimeUpdate = models.DateTimeField(auto_now=True, verbose_name='Дата изменения')
 
+
     class Meta:
         verbose_name = 'Тег'
         verbose_name_plural = 'Теги'
+
 
     def __str__(self):
         return self.name
@@ -37,7 +39,7 @@ class PublishedManager(models.Manager):
         return super().get_queryset().filter(isPublished=True)
 
 
-# Модель для статьи
+# Модель для статей
 class Article(models.Model):
     slug = models.SlugField(unique=True, verbose_name='Слаг')
     title = models.CharField(max_length=200, verbose_name='Заголовок')
@@ -55,18 +57,21 @@ class Article(models.Model):
     # Менеджер, возвращающий все опубликованные статьи
     published = PublishedManager()
 
+
     class Meta:
         verbose_name = 'Статья'
         verbose_name_plural = 'Статьи'
 
+
     def get_absolute_url(self):
         return reverse('articlePage', kwargs={'articleSlug': self.slug})
+
 
     def __str__(self):
         return f'{self.slug} - {self.title}'
 
 
-# Модель для проекта
+# Модель для проектов
 class Project(models.Model):
     slug = models.SlugField(unique=True, verbose_name='Слаг')
     title = models.CharField(max_length=200, verbose_name='Заголовок')
@@ -88,6 +93,7 @@ class Project(models.Model):
         verbose_name = 'Проект'
         verbose_name_plural = 'Проекты'
 
+
     def get_absolute_url(self):
         return reverse('projectPage', kwargs={'projectSlug': self.slug})
 
@@ -102,9 +108,11 @@ class HardSkills(models.Model):
     isVisible = models.BooleanField(default=True, verbose_name='Видимость')
     dateCreate = models.DateTimeField(blank=False, auto_now_add=True, verbose_name='Дата создания')
 
+
     class Meta:
         verbose_name = 'Скилл'
         verbose_name_plural = 'Скиллы'
+
 
     def __str__(self):
         return (
@@ -131,6 +139,7 @@ class HardSkillsCategory(models.Model):
     # Менеджер отображающий только "включенные" категории
     visibleCategory = VisibleHardSkillsCategoryManager()
 
+
     class Meta:
         verbose_name = 'Категория скилла'
         verbose_name_plural = 'Категории скиллов'
@@ -140,12 +149,54 @@ class HardSkillsCategory(models.Model):
     def getSkills(self):
         return ', '.join([skill.name for skill in self.skills.all() if skill.isVisible])
 
+
     def __str__(self):
         return f'{self.name}'
 
 
+# Модель для комментариев
+class Comment(models.Model):
+    ARTICLE = ('ARTICLE', 'article')
+    PROJECT = ('PROJECT', 'project')
+
+    COMMENT_TYPE = [
+        ARTICLE,
+        PROJECT,
+    ]
+
+    contentSlug = models.SlugField(verbose_name='Slug контента')
+    contentType = models.CharField(max_length=7, choices=COMMENT_TYPE, verbose_name='Тип контента')
+    author = models.ForeignKey(CustomUser, on_delete=models.CASCADE, verbose_name='Автор')
+    text = models.TextField(verbose_name='Текст')
+    isVisible = models.BooleanField(default=True, verbose_name='Видимость')
+    dateCreate = models.DateTimeField(blank=False, auto_now_add=True, verbose_name='Дата создания')
 
 
+    class Meta:
+        verbose_name = 'Комментарий'
+        verbose_name_plural = 'Комментарии'
+
+
+    # Получить комментарии по типу и слагу поста(Проект или Статья)
+    @staticmethod
+    def getAllByTypeAndSlug(*, slug:str, postType:str) -> QuerySet:
+        # Проверка правильного указания типа поста
+        if postType not in [contentType[0] for contentType in Comment.COMMENT_TYPE]:
+            raise ValueError(
+                f'Тип комментария указан неверно. Получено {postType}, ' +
+                f'ожидалось {", ".join([contentType[0] for contentType in Comment.COMMENT_TYPE])}'
+            )
+
+        return Comment.objects.all().filter(
+            contentSlug=slug, contentType=postType,
+            isVisible=True,
+        ).order_by('-dateCreate').all()
+
+
+    def __str__(self):
+        return (
+            f'Comment by \"{self.author}\". Href - \"{self.contentType}/{self.contentSlug}\"'
+        )
 
 
 
