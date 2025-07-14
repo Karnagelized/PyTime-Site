@@ -31,31 +31,6 @@
                     	<input type="submit" value="Создать аккаунт" class="button_submit mb-0">
                     </div>
 
-
-<!-- 					<p class="container_form_title ">
-						Имя пользователя
-					</p>
-
-					<input required type="text" placeholder="Введите имя пользователя" class="container_form_input w-100">
-
-					<p class="container_form_title">
-						Почта
-					</p>
-
-					<input required type="email" placeholder="Введите почту" class="container_form_input w-100">
-
-					<p class="container_form_title">
-						Пароль
-					</p>
-
-					<input required type="password" placeholder="Введите пароль" class="container_form_input w-100">
-
-					<div class="authentication_button_block d-flex justify-content-center">
-						{% url "serviceUnavailable" as serviceUnavailableUrl %}
-
-		                {% include "buttons/button_black_background.html" with name="Создать аккаунт" url_name=serviceUnavailableUrl %}
-					</div> -->
-
 					<div class="authentication_agreement_block text-center">
 						<p class="container_text mb-0">
 							Регистрируясь, Вы соглашаетесь с условиями
@@ -78,10 +53,10 @@
 						У Вас уже есть аккаунт?
 					</p>
 
-					<!-- Кнопка регистрации -->
-					{% url "authorizationUser" as authorizationUserURl %}
+					<!-- Кнопка авторизации -->
+					{% url "loginUser" as loginUserURl %}
 					
-					{% include "buttons/button_white_background.html" with name="Войти" url_name=authorizationUserURl %}
+					{% include "buttons/button_white_background.html" with name="Войти" url_name=loginUserURl %}
 				</div>
 			</div>
 		</div>

@@ -1,19 +1,14 @@
 <ul class="header_menu_nav mb-0 list-unstyled d-flex flex-column align-items-center justify-content-center">
-    {% url "projectsPage" as projectsUrl %}
-    {% url "articlesPage" as articlesUrl %}
-    {% url "resumePage" as resumeUrl %}
-    {% url "authorizationUser" as authorizationUrl %}
-
     <!-- Separator line -->
     <hr class="base_content_separator w-100">
 
     <li class="header_menu_nav_item w-100 d-flex align-items-center">
         {% if navigationSelected != "Projects" %}
-            <a class="header_menu_link nav-link mb-0 w-100 text-center nav-link p-0" href="{{ projectsUrl }}">
+            <a class="header_menu_link nav-link mb-0 w-100 text-center nav-link p-0" href="{% url 'projectsPage' %}">
                 Проекты
             </a>
         {% else %}
-            <p class="selected_header_menu_link mb-0 w-100 text-center nav-link p-0" href="{{ projectsUrl }}">
+            <p class="selected_header_menu_link mb-0 w-100 text-center nav-link p-0" href="{% url 'projectsPage' %}">
                 Проекты
             </p>
         {% endif %}
@@ -24,11 +19,11 @@
 
     <li class="header_menu_nav_item w-100 d-flex align-items-center">
         {% if navigationSelected != "Articles" %}
-            <a class="header_menu_link nav-link mb-0 w-100 text-center nav-link p-0" href="{{ articlesUrl }}">
+            <a class="header_menu_link nav-link mb-0 w-100 text-center nav-link p-0" href="{% url 'articlesPage' %}">
                 Статьи
             </a>
         {% else %}
-            <p class="selected_header_menu_link mb-0 w-100 text-center nav-link p-0" href="{{ articlesUrl }}">
+            <p class="selected_header_menu_link mb-0 w-100 text-center nav-link p-0" href="{% url 'articlesPage' %}">
                 Статьи
             </p>
         {% endif %}
@@ -39,11 +34,11 @@
 
     <li class="header_menu_nav_item w-100 d-flex align-items-center">
         {% if navigationSelected != "Resume" %}
-            <a class="header_menu_link nav-link mb-0 w-100 text-center nav-link p-0" href="{{ resumeUrl }}">
+            <a class="header_menu_link nav-link mb-0 w-100 text-center nav-link p-0" href="{% url 'resumePage' %}">
                 Резюме
             </a>
         {% else %}
-            <p class="selected_header_menu_link mb-0 w-100 text-center nav-link p-0" href="{{ resumeUrl }}">
+            <p class="selected_header_menu_link mb-0 w-100 text-center nav-link p-0" href="{% url 'resumePage' %}">
                 Резюме
             </p>
         {% endif %}
@@ -53,15 +48,28 @@
     <hr class="base_content_separator w-100">
 
     <li class="header_menu_nav_item w-100 d-flex align-items-center">
-        {% if navigationSelected != "Authorization" %}
-            <a class="header_menu_link nav-link mb-0 w-100 text-center nav-link p-0" href="{{ authorizationUrl }}">
-                Авторизация
-            </a>
+        {% if user.is_authenticated %}
+            {% if navigationSelected != "Profile" %}
+                <a class="header_menu_link nav-link mb-0 w-100 text-center nav-link p-0" href="{% url 'profilePage' %}">
+                    Профиль
+                </a>
+            {% else %}
+                <p class="selected_header_menu_link mb-0 w-100 text-center nav-link p-0" href="{% url 'profilePage' %}">
+                    Профиль
+                </p>
+            {% endif %}
         {% else %}
-            <p class="selected_header_menu_link mb-0 w-100 text-center nav-link p-0" href="{{ authorizationUrl }}">
-                Авторизация
-            </p>
+            {% if navigationSelected != "Authorization" %}
+                <a class="header_menu_link nav-link mb-0 w-100 text-center nav-link p-0" href="{% url 'loginUser' %}">
+                    Авторизация
+                </a>
+            {% else %}
+                <p class="selected_header_menu_link mb-0 w-100 text-center nav-link p-0" href="{% url 'loginUser' %}">
+                    Авторизация
+                </p>
+            {% endif %}
         {% endif %}
+
     </li>
 
     <!-- Separator line -->

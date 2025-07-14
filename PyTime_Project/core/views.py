@@ -1,11 +1,14 @@
 
 from os import path
 
+from django.urls import reverse
 import django.forms
+from django.contrib.auth import authenticate, login, logout
 from django.http import HttpRequest, Http404
-from django.shortcuts import render, HttpResponse
-from core.models import Article, Project, HardSkillsCategory
-from core.forms import UserRegistrationForm
+from django.shortcuts import render, HttpResponse, redirect
+from core.models import Article, Project, HardSkillsCategory, CustomUser, Comment
+from core.forms import UserLoginForm, UserRegistrationForm, WriteCommentForm
+from core.backends import EmailAuthBackend
 
 """
     Основные страницы 
@@ -18,6 +21,7 @@ def mainPage(request: HttpRequest) -> HttpResponse:
 
     # Выбор раздела навигации
     pageData = {
+        'user': request.user,
         'skillsCategoryData': skillsCategory,
     }
 
@@ -40,7 +44,12 @@ def resumePage(request: HttpRequest) -> HttpResponse:
 
 # Страница с профилем Пользователя
 def profilePage(request: HttpRequest) -> HttpResponse:
-    return render(request, 'profile.html')
+    # Выбор раздела навигации
+    pageData = {
+        'navigationSelected': 'Profile',
+    }
+
+    return render(request, 'profile.html', context=pageData)
 
 
 """
@@ -149,7 +158,36 @@ def loginUser(request: HttpRequest) -> HttpResponse:
         'navigationSelected': 'Authorization',
     }
 
+    if request.method == 'POST':
+        loginForm = UserLoginForm(request.POST)
+
+        if loginForm.is_valid():
+            email = request.POST.get('email')
+            password = request.POST.get('password')
+
+            user = EmailAuthBackend().authenticate(request, email=email, password=password)
+
+            if user is not None:
+                login(request, user=user)
+                return redirect('mainPage')
+
+        pageData['loginForm'] = loginForm
+
+        return render(request, 'authentication/authorization.html', context=pageData)
+    else:
+        pageData['loginForm'] = UserLoginForm()
+
     return render(request, 'authentication/authorization.html', context=pageData)
+
+
+# Обработка выхода Пользователя из сессии
+def logoutUser(request: HttpRequest) -> HttpResponse:
+    isUserAuthenticated = request.user.is_authenticated
+
+    if isUserAuthenticated:
+        logout(request)
+
+    return redirect('loginUser')
 
 
 # Страница для регистрации Пользователя
@@ -163,15 +201,9 @@ def registrationUser(request: HttpRequest) -> HttpResponse:
             newUser.set_password(registrationForm.cleaned_data['password'])
             newUser.save()
 
-            pageData = {
-                'userData': newUser,
-            }
-
-            return render(request, 'authentication/authorization.html', context=pageData)
+            return redirect('loginUser')
     else:
         registrationForm = UserRegistrationForm()
-
-    print(registrationForm)
 
     return render(
         request,

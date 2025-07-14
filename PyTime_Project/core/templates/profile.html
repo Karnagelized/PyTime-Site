@@ -7,32 +7,103 @@
 
 {% block main-container %}
 	<div class="main_content">
-		<div class="profile_block d-flex justify-content-center align-items-center">
-			<div class="profile_left_side">
-				<img class="profile_avatar" src="{% static 'img\errors\imageNotFound.png' %}">
+		<div class="content_container profile_container">
+			<div class="container_up_side d-flex justify-content-evenly align-items-center">
+				<img class="container_image profile_image" src="{% static 'img\errors\imageNotFound.png' %}">
+
+				<div class="container_about_block d-flex flex-column">
+					<div class="container_about_chapter">
+						<p class="container_title">
+							<b>Имя пользователя:</b> {{ user.username }}
+						</p>
+					</div>
+
+					<div class="container_about_chapter">
+						<p class="container_title">
+							<b>Почта:</b> {{ user.email }}
+						</p>
+					</div>
+
+					<div class="container_about_chapter">
+						<p class="container_title">
+							<b>Пол:</b> НЕ РЕАЛИЗОВАНО
+						</p>
+					</div>
+
+					<div class="container_about_chapter">
+						<p class="container_title">
+							<b>Дата рождения:</b> НЕ РЕАЛИЗОВАНО
+						</p>
+					</div>
+
+					<div class="container_about_chapter mb-0">
+						<p class="container_title mb-0">
+							<b>Обо мне:</b> НЕ РЕАЛИЗОВАНО
+						</p>
+					</div>
+				</div>
 			</div>
-			<div class="profile_right_side">
-				<form action="#" class="authentication_form_block">
-					<div class="profile_input_block">
-						<p class="profile_input_title">
-							Приветствую {{ userData.username }}!
+
+			<div class="container_down_side d-flex justify-content-center">
+	            <div class="block_duo_buttons d-flex justify-content-between">
+	                {% url "logoutUser" as logoutUserUrl %}
+	                {% url "articlesPage" as articlesUrl %}
+
+	                {% include "buttons/button_white_background.html" with name="Выйти" url_name=logoutUserUrl %}
+	                {% include "buttons/button_black_background.html" with name="Изменить" url_name=articlesUrl %}
+	            </div>
+			</div>
+		</div>
+
+		<div class="content_container_tablet profile_container d-flex flex-column">
+			<div class="container_up_side d-flex flex-column align-items-center">
+				<img class="container_image profile_image" src="{% static 'img\errors\imageNotFound.png' %}">
+
+				<div class="block_image_tablet mb-0 d-flex justify-content-center">
+					<img class="container_image_tablet" src="{% static 'img\errors\imageNotFound.png' %}">
+				</div>
+
+				<div class="container_about_block d-flex flex-column">
+					<div class="container_about_chapter">
+						<p class="container_title">
+							<b>Имя пользователя:</b> {{ user.username }}
 						</p>
-						<input type="text" placeholder="Введите отображаемое имя" class="profile_input" value="{{ userData.username }}">
 					</div>
 
-					<div class="profile_input_block">
-						<p class="profile_input_title">
-							Обо мне
+					<div class="container_about_chapter">
+						<p class="container_title">
+							<b>Почта:</b> {{ user.email }}
 						</p>
-						<textarea placeholder="Расскажите о себе" class="profile_area_input"></textarea>
 					</div>
 
-					<!-- Кнопка сохранения данных -->
-					<div class="authentication_button_block d-flex justify-content-center">
-						<!-- {% url "articlesPage" as articlesUrl %} -->
-		                {% include "buttons/button_white_background.html" with name="Сохранить" %}
+					<div class="container_about_chapter">
+						<p class="container_title">
+							<b>Пол:</b> НЕ РЕАЛИЗОВАНО
+						</p>
 					</div>
-				</form>
+
+					<div class="container_about_chapter">
+						<p class="container_title">
+							<b>Дата рождения:</b> НЕ РЕАЛИЗОВАНО
+						</p>
+					</div>
+
+					<div class="container_about_chapter mb-0">
+						<p class="container_title mb-0">
+							<b>Обо мне:</b> {% lorem 50 w %}
+						</p>
+					</div>
+				</div>
+			</div>
+
+			<div class="container_down_side d-flex justify-content-center">
+	            <div class="block_duo_buttons d-flex justify-content-between">
+	                {% url "projectsPage" as projectsUrl %}
+	                {% url "articlesPage" as articlesUrl %}
+
+	                {% include "buttons/button_white_background.html" with name="Выйти" url_name=projectsUrl %}
+	                {% include "buttons/button_black_background.html" with name="Изменить" url_name=articlesUrl %}
+	            </div>
 			</div>
 		</div>
 	</div>

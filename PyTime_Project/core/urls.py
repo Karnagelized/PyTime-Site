@@ -4,7 +4,7 @@ from core.views import (
     mainPage, resumePage, profilePage,
     articlesPreviewPage, allArticlesPreviewPage, articlePage,
     projectsPreviewPage, allProjectsPreviewPage, projectPage,
-    loginUser, registrationUser, passwordResetEnterMail,
+    loginUser, logoutUser, registrationUser, passwordResetEnterMail,
     passwordResetEnterCode, passwordResetEnterNewPassword,
     userAgreement, privacy,
     badRequest, forbidden, pageNotFound, internalServerError,
@@ -26,7 +26,8 @@ urlpatterns = [
     path('all-projects', allProjectsPreviewPage, name='allProjectsPage'),
     path('projects/project/<slug:projectSlug>', projectPage, name='projectPage'),
     # Аутентификация
-    path('authorization', loginUser, name='authorizationUser'),
+    path('login', loginUser, name='loginUser'),
+    path('logout', logoutUser, name='logoutUser'),
     path('registration', registrationUser, name='registrationUser'),
     path('password-reset', passwordResetEnterMail, name='passwordResetEnterMail'),
     path('password-reset-enter-code', passwordResetEnterCode, name='passwordResetEnterCode'),

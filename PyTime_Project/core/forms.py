@@ -2,7 +2,10 @@
 from django import forms
 from django.contrib.auth.models import User
 from django.contrib.auth.forms import UserCreationForm, UserChangeForm, AdminUserCreationForm
-from core.models import CustomUser
+from django.core.exceptions import ValidationError
+from django.forms import TextInput
+
+from core.models import CustomUser, Comment
 
 
 # Форма для создания Пользователя в Админке
@@ -20,23 +23,14 @@ class CustomUserChangeForm(UserChangeForm):
         fields = ('username', 'email')
 
 
-# Форма регистрации на сайте
-class UserRegistrationForm(forms.ModelForm):
-    username = forms.CharField(
-        max_length=50,
-        min_length=5,
-        label='Имя пользователя',
-        widget=forms.TextInput(attrs={
-            'placeholder': 'Введите имя пользователя',
-            'class': 'container_form_input',
-            }
-        )
-    )
+# Форма авторизации на сайте
+class UserLoginForm(forms.ModelForm):
     email = forms.EmailField(
-        label='Почта',
-        widget=forms.EmailInput(attrs={
-            'placeholder': 'Введите почту',
-            'class': 'container_form_input',
+        label="Почта",
+        widget=forms.EmailInput(
+            attrs={
+                'placeholder': 'Введите почту',
+                'class': 'container_form_input',
             }
         )
     )
@@ -44,16 +38,70 @@ class UserRegistrationForm(forms.ModelForm):
         max_length=50,
         min_length=5,
         label='Пароль',
-        widget=forms.PasswordInput(attrs={
-            'placeholder': 'Введите пароль',
-            'class': 'container_form_input',
+        widget=forms.PasswordInput(
+            attrs={
+                'placeholder': 'Введите пароль',
+                'class': 'container_form_input',
+            }
+        )
+    )
+
+
+    class Meta:
+        model = CustomUser
+        fields = ('email', 'password')
+
+    def clean(self):
+        cleaned_data = super().clean()
+        email = self.cleaned_data.get('email')
+        password = self.cleaned_data.get('password')
+
+        if email and password:
+            user = CustomUser.objects.filter(email=email).first()
+
+            if not user or not user.check_password(password):
+                raise forms.ValidationError('Неверный пароль или email!')
+
+        return cleaned_data
+
+
+# Форма регистрации на сайте
+class UserRegistrationForm(forms.ModelForm):
+    username = forms.CharField(
+        max_length=50,
+        min_length=5,
+        label='Имя пользователя',
+        widget=forms.TextInput(
+            attrs={
+                'placeholder': 'Введите имя пользователя',
+                'class': 'container_form_input',
+            }
+        )
+    )
+    email = forms.EmailField(
+        label='Почта',
+        widget=forms.EmailInput(
+            attrs={
+                'placeholder': 'Введите почту',
+                'class': 'container_form_input',
+            }
+        )
+    )
+    password = forms.CharField(
+        max_length=50,
+        min_length=5,
+        label='Пароль',
+        widget=forms.PasswordInput(
+            attrs={
+                'placeholder': 'Введите пароль',
+                'class': 'container_form_input',
             }
         )
     )
 
     class Meta:
         model = CustomUser
-        fields = ('username', 'email', 'password')
+        fields = ('username', 'email', 'password',)
 
 
     def clean_username(self):
