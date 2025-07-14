@@ -1,9 +1,20 @@
 
 from django.contrib import admin
-from .models import Tag, Article, Project
 from .models import (
+    CustomUser,
     Tag, Article, Project, HardSkillsCategory, HardSkills
 )
+from .forms import CustomUserCreationForm, CustomUserChangeForm
+from django.contrib.auth.admin import UserAdmin
+
+
+# Регистрируем CustomUser в Админке
+@admin.register(CustomUser)
+class CustomUserAdmin(UserAdmin):
+    add_form = CustomUserCreationForm
+    form = CustomUserChangeForm
+    model = CustomUser
+    list_display = ('id', 'username', 'email', )
 
 
 # Админ модель для тегов Статей и Проектов

@@ -13,31 +13,23 @@
 					Авторизация
 				</p>
 				
-				<form action="#" class="authentication_form_block">
-					<p class="container_form_title">
-						Почта
-					</p>
-						
-					<input required type="email" placeholder="Введите почту" class="container_form_input w-100">
+				<form class="authentication_form d-flex flex-column" method="post">
+                    {% csrf_token %}
 
-					<div class="container_form_text_block d-flex justify-content-between">
-						<p class="container_form_title mb-0">
-							Пароль
-						</p>
+                    {{ loginForm.non_field_errors }}
 
-						<a href="{% url 'passwordResetEnterMail' %}" class="container_link">
-							Забыли пароль?
-						</a>
-					</div>
+                    {% for field in loginForm %}
+                        <label for="{{ field.id_for_label }}" class="container_form_label">
+                            {{ field.label }}
+                        </label>
 
-					<input required type="password" placeholder="Введите пароль" class="container_form_input w-100">
+                        {{ field.errors }}
+                        {{ field }}
+                    {% endfor %}
 
-					<!-- Кнопка авторизации -->
-					<div class="authentication_button_block d-flex justify-content-center">
-						{% url "serviceUnavailable" as serviceUnavailableUrl %}
-
-		                {% include "buttons/button_black_background.html" with name="Войти" url_name=serviceUnavailableUrl %}
-					</div>
+                    <div class="authentication_button_block d-flex justify-content-center">
+                    	<input type="submit" value="Войти" class="button_submit mb-0">
+                    </div>
 				</form>
 
 				<hr class="base_content_separator mx-0">

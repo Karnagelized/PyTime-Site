@@ -1,9 +1,23 @@
 
+from django.contrib.auth.models import AbstractUser
+from django.db.models.fields import CharField
 from django.urls import reverse
 from django.db import models
 
 
-# Класс, описывающий "Теги"
+# Модель профиля Пользователя
+class CustomUser(AbstractUser):
+
+    class Meta:
+        db_table = 'custom_user'
+        verbose_name = 'Пользователь'
+        verbose_name_plural = 'Пользователи'
+
+    def __str__(self):
+        return self.username
+
+
+# Модель для тегов
 class Tag(models.Model):
     name = models.CharField(max_length=50, unique=True, verbose_name='Название')
     datetimeCreate = models.DateTimeField(auto_now_add=True, verbose_name='Дата создания')
@@ -23,7 +37,7 @@ class PublishedManager(models.Manager):
         return super().get_queryset().filter(isPublished=True)
 
 
-# Класс описывающий "Статью"
+# Модель для статьи
 class Article(models.Model):
     slug = models.SlugField(unique=True, verbose_name='Слаг')
     title = models.CharField(max_length=200, verbose_name='Заголовок')
@@ -52,7 +66,7 @@ class Article(models.Model):
         return f'{self.slug} - {self.title}'
 
 
-# Класс, описывающий "Проект"
+# Модель для проекта
 class Project(models.Model):
     slug = models.SlugField(unique=True, verbose_name='Слаг')
     title = models.CharField(max_length=200, verbose_name='Заголовок')
@@ -82,7 +96,7 @@ class Project(models.Model):
         return f'{self.slug} - {self.title}'
 
 
-# Класс для Hard скиллов
+# Модель для Hard скиллов
 class HardSkills(models.Model):
     name = models.CharField(unique=True, blank=False, max_length=50, verbose_name='Название')
     isVisible = models.BooleanField(default=True, verbose_name='Видимость')
@@ -104,6 +118,7 @@ class VisibleHardSkillsCategoryManager(models.Manager):
         return super().get_queryset().filter(isVisible=True)
 
 
+# Модель для категорий Hard скиллов
 class HardSkillsCategory(models.Model):
     name = models.CharField(unique=True, blank=False, max_length=50, verbose_name='Название')
     position = models.PositiveSmallIntegerField(blank=False, default=0, verbose_name='Позиция')

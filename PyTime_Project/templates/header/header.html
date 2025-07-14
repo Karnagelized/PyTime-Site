@@ -15,9 +15,15 @@
 
     <div class="header_right_side_block d-flex align-items-center">
         <div class="header_authorization d-flex justify-content-center">
-            <a class="header_authorization_link d-flex justify-content-center align-items-center" href="{% url 'authorizationUser' %}">
-                Войти
-            </a>
+            {% if user.is_authenticated %}
+                <a class="header_authorization_link d-flex justify-content-center align-items-center" href="{% url 'profilePage' %}">
+                    Профиль
+                </a>
+            {% else %}
+                <a class="header_authorization_link d-flex justify-content-center align-items-center" href="{% url 'loginUser' %}">
+                    Войти
+                </a>
+            {% endif %}
         </div>
     </div>
 </div>
