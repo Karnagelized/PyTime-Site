@@ -40,14 +40,11 @@
   Адаптивность
 </p>
 
-
-
-
 <p align="center">
   <img src="./README/img/pages/Desktop.png">
 </p>
 <p align="center">
-  Адаптивность
+  💻 Desktop version
 </p>
 
 <br>
@@ -56,7 +53,7 @@
   <img src="./README/img/pages/Tablet.png">
 </p>
 <p align="center">
-  📋 Tablet
+  📋 Tablet version
 </p>
 
 <br>
@@ -65,35 +62,39 @@
   <img src="./README/img/pages/Phone.png">  
 </p>
 <p align="center">
-  📱 Phone
+  📱 Phone version
 </p>
 
 ---
 
-<h2 align="center">
+<p align="center">
   Другие страницы
-</h2>
+</p>
 
 <p align="center">
   <img src="./README/img/pages/Articles.png">  
 </p>
-<h3 align="center">
-  Страница статей
-</h3>
+<p align="center">
+  📰 Страница статей
+</p>
+
+<br>
 
 <p align="center">
   <img src="./README/img/pages/Projects.png">  
 </p>
-<h3 align="center">
-  Страница проектов
-</h3>
+<p align="center">
+  📌 Страница проектов
+</p>
+
+<br>
 
 <p align="center">
   <img src="./README/img/pages/Resume.png">  
 </p>
-<h3 align="center">
-  Страница с резюме
-</h3>
+<p align="center">
+  📄 Страница с резюме
+</p>
 
 ---
 
