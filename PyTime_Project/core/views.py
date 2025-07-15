@@ -1,5 +1,7 @@
 
 from os import path
+from typing import Union
+
 from django.urls import reverse
 import django.forms
 from django.contrib.auth import authenticate, login, logout
@@ -8,247 +10,347 @@ from django.shortcuts import render, HttpResponse, redirect
 from core.models import Article, Project, HardSkillsCategory, CustomUser, Comment
 from core.forms import UserLoginForm, UserRegistrationForm, WriteCommentForm
 from core.backends import EmailAuthBackend
+from django.views import View
 
 
-# Главная страница сайта
-def mainPage(request: HttpRequest) -> HttpResponse:
-    # Получаем Hard скиллы
-    skillsCategory = HardSkillsCategory.visibleCategory.all()
-
-    # Выбор раздела навигации
-    pageData = {
-        'user': request.user,
-        'skillsCategoryData': skillsCategory,
-    }
-
-    return render(request, 'index.html', context=pageData)
+# Представление Главной страницы
+class MainView(View):
 
 
-# Страница с резюме
-def resumePage(request: HttpRequest) -> HttpResponse:
-    # Получаем Hard скиллы
-    skillsCategory = HardSkillsCategory.visibleCategory.all()
-
-    # Выбор раздела навигации
-    pageData = {
-        'navigationSelected': 'Resume',
-        'skillsCategoryData': skillsCategory,
-    }
-
-    return render(request, 'resume.html', context=pageData)
+    def post(self, *args, **kwargs) -> HttpResponse:
+        pass
 
 
-# Страница с профилем Пользователя
-def profilePage(request: HttpRequest) -> HttpResponse:
-    user = CustomUser.objects.all().filter(id=request.user.id).first()
+    def get(self, request:HttpRequest, *args, **kwargs) -> HttpResponse:
+        pageData = {
+            'user': request.user,
+            'skillsCategoryData': HardSkillsCategory.visibleCategory.all(),
+        }
 
-    if user is None or not user.is_authenticated:
-        return redirect('mainPage')
-
-    # Выбор раздела навигации
-    pageData = {
-        'navigationSelected': 'Profile',
-    }
-
-    return render(request, 'profile.html', context=pageData)
+        return render(request, 'index.html', context=pageData)
 
 
-# Страница описания статей
-def articlesPreviewPage(request: HttpRequest) -> HttpResponse:
-    lastArticles = Article.published.all().order_by('-datetimeCreate')[:4]
-
-    # Проверка на существование изображения Статьи
-    for article in lastArticles:
-        if not path.exists(str(article.image)):
-            article.image = ''
-
-    pageData = {
-        'navigationSelected': 'Articles',
-        'lastArticles': lastArticles,
-        'lastArticle': lastArticles[0] if len(lastArticles) > 0 else None,
-    }
-
-    return render(request, 'articles/articles.html', context=pageData)
+# Представление страницы с Резюме
+class ResumeView(View):
 
 
-# Страница со списком всех статей
-def allArticlesPreviewPage(request: HttpRequest) -> HttpResponse:
-    allArticles = Article.published.all().order_by('-datetimeCreate')
-
-    pageData = {
-        'allArticles': allArticles,
-    }
-
-    return render(request, 'articles/all_articles.html', context=pageData)
+    def post(self, *args, **kwargs) -> HttpResponse:
+        pass
 
 
-# Страница статьи
-def articlePage(request: HttpRequest, articleSlug: int) -> HttpResponse:
-    user = CustomUser.objects.all().filter(id=request.user.id).first()
-    articleData = Article.published.filter(slug=articleSlug).first()
+    def get(self, request:HttpRequest, *args, **kwargs) -> HttpResponse:
+        # Выбор раздела навигации
+        pageData = {
+            'navigationSelected': 'Resume',
+            'skillsCategoryData': HardSkillsCategory.visibleCategory.all(),
+        }
 
-    # Проверка на существование
-    if articleData is None:
-        raise Http404()
+        return render(request, 'resume.html', context=pageData)
 
-    pageData = {
-        'articleData': articleData,
-        'writeCommentForm': WriteCommentForm(),
-        'comments': Comment.getAllByTypeAndSlug(slug=articleSlug, postType='ARTICLE'),
-    }
 
-    if request.POST:
+# Представление страницы Профиля Пользователя
+class UserProfileView(View):
+
+
+    def post(self, *args, **kwargs) -> HttpResponse:
+        pass
+
+
+    def get(self, request:HttpRequest, *args, **kwargs) -> HttpResponse:
+        if request.user.is_anonymous:
+            return redirect('mainPage')
+
+        # Выбор раздела навигации
+        pageData = {
+            'navigationSelected': 'Profile',
+        }
+
+        return render(request, 'profile.html', context=pageData)
+
+
+# Представление страницы с информацией о Статьях
+class ArticleAboutView(View):
+
+
+    def post(self, *args, **kwargs) -> HttpResponse:
+        pass
+
+
+    def get(self, request:HttpRequest, *args, **kwargs) -> HttpResponse:
+        lastArticles = Article.published.all().order_by('-datetimeCreate')[:4]
+
+        # Проверка на существование изображения Статьи
+        for article in lastArticles:
+            if not path.exists(str(article.image)):
+                article.image = ''
+
+        pageData = {
+            'navigationSelected': 'Articles',
+            'lastArticles': lastArticles,
+            'lastArticle': lastArticles[0] if len(lastArticles) > 0 else None,
+        }
+
+        return render(request, 'articles/articles.html', context=pageData)
+
+
+# Представление страницы с карточками всех Статей
+class ArticleListView(View):
+
+
+    def post(self, *args, **kwargs) -> HttpResponse:
+        pass
+
+
+    def get(self, request:HttpRequest, *args, **kwargs) -> HttpResponse:
+        pageData = {
+            'allArticles': Article.published.all().order_by('-datetimeCreate'),
+        }
+
+        return render(request, 'articles/all_articles.html', context=pageData)
+
+
+# Представление страницы Статей
+class ArticlePageView(View):
+
+
+    def get(self, request:HttpRequest, articleSlug:str, *args, **kwargs) -> HttpResponse:
+        articleData = Article.published.filter(slug=articleSlug).first()
+
+        # Проверка на существование страницы
+        if articleData is None:
+            raise Http404()
+
+        pageData = {
+            'articleData': articleData,
+            'writeCommentForm': WriteCommentForm(),
+            'comments': Comment.getAllByTypeAndSlug(slug=articleSlug, postType='ARTICLE'),
+        }
+
+        return render(request, 'articles/article_page.html', context=pageData)
+
+
+    def post(self, request:HttpRequest, articleSlug:str, *args, **kwargs) -> HttpResponse:
+        articleData = Article.published.filter(slug=articleSlug).first()
         commentForm = WriteCommentForm(request.POST)
 
-        if user and user.is_authenticated:
-            if commentForm.is_valid():
-                newComment = commentForm.save(commit=False)
-                newComment.contentSlug = articleSlug
-                newComment.contentType = 'ARTICLE'
-                newComment.author = user
-                newComment.text = commentForm.cleaned_data['content']
-                newComment.save()
+        pageData = {
+            'articleData': articleData,
+            'writeCommentForm': WriteCommentForm(),
+        }
 
-                pageData['comments'] = Comment.getAllByTypeAndSlug(slug=articleSlug, postType='ARTICLE')
-
-                return redirect(reverse('articlePage', kwargs={'articleSlug': articleSlug}))
-            else:
-                pageData['writeCommentForm'] = commentForm
-        else:
+        # Пользователь не авторизован
+        if request.user.is_anonymous:
             commentForm.add_error(field=None, error='Пользователь не авторизован!')
             pageData['writeCommentForm'] = commentForm
 
-    return render(request, 'articles/article_page.html', context=pageData)
+            return render(request, 'articles/article_page.html', context=pageData)
+
+        # Форма не прошла валидацию
+        if not commentForm.is_valid():
+            pageData['writeCommentForm'] = commentForm
+
+            return render(request, 'articles/article_page.html', context=pageData)
+
+        # Сохраняем комментарий
+        newComment = commentForm.save(commit=False)
+        newComment.contentSlug = articleSlug
+        newComment.contentType = 'ARTICLE'
+        newComment.author = request.user
+        newComment.text = commentForm.cleaned_data['content']
+        newComment.save()
+
+        pageData['comments'] = Comment.getAllByTypeAndSlug(slug=articleSlug, postType='ARTICLE')
+
+        return redirect(reverse('articlePage', kwargs={'articleSlug': articleSlug}))
 
 
-# Страница описания проектов
-def projectsPreviewPage(request: HttpRequest) -> HttpResponse:
-    lastProjects = Project.published.all().order_by('-datetimeCreate')[:4]
-
-    # Проверка на существование изображения Статьи
-    for project in lastProjects:
-        if not path.exists(str(project.image)):
-            project.image = ''
-
-    pageData = {
-        'navigationSelected': 'Projects',
-        'lastProjects': lastProjects,
-        'lastProject': lastProjects[0] if len(lastProjects) > 0 else None,
-    }
-
-    return render(request, 'projects/projects.html', context=pageData)
+# Представление страницы с информацией о Проектах
+class ProjectAboutView(View):
 
 
-# Страница со списком всех статей
-def allProjectsPreviewPage(request: HttpRequest) -> HttpResponse:
-    allProjects = Project.published.all().order_by('-datetimeCreate')
-
-    pageData = {
-        'allProjects': allProjects,
-    }
-
-    return render(request, 'projects/all_projects.html', context=pageData)
+    def post(self, *args, **kwargs) -> HttpResponse:
+        pass
 
 
-# Страница статьи
-def projectPage(request: HttpRequest, projectSlug: int) -> HttpResponse:
-    user = CustomUser.objects.all().filter(id=request.user.id).first()
-    projectData = Project.published.filter(slug=projectSlug).first()
+    def get(self, request:HttpRequest, *args, **kwargs) -> HttpResponse:
+        lastProjects = Project.published.all().order_by('-datetimeCreate')[:4]
 
-    # Проверка на существование
-    if projectData is None:
-        raise Http404()
+        pageData = {
+            'navigationSelected': 'Projects',
+            'lastProjects': lastProjects,
+            'lastProject': lastProjects[0] if len(lastProjects) > 0 else None,
+        }
 
-    pageData = {
-        'projectData': projectData,
-        'writeCommentForm': WriteCommentForm(),
-        'comments': Comment.getAllByTypeAndSlug(slug=projectSlug, postType='PROJECT'),
-    }
+        return render(request, 'projects/projects.html', context=pageData)
 
-    if request.POST:
+
+# Представление страницы с карточками всех Проектов
+class ProjectListView(View):
+
+
+    def post(self, *args, **kwargs) -> HttpResponse:
+        pass
+
+
+    def get(self, request:HttpRequest, *args, **kwargs) -> HttpResponse:
+        pageData = {
+            'allProjects': Project.published.all().order_by('-datetimeCreate'),
+        }
+
+        return render(request, 'projects/all_projects.html', context=pageData)
+
+
+# Представление страницы Проектов
+class ProjectPage(View):
+
+
+    def get(self, request:HttpRequest, projectSlug:str, *args, **kwargs) -> HttpResponse:
+        projectData = Project.published.filter(slug=projectSlug).first()
+
+        # Проверка на существование страницы
+        if projectData is None:
+            raise Http404()
+
+        pageData = {
+            'projectData': projectData,
+            'writeCommentForm': WriteCommentForm(),
+            'comments': Comment.getAllByTypeAndSlug(slug=projectSlug, postType='PROJECT'),
+        }
+
+        return render(request, 'projects/project_page.html', context=pageData)
+
+
+    def post(self, request:HttpRequest, projectSlug:str, *args, **kwargs) -> HttpResponse:
+        projectData = Project.published.filter(slug=projectSlug).first()
         commentForm = WriteCommentForm(request.POST)
 
-        if user and user.is_authenticated:
-            if commentForm.is_valid():
-                newComment = commentForm.save(commit=False)
-                newComment.contentSlug = projectSlug
-                newComment.contentType = 'PROJECT'
-                newComment.author = user
-                newComment.text = commentForm.cleaned_data['content']
-                newComment.save()
+        pageData = {
+            'projectData': projectData,
+            'writeCommentForm': WriteCommentForm(),
+        }
 
-                pageData['comments'] = Comment.getAllByTypeAndSlug(slug=projectSlug, postType='PROJECT')
-
-                return redirect(reverse('projectPage', kwargs={'projectSlug': projectSlug}))
-            else:
-                pageData['writeCommentForm'] = commentForm
-        else:
+        # Пользователь не имеет профиля или не авторизован
+        if request.user.is_anonymous:
             commentForm.add_error(field=None, error='Пользователь не авторизован!')
             pageData['writeCommentForm'] = commentForm
 
-    return render(request, 'projects/project_page.html', context=pageData)
+            return render(request, 'projects/project_page.html', context=pageData)
+
+        # Форма не прошла валидацию
+        if not commentForm.is_valid():
+            pageData['writeCommentForm'] = commentForm
+
+            return render(request, 'projects/project_page.html', context=pageData)
+
+        # Сохраняем комментарий
+        newComment = commentForm.save(commit=False)
+        newComment.contentSlug = projectSlug
+        newComment.contentType = 'PROJECT'
+        newComment.author = request.user
+        newComment.text = commentForm.cleaned_data['content']
+        newComment.save()
+
+        pageData['comments'] = Comment.getAllByTypeAndSlug(slug=projectSlug, postType='PROJECT')
+
+        return redirect(reverse('projectPage', kwargs={'projectSlug': projectSlug}))
 
 
-# Страница для авторизации Пользователя
-def loginUser(request: HttpRequest) -> HttpResponse:
-    pageData = {
-        'navigationSelected': 'Authorization',
-    }
+# Представление авторизации Пользователя
+class LoginUserView(View):
 
-    if request.method == 'POST':
+
+    def post(self, request:HttpRequest, *args, **kwargs) -> HttpResponse:
+        pageData = {
+            'navigationSelected': 'Authorization',
+        }
+
         loginForm = UserLoginForm(request.POST)
 
-        if loginForm.is_valid():
-            email = request.POST.get('email')
-            password = request.POST.get('password')
+        # Проверяем валидность формы
+        if not loginForm.is_valid():
+            pageData['loginForm'] = loginForm
 
-            user = EmailAuthBackend().authenticate(request, email=email, password=password)
+            return render(request, 'authentication/authorization.html', context=pageData)
 
-            if user is not None:
-                login(request, user=user)
-                return redirect('mainPage')
+        # Получаем данные
+        email = loginForm.cleaned_data['email']
+        password = loginForm.cleaned_data['password']
 
-        pageData['loginForm'] = loginForm
+        user = EmailAuthBackend().authenticate(request, email=email, password=password)
+
+        # Аутентификация не прошла
+        if not user or not user.is_authenticated:
+            pageData['loginForm'] = loginForm
+
+            return render(request, 'authentication/authorization.html', context=pageData)
+
+        # Авторизуем Пользователя
+        login(request, user=user)
+
+        return redirect('mainPage')
+
+
+    def get(self, request:HttpRequest, *args, **kwargs) -> HttpResponse:
+        if request.user.is_authenticated:
+            return redirect('mainPage')
+
+        pageData = {
+            'navigationSelected': 'Authorization',
+            'loginForm': UserLoginForm(),
+        }
 
         return render(request, 'authentication/authorization.html', context=pageData)
-    else:
-        pageData['loginForm'] = UserLoginForm()
-
-    return render(request, 'authentication/authorization.html', context=pageData)
 
 
-# Обработка выхода Пользователя из сессии
-def logoutUser(request: HttpRequest) -> HttpResponse:
-    isUserAuthenticated = request.user.is_authenticated
-
-    if isUserAuthenticated:
-        logout(request)
-
-    return redirect('loginUser')
+# Представление страницы выхода из профиля Пользователя
+class LogoutUserView(View):
 
 
-# Страница для регистрации Пользователя
-def registrationUser(request: HttpRequest) -> HttpResponse:
-    if request.method == 'POST':
+    def post(self, *args, **kwargs) -> HttpResponse:
+        pass
+
+
+    def get(self, request:HttpRequest, *args, **kwargs) -> HttpResponse:
+        if request.user.is_authenticated:
+            logout(request)
+
+        return redirect('loginUser')
+
+
+# Представление регистрации Пользователя
+class RegistrationUserView(View):
+
+
+    def post(self, request:HttpRequest, *args, **kwargs) -> HttpResponse:
         registrationForm = UserRegistrationForm(request.POST)
 
-        if registrationForm.is_valid():
-            # Создаём объект Пользователя без сохранения в БД
-            newUser = registrationForm.save(commit=False)
-            newUser.set_password(registrationForm.cleaned_data['password'])
-            newUser.save()
-
-            return redirect('loginUser')
-    else:
-        registrationForm = UserRegistrationForm()
-
-    return render(
-        request,
-        'authentication/registration.html',
-        context={
-            'registrationForm': registrationForm
+        pageData = {
+            'registrationForm': registrationForm,
         }
-    )
+
+        # Проверяем валидность формы
+        if not registrationForm.is_valid():
+            return render(request, 'authentication/registration.html', context=pageData)
+
+        # Создаём объект Пользователя без сохранения в БД
+        newUser = registrationForm.save(commit=False)
+        newUser.set_password(registrationForm.cleaned_data['password'])
+        newUser.save()
+
+        return redirect('loginUser')
+
+
+    def get(self, request:HttpRequest, *args, **kwargs) -> HttpResponse:
+        if request.user.is_authenticated:
+            return redirect('mainPage')
+
+        return render(
+            request,
+            'authentication/registration.html',
+            context={
+                'registrationForm': UserRegistrationForm()
+            }
+        )
 
 
 # Страница для восстановления пароля Пользователя - Ввод почты
@@ -275,62 +377,101 @@ def passwordResetEnterNewPassword(request: HttpRequest) -> HttpResponse:
     return render(request, 'authentication/recovery_password/enter_new_password.html')
 
 
-# Страница Пользовательского соглашения
-def userAgreement(request: HttpRequest) -> HttpResponse:
-    return render(request, 'agreements/user_agreement.html')
+# Представление страницы Пользовательского соглашения
+class UserAgreementView(View):
 
 
-# Страница Политики конфиденциальности
-def privacy(request: HttpRequest) -> HttpResponse:
-    return render(request, 'agreements/privacy.html')
+    def post(self, *args, **kwargs) -> HttpResponse:
+        pass
 
 
-# Страница с ошибкой 400
-def badRequest(request: HttpRequest, exception=None) -> HttpResponse:
-    user = CustomUser.objects.all().filter(id=request.user.id).first()
-
-    if user is None or not user.is_superuser:
-        return redirect('mainPage')
-
-    return render(request, 'errors/400.html', status=400)
+    def get(self, request:HttpRequest, *args, **kwargs) -> HttpResponse:
+        return render(request, 'agreements/user_agreement.html')
 
 
-# Страница с ошибкой 403
-def forbidden(request: HttpRequest, exception=None) -> HttpResponse:
-    user = CustomUser.objects.all().filter(id=request.user.id).first()
-
-    if user is None or not user.is_superuser:
-        return redirect('mainPage')
-
-    return render(request, 'errors/403.html', status=403)
+# Представление страницы Политики конфиденциальности
+class PrivacyView(View):
 
 
-# Страница с ошибкой 404
-def pageNotFound(request: HttpRequest, exception=None) -> HttpResponse:
-    user = CustomUser.objects.all().filter(id=request.user.id).first()
-
-    if user is None or not user.is_superuser:
-        return redirect('mainPage')
-
-    return render(request, 'errors/404.html', status=404)
+    def post(self, *args, **kwargs) -> HttpResponse:
+        pass
 
 
-# Страница с ошибкой 500
-def internalServerError(request: HttpRequest, exception=None) -> HttpResponse:
-    user = CustomUser.objects.all().filter(id=request.user.id).first()
-
-    if user is None or not user.is_superuser:
-        return redirect('mainPage')
-
-    return render(request, 'errors/500.html', status=500)
+    def get(self, request:HttpRequest, *args, **kwargs) -> HttpResponse:
+        return render(request, 'agreements/privacy.html')
 
 
-# Страница с ошибкой 503
-def serviceUnavailable(request: HttpRequest, exception=None) -> HttpResponse:
-    user = CustomUser.objects.all().filter(id=request.user.id).first()
+# Представление страницы 400 ошибки - Bad request
+class BadRequestView(View):
 
-    if user is None or not user.is_superuser:
-        return redirect('mainPage')
 
-    return render(request, 'errors/503.html', status=503)
+    def post(self, *args, **kwargs) -> HttpResponse:
+        pass
+
+
+    def get(self, request:HttpRequest, *args, **kwargs) -> HttpResponse:
+        if request.user.is_anonymous:
+            return redirect('mainPage')
+
+        return render(request, 'errors/400.html', status=400)
+
+
+# Представление страницы 403 ошибки - Forbidden
+class ForbiddenView(View):
+
+
+    def post(self, *args, **kwargs) -> HttpResponse:
+        pass
+
+
+    def get(self, request:HttpRequest, *args, **kwargs) -> HttpResponse:
+        if request.user.is_anonymous:
+            return redirect('mainPage')
+
+        return render(request, 'errors/403.html', status=403)
+
+
+# Представление страницы 404 ошибки - Page not found
+class PageNotFoundView(View):
+
+
+    def post(self, *args, **kwargs) -> HttpResponse:
+        pass
+
+
+    def get(self, request:HttpRequest, *args, **kwargs) -> HttpResponse:
+        if request.user.is_anonymous:
+            return redirect('mainPage')
+
+        return render(request, 'errors/404.html', status=404)
+
+
+# Представление страницы 500 ошибки - Internal server error
+class InternalServerErrorView(View):
+
+
+    def post(self, *args, **kwargs) -> HttpResponse:
+        pass
+
+
+    def get(self, request:HttpRequest, *args, **kwargs) -> HttpResponse:
+        if request.user.is_anonymous:
+            return redirect('mainPage')
+
+        return render(request, 'errors/500.html', status=500)
+
+
+# Представление страницы 503 ошибки - Service is unavailable
+class ServiceUnavailableView(View):
+
+
+    def post(self, *args, **kwargs) -> HttpResponse:
+        pass
+
+
+    def get(self, request:HttpRequest, *args, **kwargs) -> HttpResponse:
+        if request.user.is_anonymous:
+            return redirect('mainPage')
+
+        return render(request, 'errors/503.html', status=503)
 

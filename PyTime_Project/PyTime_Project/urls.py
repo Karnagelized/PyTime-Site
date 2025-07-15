@@ -18,8 +18,8 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path, include
 from core.views import (
-    badRequest, forbidden,
-    pageNotFound, internalServerError
+    BadRequestView, ForbiddenView, PageNotFoundView,
+    InternalServerErrorView, ServiceUnavailableView
 )
 from django.conf.urls.static import static
 from django.conf import settings
@@ -35,7 +35,8 @@ if settings.DEBUG:
     urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 
 
-handler400 = badRequest
-handler403 = forbidden
-handler404 = pageNotFound
-handler500 = internalServerError
+handler400 = BadRequestView.as_view()
+handler403 = ForbiddenView.as_view()
+handler404 = PageNotFoundView.as_view()
+handler500 = InternalServerErrorView.as_view()
+handler503 = ServiceUnavailableView.as_view()

@@ -5,7 +5,6 @@ from django.contrib.auth.forms import (
     UserCreationForm, UserChangeForm, AdminUserCreationForm
 )
 from django.core.exceptions import ValidationError
-from django.forms import TextInput
 from core.models import CustomUser, Comment
 
 
