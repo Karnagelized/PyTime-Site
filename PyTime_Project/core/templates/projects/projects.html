@@ -54,7 +54,7 @@
                 {% if lastProject.image %}
                     <img src="{{ lastProject.image.url }}" class="container_image">
                 {% else %}
-                    <img src="{% static 'img\errors\imageNotFound.png' %}" class="container_image">
+                    <img src="{% static 'core/img/errors/imageNotFound.png' %}" class="container_image">
                 {% endif %}
     		</div>
             
@@ -80,7 +80,7 @@
                     {% if lastProject.image %}
                         <img src="{{ lastProject.image.url }}" class="container_image">
                     {% else %}
-                        <img src="{% static 'img\errors\imageNotFound.png' %}" class="container_image">
+                        <img src="{% static 'core/img/errors/imageNotFound.png' %}" class="container_image">
                     {% endif %}
                 </div>
                 
@@ -90,7 +90,7 @@
                     </div>
                 {% else %}
                     <div class="block_image_tablet mb-0 d-flex justify-content-center">
-                        <img class="container_image_tablet" src="{% static 'img\errors\imageNotFound.png' %}">
+                        <img class="container_image_tablet" src="{% static 'core/img/errors/imageNotFound.png' %}">
                     </div>
                 {% endif %}
 

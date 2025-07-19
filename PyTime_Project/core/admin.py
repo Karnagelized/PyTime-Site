@@ -83,7 +83,7 @@ class HardSkillsCategoryAdmin(admin.ModelAdmin):
     list_display_links = ('name', )
     filter_horizontal = ('skills', )
     list_editable = ('isVisible', 'position', )
-    ordering = ('position', 'name', )
+    ordering = ('position', )
 
 
 @admin.register(Comment)

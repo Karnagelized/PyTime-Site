@@ -32,6 +32,7 @@ urlpatterns = [
 
 
 if settings.DEBUG:
+    urlpatterns += static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
     urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 
 
@@ -40,3 +41,4 @@ handler403 = ForbiddenView.as_view()
 handler404 = PageNotFoundView.as_view()
 handler500 = InternalServerErrorView.as_view()
 handler503 = ServiceUnavailableView.as_view()
+
