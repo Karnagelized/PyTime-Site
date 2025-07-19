@@ -5,8 +5,8 @@ from typing import Union
 from django.urls import reverse
 import django.forms
 from django.contrib.auth import authenticate, login, logout
-from django.http import HttpRequest, Http404
-from django.shortcuts import render, HttpResponse, redirect
+from django.http import HttpRequest, HttpResponseNotAllowed
+from django.shortcuts import render, HttpResponse, redirect, get_object_or_404
 from core.models import Article, Project, HardSkillsCategory, CustomUser, Comment
 from core.forms import UserLoginForm, UserRegistrationForm, WriteCommentForm
 from core.backends import EmailAuthBackend
@@ -15,10 +15,9 @@ from django.views import View
 
 # Представление Главной страницы
 class MainView(View):
-
-
-    def post(self, *args, **kwargs) -> HttpResponse:
-        pass
+    def post(self, *args, **kwargs) -> HttpResponseNotAllowed:
+        """Заглушка. POST запроса нет на Главную страницу"""
+        return HttpResponseNotAllowed(['GET'])
 
 
     def get(self, request:HttpRequest, *args, **kwargs) -> HttpResponse:
@@ -32,10 +31,8 @@ class MainView(View):
 
 # Представление страницы с Резюме
 class ResumeView(View):
-
-
-    def post(self, *args, **kwargs) -> HttpResponse:
-        pass
+    def post(self, *args, **kwargs) -> HttpResponseNotAllowed:
+        return HttpResponseNotAllowed(['GET'])
 
 
     def get(self, request:HttpRequest, *args, **kwargs) -> HttpResponse:
@@ -50,10 +47,8 @@ class ResumeView(View):
 
 # Представление страницы Профиля Пользователя
 class UserProfileView(View):
-
-
-    def post(self, *args, **kwargs) -> HttpResponse:
-        pass
+    def post(self, *args, **kwargs) -> HttpResponseNotAllowed:
+        return HttpResponseNotAllowed(['GET'])
 
 
     def get(self, request:HttpRequest, *args, **kwargs) -> HttpResponse:
@@ -70,10 +65,8 @@ class UserProfileView(View):
 
 # Представление страницы с информацией о Статьях
 class ArticleAboutView(View):
-
-
-    def post(self, *args, **kwargs) -> HttpResponse:
-        pass
+    def post(self, *args, **kwargs) -> HttpResponseNotAllowed:
+        return HttpResponseNotAllowed(['GET'])
 
 
     def get(self, request:HttpRequest, *args, **kwargs) -> HttpResponse:
@@ -95,10 +88,8 @@ class ArticleAboutView(View):
 
 # Представление страницы с карточками всех Статей
 class ArticleListView(View):
-
-
-    def post(self, *args, **kwargs) -> HttpResponse:
-        pass
+    def post(self, *args, **kwargs) -> HttpResponseNotAllowed:
+        return HttpResponseNotAllowed(['GET'])
 
 
     def get(self, request:HttpRequest, *args, **kwargs) -> HttpResponse:
@@ -111,26 +102,8 @@ class ArticleListView(View):
 
 # Представление страницы Статей
 class ArticlePageView(View):
-
-
-    def get(self, request:HttpRequest, articleSlug:str, *args, **kwargs) -> HttpResponse:
-        articleData = Article.published.filter(slug=articleSlug).first()
-
-        # Проверка на существование страницы
-        if articleData is None:
-            raise Http404()
-
-        pageData = {
-            'articleData': articleData,
-            'writeCommentForm': WriteCommentForm(),
-            'comments': Comment.getAllByTypeAndSlug(slug=articleSlug, postType='ARTICLE'),
-        }
-
-        return render(request, 'articles/article_page.html', context=pageData)
-
-
     def post(self, request:HttpRequest, articleSlug:str, *args, **kwargs) -> HttpResponse:
-        articleData = Article.published.filter(slug=articleSlug).first()
+        articleData = get_object_or_404(Article, slug=articleSlug)
         commentForm = WriteCommentForm(request.POST)
 
         pageData = {
@@ -141,12 +114,6 @@ class ArticlePageView(View):
         # Пользователь не авторизован
         if request.user.is_anonymous:
             commentForm.add_error(field=None, error='Пользователь не авторизован!')
-            pageData['writeCommentForm'] = commentForm
-
-            return render(request, 'articles/article_page.html', context=pageData)
-
-        # Форма не прошла валидацию
-        if not commentForm.is_valid():
             pageData['writeCommentForm'] = commentForm
 
             return render(request, 'articles/article_page.html', context=pageData)
@@ -164,12 +131,22 @@ class ArticlePageView(View):
         return redirect(reverse('articlePage', kwargs={'articleSlug': articleSlug}))
 
 
+    def get(self, request:HttpRequest, articleSlug:str, *args, **kwargs) -> HttpResponse:
+        articleData = get_object_or_404(Article.published, slug=articleSlug)
+
+        pageData = {
+            'articleData': articleData,
+            'writeCommentForm': WriteCommentForm(),
+            'comments': Comment.getAllByTypeAndSlug(slug=articleSlug, postType='ARTICLE'),
+        }
+
+        return render(request, 'articles/article_page.html', context=pageData)
+
+
 # Представление страницы с информацией о Проектах
 class ProjectAboutView(View):
-
-
-    def post(self, *args, **kwargs) -> HttpResponse:
-        pass
+    def post(self, *args, **kwargs) -> HttpResponseNotAllowed:
+        return HttpResponseNotAllowed(['GET'])
 
 
     def get(self, request:HttpRequest, *args, **kwargs) -> HttpResponse:
@@ -186,10 +163,8 @@ class ProjectAboutView(View):
 
 # Представление страницы с карточками всех Проектов
 class ProjectListView(View):
-
-
-    def post(self, *args, **kwargs) -> HttpResponse:
-        pass
+    def post(self, *args, **kwargs) -> HttpResponseNotAllowed:
+        return HttpResponseNotAllowed(['GET'])
 
 
     def get(self, request:HttpRequest, *args, **kwargs) -> HttpResponse:
@@ -201,25 +176,7 @@ class ProjectListView(View):
 
 
 # Представление страницы Проектов
-class ProjectPage(View):
-
-
-    def get(self, request:HttpRequest, projectSlug:str, *args, **kwargs) -> HttpResponse:
-        projectData = Project.published.filter(slug=projectSlug).first()
-
-        # Проверка на существование страницы
-        if projectData is None:
-            raise Http404()
-
-        pageData = {
-            'projectData': projectData,
-            'writeCommentForm': WriteCommentForm(),
-            'comments': Comment.getAllByTypeAndSlug(slug=projectSlug, postType='PROJECT'),
-        }
-
-        return render(request, 'projects/project_page.html', context=pageData)
-
-
+class ProjectPageView(View):
     def post(self, request:HttpRequest, projectSlug:str, *args, **kwargs) -> HttpResponse:
         projectData = Project.published.filter(slug=projectSlug).first()
         commentForm = WriteCommentForm(request.POST)
@@ -255,10 +212,55 @@ class ProjectPage(View):
         return redirect(reverse('projectPage', kwargs={'projectSlug': projectSlug}))
 
 
+    def get(self, request:HttpRequest, projectSlug:str, *args, **kwargs) -> HttpResponse:
+        projectData = get_object_or_404(Project.published, slug=projectSlug)
+
+        pageData = {
+            'projectData': projectData,
+            'writeCommentForm': WriteCommentForm(),
+            'comments': Comment.getAllByTypeAndSlug(slug=projectSlug, postType='PROJECT'),
+        }
+
+        return render(request, 'projects/project_page.html', context=pageData)
+
+
+# Представление регистрации Пользователя
+class RegistrationUserView(View):
+    def post(self, request:HttpRequest, *args, **kwargs) -> HttpResponse:
+        registrationForm = UserRegistrationForm(request.POST)
+
+        pageData = {
+            'registrationForm': registrationForm,
+        }
+
+        # Проверяем валидность формы
+        if not registrationForm.is_valid():
+            return render(request, 'authentication/registration.html', context=pageData)
+
+        # Создаём объект Пользователя без сохранения в БД
+        newUser = registrationForm.save(commit=False)
+        newUser.set_password(registrationForm.cleaned_data['password'])
+        newUser.save()
+
+        return redirect('loginUser')
+
+
+    def get(self, request:HttpRequest, *args, **kwargs) -> HttpResponse:
+        if request.user.is_authenticated:
+            return redirect('mainPage')
+
+        return render(
+            request,
+            'authentication/registration.html',
+            context={
+                'registrationForm': UserRegistrationForm()
+            }
+        )
+
+
+# TODO НАПИСАТЬ ТЕСТЫ
 # Представление авторизации Пользователя
 class LoginUserView(View):
-
-
     def post(self, request:HttpRequest, *args, **kwargs) -> HttpResponse:
         pageData = {
             'navigationSelected': 'Authorization',
@@ -304,10 +306,8 @@ class LoginUserView(View):
 
 # Представление страницы выхода из профиля Пользователя
 class LogoutUserView(View):
-
-
-    def post(self, *args, **kwargs) -> HttpResponse:
-        pass
+    def post(self, *args, **kwargs) -> HttpResponseNotAllowed:
+        return HttpResponseNotAllowed(['GET'])
 
 
     def get(self, request:HttpRequest, *args, **kwargs) -> HttpResponse:
@@ -315,42 +315,6 @@ class LogoutUserView(View):
             logout(request)
 
         return redirect('loginUser')
-
-
-# Представление регистрации Пользователя
-class RegistrationUserView(View):
-
-
-    def post(self, request:HttpRequest, *args, **kwargs) -> HttpResponse:
-        registrationForm = UserRegistrationForm(request.POST)
-
-        pageData = {
-            'registrationForm': registrationForm,
-        }
-
-        # Проверяем валидность формы
-        if not registrationForm.is_valid():
-            return render(request, 'authentication/registration.html', context=pageData)
-
-        # Создаём объект Пользователя без сохранения в БД
-        newUser = registrationForm.save(commit=False)
-        newUser.set_password(registrationForm.cleaned_data['password'])
-        newUser.save()
-
-        return redirect('loginUser')
-
-
-    def get(self, request:HttpRequest, *args, **kwargs) -> HttpResponse:
-        if request.user.is_authenticated:
-            return redirect('mainPage')
-
-        return render(
-            request,
-            'authentication/registration.html',
-            context={
-                'registrationForm': UserRegistrationForm()
-            }
-        )
 
 
 # Страница для восстановления пароля Пользователя - Ввод почты
@@ -379,10 +343,8 @@ def passwordResetEnterNewPassword(request: HttpRequest) -> HttpResponse:
 
 # Представление страницы Пользовательского соглашения
 class UserAgreementView(View):
-
-
-    def post(self, *args, **kwargs) -> HttpResponse:
-        pass
+    def post(self, *args, **kwargs) -> HttpResponseNotAllowed:
+        return HttpResponseNotAllowed(['GET'])
 
 
     def get(self, request:HttpRequest, *args, **kwargs) -> HttpResponse:
@@ -391,10 +353,8 @@ class UserAgreementView(View):
 
 # Представление страницы Политики конфиденциальности
 class PrivacyView(View):
-
-
-    def post(self, *args, **kwargs) -> HttpResponse:
-        pass
+    def post(self, *args, **kwargs) -> HttpResponseNotAllowed:
+        return HttpResponseNotAllowed(['GET'])
 
 
     def get(self, request:HttpRequest, *args, **kwargs) -> HttpResponse:
@@ -403,75 +363,51 @@ class PrivacyView(View):
 
 # Представление страницы 400 ошибки - Bad request
 class BadRequestView(View):
-
-
-    def post(self, *args, **kwargs) -> HttpResponse:
-        pass
+    def post(self, *args, **kwargs) -> HttpResponseNotAllowed:
+        return HttpResponseNotAllowed(['GET'])
 
 
     def get(self, request:HttpRequest, *args, **kwargs) -> HttpResponse:
-        if request.user.is_anonymous:
-            return redirect('mainPage')
-
         return render(request, 'errors/400.html', status=400)
 
 
 # Представление страницы 403 ошибки - Forbidden
 class ForbiddenView(View):
-
-
-    def post(self, *args, **kwargs) -> HttpResponse:
-        pass
+    def post(self, *args, **kwargs) -> HttpResponseNotAllowed:
+        return HttpResponseNotAllowed(['GET'])
 
 
     def get(self, request:HttpRequest, *args, **kwargs) -> HttpResponse:
-        if request.user.is_anonymous:
-            return redirect('mainPage')
-
         return render(request, 'errors/403.html', status=403)
 
 
 # Представление страницы 404 ошибки - Page not found
 class PageNotFoundView(View):
-
-
-    def post(self, *args, **kwargs) -> HttpResponse:
-        pass
+    def post(self, *args, **kwargs) -> HttpResponseNotAllowed:
+        return HttpResponseNotAllowed(['GET'])
 
 
     def get(self, request:HttpRequest, *args, **kwargs) -> HttpResponse:
-        if request.user.is_anonymous:
-            return redirect('mainPage')
-
         return render(request, 'errors/404.html', status=404)
 
 
 # Представление страницы 500 ошибки - Internal server error
 class InternalServerErrorView(View):
-
-
-    def post(self, *args, **kwargs) -> HttpResponse:
-        pass
+    def post(self, *args, **kwargs) -> HttpResponseNotAllowed:
+        return HttpResponseNotAllowed(['GET'])
 
 
     def get(self, request:HttpRequest, *args, **kwargs) -> HttpResponse:
-        if request.user.is_anonymous:
-            return redirect('mainPage')
-
         return render(request, 'errors/500.html', status=500)
 
 
 # Представление страницы 503 ошибки - Service is unavailable
 class ServiceUnavailableView(View):
-
-
-    def post(self, *args, **kwargs) -> HttpResponse:
-        pass
+    def post(self, *args, **kwargs) -> HttpResponseNotAllowed:
+        return HttpResponseNotAllowed(['GET'])
 
 
     def get(self, request:HttpRequest, *args, **kwargs) -> HttpResponse:
-        if request.user.is_anonymous:
-            return redirect('mainPage')
-
         return render(request, 'errors/503.html', status=503)
+
 
