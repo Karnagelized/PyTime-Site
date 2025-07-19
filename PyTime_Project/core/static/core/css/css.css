@@ -9,7 +9,7 @@
 }
 
 * {
-    font-family: "Roboto Regular";
+    font-family: "Roboto Regular", sans-serif;
 }
 
 header,
@@ -37,12 +37,12 @@ a {
 }
 
 h1 {
-    font-family: "Roboto Bold";
+    font-family: "Roboto Bold", sans-serif;
     font-size: 56px;
 }
 
 h2 {
-    font-family: "Roboto Bold";
+    font-family: "Roboto Bold", sans-serif;
     font-size: 48px;
 }
 
@@ -72,18 +72,18 @@ p {
 .footer_agreements_item_text,
 .footer_agreements_item_link,
 .footer_site_email_link {
-    font-family: "Roboto SemiBold";
+    font-family: "Roboto SemiBold", sans-serif;
 }
 
 .article_card_title,
 .project_card_title,
 .project_card_view_link,
 .article_card_view_link {
-    font-family: "Roboto Bold";
+    font-family: "Roboto Bold", sans-serif;
 }
 
 .underline_title {
-    font-family: "Roboto SemiBold";
+    font-family: "Roboto SemiBold", sans-serif;
 }
 
 .one_word_description {
@@ -725,7 +725,6 @@ p {
             color: var(--form-error-color);
         } 
     }
-    
 
     .button_submit {
         width: 160px;
