@@ -11,6 +11,8 @@ https://docs.djangoproject.com/en/5.1/ref/settings/
 """
 
 from pathlib import Path
+
+from django.conf.global_settings import ALLOWED_HOSTS
 from dotenv import load_dotenv
 from os import getenv, path
 
@@ -25,12 +27,10 @@ LOAD_ENV = load_dotenv(path.join(BASE_DIR.parent, '.env'))
 SECRET_KEY = getenv('DJANGO_SECRET_KEY')
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = getenv('DEBUG')
 
 ALLOWED_HOSTS = [
-    '127.0.0.1',
-    'localhost',
-    'testserver',
+    ', '.join(getenv('ALLOWED_HOSTS').split())
 ]
 
 # Application definition

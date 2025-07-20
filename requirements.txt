@@ -1,6 +1,10 @@
-Django              >= 5.1.7
-django-extensions   >= 3.2.3
-python-dotenv       >= 1.1.0
-pillow              >= 11.1.0
-factory_boy         >= 3.3.3
-numpy               >= 2.3.1
+asgiref==3.8.1
+Django==5.1.7
+django-extensions==3.2.3
+factory_boy==3.3.3
+Faker==37.4.2
+numpy==2.3.1
+pillow==11.1.0
+python-dotenv==1.1.0
+sqlparse==0.5.3
+tzdata==2025.2
