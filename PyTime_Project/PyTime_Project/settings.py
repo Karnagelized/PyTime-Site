@@ -13,24 +13,27 @@ https://docs.djangoproject.com/en/5.1/ref/settings/
 from pathlib import Path
 
 from django.conf.global_settings import ALLOWED_HOSTS
-from dotenv import load_dotenv
-from os import getenv, path
+import environ
+from os import path
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
-LOAD_ENV = load_dotenv(path.join(BASE_DIR.parent, '.env'))
+
+# Load Env
+env = environ.Env()
+environ.Env.read_env(path.join(BASE_DIR.parent, '.env'))
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/5.1/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = getenv('DJANGO_SECRET_KEY')
+SECRET_KEY = env('SECRET_KEY')
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = getenv('DEBUG')
+DEBUG = env('DEBUG')
 
 ALLOWED_HOSTS = [
-    ', '.join(getenv('ALLOWED_HOSTS').split())
+    *env('ALLOWED_HOSTS').split()
 ]
 
 # Application definition
@@ -87,9 +90,13 @@ WSGI_APPLICATION = 'PyTime_Project.wsgi.application'
 # https://docs.djangoproject.com/en/5.1/ref/settings/#databases
 
 DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+    "default": {
+        "ENGINE": "django.db.backends.postgresql",
+        "NAME": env('DB_NAME'),
+        "HOST": env('HOST'),
+        "PORT": env('PORT'),
+        "USER": env('USER'),
+        "PASSWORD": env('PASSWORD'),
     }
 }
 
