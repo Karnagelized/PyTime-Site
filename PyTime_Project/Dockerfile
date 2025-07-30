@@ -11,4 +11,4 @@ ENV PYTHONUNBUFFERED=1
 
 CMD python manage.py migrate \
     && python manage.py collectstatic --noinput \
-    && gunicorn PyTime_Project.wsgi:application --bind 0.0.0.0:8000 --log-level info
+    && gunicorn PyTime_Project.wsgi:application --bind 0.0.0.0:8080
