@@ -13,7 +13,7 @@ services:
     volumes:
       - postgres_data:/var/lib/postgresql/data
 
-  pytime_core:
+  core:
     build:
       context: ./PyTime_Project
     container_name: core
@@ -47,7 +47,7 @@ services:
       - ./certbot/conf/:/etc/letsencrypt
       - static_volume:/static
     depends_on:
-      - pytime_core
+      - core
       - database
 
   certbot:
@@ -64,7 +64,7 @@ services:
       - ./certbot/conf/:/etc/letsencrypt
     depends_on:
       - database
-      - pytime_core
+      - core
       - nginx
 
 volumes:
