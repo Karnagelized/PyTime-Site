@@ -6,10 +6,10 @@ services:
       - .env
     environment:
       POSTGRES_DB: ${DB_NAME}
-      POSTGRES_USER: ${USER}
-      POSTGRES_PASSWORD: ${PASSWORD}
+      POSTGRES_USER: ${DB_USER}
+      POSTGRES_PASSWORD: ${DB_PASSWORD}
     ports:
-      - "5432:5432"
+      - "${DB_PORT}:5432"
     volumes:
       - postgres_data:/var/lib/postgresql/data
 
@@ -23,16 +23,13 @@ services:
       SECRET_KEY: ${SECRET_KEY}
       DEBUG: ${DEBUG}
       HOST: ${HOST}
-      PORT: ${PORT}
+      DB_PORT: ${DB_PORT}
       DB_NAME: ${DB_NAME}
-      USER: ${USER}
-      PASSWORD: ${PASSWORD}
+      DB_USER: ${DB_USER}
+      DB_PASSWORD: ${DB_PASSWORD}
       ALLOWED_HOSTS: ${ALLOWED_HOSTS}
-      DJANGO_SUPERUSER_USERNAME: ${DJANGO_SUPERUSER_USERNAME}
-      DJANGO_SUPERUSER_EMAIL: ${DJANGO_SUPERUSER_EMAIL}
-      DJANGO_SUPERUSER_PASSWORD: ${DJANGO_SUPERUSER_PASSWORD}
     ports:
-      - "8080:8080"
+      - 8080
     depends_on:
       - database
     volumes:

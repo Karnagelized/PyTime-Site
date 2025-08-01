@@ -11,4 +11,5 @@ ENV PYTHONUNBUFFERED=1
 
 CMD python manage.py migrate \
     && python manage.py collectstatic --noinput \
+    && python manage.py create_superuser \
     && gunicorn PyTime_Project.wsgi:application --bind 0.0.0.0:8080

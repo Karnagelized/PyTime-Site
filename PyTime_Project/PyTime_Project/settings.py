@@ -30,11 +30,17 @@ environ.Env.read_env(path.join(BASE_DIR.parent, '.env'))
 SECRET_KEY = env('SECRET_KEY')
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = env('DEBUG')
+DEBUG = int(env('DEBUG'))
 
 ALLOWED_HOSTS = [
     *env('ALLOWED_HOSTS').split()
 ]
+
+if DEBUG:
+    ALLOWED_HOSTS += [
+        '127.0.0.1',
+        'localhost'
+    ]
 
 # Application definition
 INSTALLED_APPS = [
@@ -92,11 +98,11 @@ WSGI_APPLICATION = 'PyTime_Project.wsgi.application'
 DATABASES = {
     "default": {
         "ENGINE": "django.db.backends.postgresql",
-        "NAME": env('DB_NAME'),
         "HOST": env('HOST'),
-        "PORT": env('PORT'),
-        "USER": env('USER'),
-        "PASSWORD": env('PASSWORD'),
+        "PORT": env('DB_PORT'),
+        "NAME": env('DB_NAME'),
+        "USER": env('DB_USER'),
+        "PASSWORD": env('DB_PASSWORD'),
     }
 }
 
@@ -146,3 +152,14 @@ STATIC_URL = '/static/'
 # https://docs.djangoproject.com/en/5.1/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+
+# HTTPS
+CSRF_COOKIE_SECURE = True
+SESSION_COOKIE_SECURE = True
+CSRF_TRUSTED_ORIGINS = [
+    'https://pytime.ru',
+    'https://www.pytime.ru',
+]
+CSRF_COOKIE_DOMAIN = '.pytime.ru'
+SESSION_COOKIE_DOMAIN = '.pytime.ru'

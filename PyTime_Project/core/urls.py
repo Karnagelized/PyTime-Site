@@ -1,7 +1,7 @@
 
 from django.urls import path
 from core.views import (
-    MainView, ResumeView, UserProfileView,
+    MainView, ResumeView, UserProfileView, ContactView,
     ArticleAboutView, ArticleListView, ArticlePageView,
     ProjectAboutView, ProjectListView, ProjectPageView,
     LoginUserView, LogoutUserView, RegistrationUserView,
@@ -19,6 +19,7 @@ urlpatterns = [
     path('', MainView.as_view(), name='mainPage'),
     path('resume', ResumeView.as_view(), name='resumePage'),
     path('profile', UserProfileView.as_view(), name='profilePage'),
+    path('contact', ContactView.as_view(), name='contactPage'),
     # Статьи
     path('articles', ArticleAboutView.as_view(), name='articlesPage'),
     path('all-articles', ArticleListView.as_view(), name='allArticlesPage'),
