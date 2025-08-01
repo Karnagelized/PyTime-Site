@@ -70,16 +70,16 @@
                 </h2>
                 
                 <p class="container_text">
-                    Будучи студентом 3 курса технической специальности, я обладаю более чем 3-х летним опытом разработки учебных и личных проектов на Python. Начинал свою карьеру с PHP, однако в дальнейшем отдал предпочтение Python, который считаю мощным и универсальным инструментом для решения большинства задач. Непрерывно совершенствую свои навыки, активно изучая литературу, статьи и видеоматериалы. Убежден, что программирование – это процесс, требующий постоянного саморазвития.
+                    Будучи студентом 4 курса технической специальности, я обладаю более чем 3-х летним опытом разработки учебных и личных проектов на Python. Начинал свою карьеру с PHP, однако в дальнейшем отдал предпочтение Python, который считаю мощным и универсальным инструментом для решения большинства задач. Непрерывно совершенствую свои навыки, активно изучая литературу, статьи и видеоматериалы. Убежден, что программирование – это процесс, требующий постоянного саморазвития.
                 </p>
 
                 <!-- Buttons -->
                 <div class="block_duo_buttons d-flex justify-content-between">
                     {% url "projectsPage" as projectsUrl %}
-                    {% url "mainPage" as mainUrl %}
+                    {% url "contactPage" as contactUrl %}
 
                     {% include "buttons/button_white_background.html" with name="Узнать больше" url_name=projectsUrl %}
-                    {% include "buttons/button_black_background.html" with name="Связаться" id_name="footer_id" %}
+                    {% include "buttons/button_black_background.html" with name="Связаться" url_name=contactUrl %}
                 </div>
             </div>
 
@@ -101,7 +101,7 @@
             <div class="container_bottom_side d-flex justify-content-between align-items-center">
                 <div class="container_left_side d-flex flex-column align-items-center">
                     <p class="container_text mb-0 text-center">
-                        Будучи студентом 3 курса технической специальности, я обладаю более чем 3-х летним опытом разработки учебных и личных проектов на Python. Начинал свою карьеру с PHP, однако в дальнейшем отдал предпочтение Python, который считаю мощным и универсальным инструментом для решения большинства задач. Непрерывно совершенствую свои навыки, активно изучая литературу, статьи и видеоматериалы. Убежден, что программирование – это процесс, требующий постоянного саморазвития.
+                        Будучи студентом 4 курса технической специальности, я обладаю более чем 3-х летним опытом разработки учебных и личных проектов на Python. Начинал свою карьеру с PHP, однако в дальнейшем отдал предпочтение Python, который считаю мощным и универсальным инструментом для решения большинства задач. Непрерывно совершенствую свои навыки, активно изучая литературу, статьи и видеоматериалы. Убежден, что программирование – это процесс, требующий постоянного саморазвития.
                     </p>
 
                     <div class="block_image_tablet d-flex justify-content-center">
@@ -116,10 +116,10 @@
                 <!-- Buttons -->
                 <div class="block_duo_buttons d-flex justify-content-between">
                     {% url "projectsPage" as projectsUrl %}
-                    {% url "mainPage" as mainUrl %}
+                    {% url "contactPage" as contactUrl %}
 
                     {% include "buttons/button_white_background.html" with name="Узнать больше" url_name=projectsUrl %}
-                    {% include "buttons/button_black_background.html" with name="Связаться" id_name="footer_id" %}
+                    {% include "buttons/button_black_background.html" with name="Связаться" url_name=contactUrl %}
                 </div> 
             </div>
         </div>
@@ -141,7 +141,7 @@
                 </p>
 
                 <!-- Skills -->
-                {% include 'include/hard_skills.html' with skillsData=hardSkills %}
+                {% include 'include/hard_skills.html'%}
             </div>
         </div>
 

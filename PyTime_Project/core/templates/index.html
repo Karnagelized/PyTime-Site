@@ -26,7 +26,7 @@
 				</div>
 				
 				<div class="main_greeting_contact d-flex justify-content-center">
-					<a href="{% url 'serviceUnavailable' %}" class="main_greeting_contact_link w-100 d-flex justify-content-center align-items-center">
+					<a href="{% url 'contactPage' %}" class="main_greeting_contact_link w-100 d-flex justify-content-center align-items-center">
 						Связаться
 					</a>
 				</div>
@@ -54,7 +54,7 @@
 				</div>
 				
 				<div class="main_greeting_contact d-flex justify-content-center">
-					<a href="{% url 'serviceUnavailable' %}" class="main_greeting_contact_link w-100 d-flex justify-content-center align-items-center">
+					<a href="{% url 'contactPage' %}" class="main_greeting_contact_link w-100 d-flex justify-content-center align-items-center">
 						Связаться
 					</a>
 				</div>
@@ -95,7 +95,7 @@
 
 			<div class="container_bottom_side d-flex justify-content-between align-items-center">
 				<div class="container_left_side">
-					{% include 'include/hard_skills.html' with skillsData=hardSkills %}
+					{% include 'include/hard_skills.html' %}
 				</div>
 
 				<img class="container_image" src="{% static 'core/img/main_page/skills.jpg' %}">

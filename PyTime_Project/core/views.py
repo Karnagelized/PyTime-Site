@@ -5,7 +5,7 @@ from typing import Union
 from django.urls import reverse
 import django.forms
 from django.contrib.auth import authenticate, login, logout
-from django.http import HttpRequest, HttpResponseNotAllowed
+from django.http import HttpRequest, HttpResponseNotAllowed, Http404
 from django.shortcuts import render, HttpResponse, redirect, get_object_or_404
 from core.models import Article, Project, HardSkillsCategory, CustomUser, Comment
 from core.forms import UserLoginForm, UserRegistrationForm, WriteCommentForm
@@ -22,7 +22,6 @@ class MainView(View):
 
     def get(self, request:HttpRequest, *args, **kwargs) -> HttpResponse:
         pageData = {
-            'user': request.user,
             'skillsCategoryData': HardSkillsCategory.visibleCategory.all(),
         }
 
@@ -61,6 +60,16 @@ class UserProfileView(View):
         }
 
         return render(request, 'profile.html', context=pageData)
+
+
+# Представление страницы Контактов
+class ContactView(View):
+    def post(self, *args, **kwargs) -> HttpResponseNotAllowed:
+        return HttpResponseNotAllowed(['GET'])
+
+
+    def get(self, request:HttpRequest, *args, **kwargs) -> HttpResponse:
+        raise Http404
 
 
 # Представление страницы с информацией о Статьях
@@ -258,7 +267,6 @@ class RegistrationUserView(View):
         )
 
 
-# TODO НАПИСАТЬ ТЕСТЫ
 # Представление авторизации Пользователя
 class LoginUserView(View):
     def post(self, request:HttpRequest, *args, **kwargs) -> HttpResponse:
