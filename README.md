@@ -10,9 +10,12 @@
 <p align="center" >
   <img src="https://img.shields.io/badge/python-3670A0?style=for-the-badge&logo=python&logoColor=ffdd54">
   <img src="https://img.shields.io/badge/django-%23092E20.svg?style=for-the-badge&logo=django&logoColor=white">
-  <img src="https://img.shields.io/badge/sqlite-%2307405e.svg?style=for-the-badge&logo=sqlite&logoColor=white">
+  <img src="https://img.shields.io/badge/postgres-%23316192.svg?style=for-the-badge&logo=postgresql&logoColor=white">
   <img src="https://img.shields.io/badge/docker-%230db7ed.svg?style=for-the-badge&logo=docker&logoColor=white">
   <img src="https://img.shields.io/badge/bootstrap-%238511FA.svg?style=for-the-badge&logo=bootstrap&logoColor=white">
+  <img src="https://img.shields.io/badge/html5-%23E34F26.svg?style=for-the-badge&logo=html5&logoColor=white">
+  <img src="https://img.shields.io/badge/css3-%231572B6.svg?style=for-the-badge&logo=css3&logoColor=white">
+  <img src="https://img.shields.io/badge/javascript-%23323330.svg?style=for-the-badge&logo=javascript&logoColor=%23F7DF1E">
   <img src="https://img.shields.io/badge/figma-%23F24E1E.svg?style=for-the-badge&logo=figma&logoColor=white">
 </p>
 
@@ -44,7 +47,7 @@
   <img src="./README/img/pages/Desktop.png">
 </p>
 <p align="center">
-  💻 Desktop version
+  💻 Десктопная версия
 </p>
 
 <br>
@@ -53,7 +56,7 @@
   <img src="./README/img/pages/Tablet.png">
 </p>
 <p align="center">
-  📋 Tablet version
+  📋 Планшетная версия
 </p>
 
 <br>
@@ -62,7 +65,7 @@
   <img src="./README/img/pages/Phone.png">  
 </p>
 <p align="center">
-  📱 Phone version
+  📱 Телефонная версия
 </p>
 
 ---
@@ -102,6 +105,8 @@
 - Главная страница: `pytime.ru/`
 - Статьи: `pytime.ru/articles/`
 - Проекты: `pytime.ru/projects/`
+- Контакты: `pytime.ru/contatc/` (В разработке)
+- Сервисы: `pytime.ru/services/` (В разработке)
 - Пользовательское соглашение: `pytime.ru/agreement/`
 - Политика конфиденциальности: `pytime.ru/privacy/`
 - Авторизация: `pytime.ru/login/`
@@ -115,10 +120,12 @@
   - Резюме
   - Описание проектов
   - Статьи
+  - Контакты (В разработке)
+  - Сервисы (В разработке)
 - Система аутентификации
   - Регистрация
   - Авторизации
-  - Восстановления пароля
+  - Восстановления пароля (В разработке)
 - Адаптивный дизайн для всех устройств
 - Админ-панель для управления контентом **(Для суперпользователя)**
 
@@ -128,21 +135,24 @@
 ### 🔨 Backend
 - Python 3.11+
 - Django 5.1.7+
-- SQLite
+- PostgreSQL (psycopg2)
 
 ### 🎨 Frontend
-- HTML5, CSS3, JavaScript
 - Bootstrap 5
+- HTML5, CSS3, JavaScript
 
 ### 💣 Инфраструктура
 - Docker (контейнеризация)
 - GitHub Actions (CI/CD)
 
 ### 📑 Основные библиотеки
-- django-debug-toolbar 5.2.0+
-- django-extensions    3.2.3+
-- pillow               11.1.0+
-- python-dotenv        1.1.0+
+- django-extensions 3.2.3+
+- factory_boy 3.3.3+
+- gunicorn 23.0.0+
+- pillow 11.1.0+
+- numpy 2.3.1+
+- psycopg2 2.9.10+
+- django-environ 0.12.0+
 
 ---
 
@@ -150,18 +160,20 @@
 
 ```
 PyTime Site
-├── README/                     # README проекта
-├── requirements.txt            # Зависимости проекта
-├── LICENSE                     # Лицензия
-└── PyTime_Project/             # Корневая папка проекта
-    ├── PyTime_Project/         # Основные приложения Django
-    ├── core/                   # Основное приложение PyTime
-    ├── servises_1/             # В разработке...
+├── README/               # README проекта
+├── requirements.txt      # Зависимости проекта
+├── LICENSE               # Лицензия
+├── conf/                 # Nginx конфиг
+├── docker-compose.yml    # Контеризация приложения
+└── PyTime_Project/       # Корневая папка проекта
+    ├── PyTime_Project/   # Основные приложения Django
+    ├── core/             # Основное приложение PyTime
+    ├── servises_1/       # В разработке...
     ├── ...
-    ├── servises_N/             # В разработке...
-    ├── templates/              # HTML шаблоны
-    ├── uploads/                # Загруженные изображения
-    └── manage.py               # Скрипт управления Django
+    ├── servises_N/       # В разработке...
+    ├── templates/        # HTML шаблоны
+    ├── uploads/          # Загруженные изображения
+    └── manage.py         # Скрипт управления Django
 ```
 
 ---
