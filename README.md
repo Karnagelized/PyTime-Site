@@ -105,7 +105,7 @@
 - Главная страница: `pytime.ru/`
 - Статьи: `pytime.ru/articles/`
 - Проекты: `pytime.ru/projects/`
-- Контакты: `pytime.ru/contatc/` (В разработке)
+- Контакты: `pytime.ru/contact/` (В разработке)
 - Сервисы: `pytime.ru/services/` (В разработке)
 - Пользовательское соглашение: `pytime.ru/agreement/`
 - Политика конфиденциальности: `pytime.ru/privacy/`

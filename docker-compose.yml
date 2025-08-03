@@ -1,17 +1,17 @@
 services:
-  database:
+  database_prod:
     image: postgres:16.9-alpine
-    container_name: database
+    container_name: database_prod
     env_file:
       - .env
     environment:
-      POSTGRES_DB: ${DB_NAME}
-      POSTGRES_USER: ${DB_USER}
-      POSTGRES_PASSWORD: ${DB_PASSWORD}
+      POSTGRES_DB: ${DB_NAME_PROD}
+      POSTGRES_USER: ${DB_USER_PROD}
+      POSTGRES_PASSWORD: ${DB_PASSWORD_PROD}
     ports:
-      - "${DB_PORT}:5432"
+      - "${DB_PORT_PROD}:5432"
     volumes:
-      - postgres_data:/var/lib/postgresql/data
+      - postgres_prod_data:/var/lib/postgresql/data
 
   core:
     build:
@@ -19,19 +19,10 @@ services:
     container_name: core
     env_file:
       - .env
-    environment:
-      SECRET_KEY: ${SECRET_KEY}
-      DEBUG: ${DEBUG}
-      HOST: ${HOST}
-      DB_PORT: ${DB_PORT}
-      DB_NAME: ${DB_NAME}
-      DB_USER: ${DB_USER}
-      DB_PASSWORD: ${DB_PASSWORD}
-      ALLOWED_HOSTS: ${ALLOWED_HOSTS}
     ports:
       - 8080
     depends_on:
-      - database
+      - database_prod
     volumes:
       - static_volume:/pytime/staticfiles
 
@@ -48,7 +39,7 @@ services:
       - static_volume:/static
     depends_on:
       - core
-      - database
+      - database_prod
 
   certbot:
     image: certbot/certbot:latest
@@ -63,15 +54,15 @@ services:
       - ./certbot/www/:/var/www/certbot
       - ./certbot/conf/:/etc/letsencrypt
     depends_on:
-      - database
+      - database_prod
       - core
       - nginx
 
 volumes:
-  postgres_data:
+  postgres_prod_data:
   static_volume:
 
 networks:
   default:
-    name: pytime_network
+    name: pytime_network_prod
     driver: bridge

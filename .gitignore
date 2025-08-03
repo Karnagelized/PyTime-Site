@@ -10,11 +10,10 @@ __pycache__/
 # PyCharm
 .idea/
 
-# SQLite
+# Database
 db.*
-
-# PostgreSQL
 .pg*
+.database/
 
 # Uploads
 uploads/

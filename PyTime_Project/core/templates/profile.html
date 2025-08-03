@@ -8,11 +8,12 @@
 {% block main-container %}
 	<div class="main_content">
 		<div class="content_container profile_container">
-			<div class="container_up_side d-flex justify-content-evenly align-items-center">
+			<!-- <div class="container_up_side d-flex justify-content-evenly align-items-center"> -->
+			<div class="container_up_side d-flex flex-column align-items-center">
 				<img class="container_image profile_image" src="{% static 'core/img/errors/imageNotFound.png' %}">
 
 				<div class="container_about_block d-flex flex-column">
-					<div class="container_about_chapter">
+<!-- 					<div class="container_about_chapter">
 						<p class="container_title">
 							<b>Имя пользователя:</b> {{ user.username }}
 						</p>
@@ -22,7 +23,7 @@
 						<p class="container_title">
 							<b>Почта:</b> {{ user.email }}
 						</p>
-					</div>
+					</div> -->
 
 <!-- 					<div class="container_about_chapter">
 						<p class="container_title">
@@ -76,7 +77,7 @@
 						</p>
 					</div>
 
-					<div class="container_about_chapter">
+				<!-- 	<div class="container_about_chapter">
 						<p class="container_title">
 							<b>Пол:</b> НЕ РЕАЛИЗОВАНО
 						</p>
@@ -92,7 +93,7 @@
 						<p class="container_title mb-0">
 							<b>Обо мне:</b> {% lorem 50 w %}
 						</p>
-					</div>
+					</div> -->
 				</div>
 			</div>
 

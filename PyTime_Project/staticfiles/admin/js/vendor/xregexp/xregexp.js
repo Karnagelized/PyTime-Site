@@ -2789,9 +2789,7 @@ require('../../modules/esnext.symbol.dispose');
 require('../../modules/esnext.symbol.matcher');
 require('../../modules/esnext.symbol.metadata');
 require('../../modules/esnext.symbol.observable');
-// TODO: Remove from `core-js@4`
 require('../../modules/esnext.symbol.pattern-match');
-// TODO: Remove from `core-js@4`
 require('../../modules/esnext.symbol.replace-all');
 
 module.exports = parent;
@@ -5673,7 +5671,6 @@ if (!SymbolPrototype[TO_PRIMITIVE]) {
   var valueOf = SymbolPrototype.valueOf;
   // eslint-disable-next-line no-unused-vars -- required for .length
   redefine(SymbolPrototype, TO_PRIMITIVE, function (hint) {
-    // TODO: improve hint logic
     return call(valueOf, this);
   });
 }
@@ -5782,7 +5779,6 @@ var defineWellKnownSymbol = require('../internals/define-well-known-symbol');
 defineWellKnownSymbol('observable');
 
 },{"../internals/define-well-known-symbol":82}],205:[function(require,module,exports){
-// TODO: remove from `core-js@4`
 var defineWellKnownSymbol = require('../internals/define-well-known-symbol');
 
 // `Symbol.patternMatch` well-known symbol
@@ -5790,7 +5786,6 @@ var defineWellKnownSymbol = require('../internals/define-well-known-symbol');
 defineWellKnownSymbol('patternMatch');
 
 },{"../internals/define-well-known-symbol":82}],206:[function(require,module,exports){
-// TODO: remove from `core-js@4`
 var defineWellKnownSymbol = require('../internals/define-well-known-symbol');
 
 defineWellKnownSymbol('replaceAll');

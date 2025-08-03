@@ -11,7 +11,6 @@ https://docs.djangoproject.com/en/5.1/ref/settings/
 """
 
 from pathlib import Path
-
 from django.conf.global_settings import ALLOWED_HOSTS
 import environ
 from os import path
@@ -93,10 +92,10 @@ DATABASES = {
     "default": {
         "ENGINE": "django.db.backends.postgresql",
         "HOST": env('HOST'),
-        "PORT": env('DB_PORT'),
-        "NAME": env('DB_NAME'),
-        "USER": env('DB_USER'),
-        "PASSWORD": env('DB_PASSWORD'),
+        "PORT": env('DB_PORT_DEV') if DEBUG else env('DB_PORT_PROD'),
+        "NAME": env('DB_NAME_DEV') if DEBUG else env('DB_NAME_PROD'),
+        "USER": env('DB_USER_DEV') if DEBUG else env('DB_USER_PROD'),
+        "PASSWORD": env('DB_PASSWORD_DEV') if DEBUG else env('DB_PASSWORD_PROD'),
     }
 }
 
