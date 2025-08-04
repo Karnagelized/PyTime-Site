@@ -44,9 +44,15 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'core',
+    'users',
+    'tags',
+    'skills',
+    'articles',
+    'projects',
+    'comments',
 ]
 
-AUTH_USER_MODEL = 'core.CustomUser'
+AUTH_USER_MODEL = 'users.CustomUser'
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
@@ -148,11 +154,12 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 
 # HTTPS
-CSRF_COOKIE_SECURE = True
-SESSION_COOKIE_SECURE = True
-CSRF_TRUSTED_ORIGINS = [
-    'https://pytime.ru',
-    'https://www.pytime.ru',
-]
-CSRF_COOKIE_DOMAIN = '.pytime.ru'
-SESSION_COOKIE_DOMAIN = '.pytime.ru'
+if not DEBUG:
+    CSRF_COOKIE_SECURE = True
+    SESSION_COOKIE_SECURE = True
+    CSRF_TRUSTED_ORIGINS = [
+        'https://pytime.ru',
+        'https://www.pytime.ru',
+    ]
+    CSRF_COOKIE_DOMAIN = '.pytime.ru'
+    SESSION_COOKIE_DOMAIN = '.pytime.ru'

@@ -1,0 +1,58 @@
+{% extends "base.html" %}
+
+{% block title %}
+	{{ articleData.shortTitle }}
+{% endblock title %}
+
+{% block main-container %}
+	<div class="main_content">
+		<div class="content_page_container d-flex justify-content-between align-items-center">
+			<div class="container_left_side">
+				<h2 class="container_title text-center">
+					{{ articleData.title }}
+				</h2>
+
+				<!-- Tags -->
+				{% include 'content/item_tags.html' with itemData=articleData getAllTags=True %}
+			</div>
+
+			<div class="container_right_side">
+				<p class="container_text mb-0">
+					{{ articleData.description }}
+				</p>
+			</div>
+		</div>
+
+		<div class="content_page_container_tablet d-flex flex-column justify-content-between align-items-center">
+			<div class="container_up_side w-100 mb-3">
+				<h2 class="container_title text-center">
+					{{ articleData.title }}
+				</h2>
+
+				<!-- Tags -->
+				{% include 'content/item_tags.html' with itemData=articleData getAllTags=True %}
+			</div>
+
+			<div class="container_bottom_side">
+				<p class="container_text mb-0">
+					{{ articleData.description }}
+				</p>
+			</div>
+		</div>
+
+        <!-- Separator line -->
+        <hr class="content_separator">
+
+		<div class="body_article">
+			<p class="container_text mb-0">
+				{{ articleData.text }}
+			</p>
+		</div>
+
+        <!-- Separator line -->
+        <hr class="content_separator">
+
+        <!-- Write a comment block -->
+        {% include 'content/write_comment.html' %}
+	</div>	
+{% endblock %}
