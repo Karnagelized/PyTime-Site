@@ -1,0 +1,53 @@
+{% extends 'base.html' %}
+
+{% block title %}
+	{{ title }}
+{% endblock title %}
+
+{% block ogTags %}
+	{% include 'meta/og_tags.html' with title=title description=og_description %}
+{% endblock %}
+
+{% block main-container %}
+	<div class="main_content">
+		<div class="authentication_container d-flex align-items-center justify-content-center">
+			<div class="authentication_block">
+				<p class="container_title">
+					Авторизация
+				</p>
+				
+				<form class="authentication_form d-flex flex-column" method="post">
+                    {% csrf_token %}
+
+                    {{ loginForm.non_field_errors }}
+
+                    {% for field in loginForm %}
+                        <label for="{{ field.id_for_label }}" class="container_form_label">
+                            {{ field.label }}
+                        </label>
+
+                        {{ field.errors }}
+                        {{ field }}
+                    {% endfor %}
+
+                    <div class="authentication_button_block d-flex justify-content-center">
+                    	<input type="submit" value="Войти" class="button_submit mb-0">
+                    </div>
+				</form>
+
+				<hr class="base_content_separator mx-0">
+
+				<div class="container_create_account d-flex justify-content-between align-items-center">
+					<p class="container_text mb-0">
+						У Вас ещё нет аккаунта?
+					</p>
+
+					<!-- Кнопка регистрации -->
+					{% url "registrationUser" as registrationUserURL %}
+					
+					{% include "buttons/button_white_background.html" with name="Регистрация" url_name=registrationUserURL %}
+				</div>
+			</div>
+		</div>
+	</div>
+{% endblock %}

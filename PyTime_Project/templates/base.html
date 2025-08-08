@@ -22,14 +22,28 @@
         <link rel="icon" type="image/png" sizes="32x32" href="{% static 'core/img/icon/favicon-32x32.png' %}">
         <link rel="icon" type="image/png" sizes="16x16" href="{% static 'core/img/icon/favicon-16x16.png' %}">
 
-        <!--   Записана как ошибка    -->
-        <link rel="manifest" href="{% static 'core/img/icon/site.webmanifest' %}">
+        {% block extraHead %}
+            <!-- Custom head page -->
+        {% endblock %}
+
+        <!-- JS scripts -->
+        <script src="{% static 'core/js/header-scrolled.js' %}"></script>
+
+        <!-- Manifest -->
+        <link rel="manifest" href="{% static 'manifest.json' %}">
+
+        {% block ogTags %}
+            <!-- Add OG Tags for page -->
+        {% endblock %}
     </head>
 
     <body>
         <!-- Header -->
-        <header class="header d-flex">
+        <header class="header sticky-top">
             {% include './header/header.html' %}
+
+            <!-- Separator line -->
+            <hr class="content_separator">
         </header>
 
         <!-- Main container -->

@@ -1,0 +1,32 @@
+{
+    "name": "Начало Backend разработчика на Python | PyTime",
+    "short_name": "PT",
+    "categories": ["programming", "education", "news"],
+    "lang": "ru-RU",
+    "description": "PyTime – это виртуальная визитная карточка, отражающая страсть к разработке и стремление к постоянному профессиональному росту.",
+    "start_url": "/",
+    "scope": "/",
+    "display": "standalone",
+    "background_color": "#59A5F5",
+    "theme_color": "#59A5F5",
+    "orientation": "portrait-primary",
+    "icons": [
+        {
+            "src": "./core/img/icon/favicon.svg",
+            "sizes": "512x512",
+            "type": "image/svg+xml"
+        },
+        {
+            "src": "./core/img/icon/favicon-192x192.png",
+            "sizes": "192x192",
+            "type": "image/png"
+        },
+        {
+            "src": "./core/img/icon/favicon-512x512.png",
+            "sizes": "512x512",
+            "type": "image/png"
+        }
+    ],
+    "id": "/",
+	"version": "1.0.0"
+}

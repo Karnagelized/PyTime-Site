@@ -43,13 +43,16 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'core',
-    'users',
-    'tags',
-    'skills',
-    'articles',
-    'projects',
-    'comments',
+    'django_bleach',
+    'ckeditor',
+    'ckeditor_uploader',
+    'apps.core',
+    'apps.users',
+    'apps.tags',
+    'apps.skills',
+    'apps.articles',
+    'apps.projects',
+    'apps.comments',
 ]
 
 AUTH_USER_MODEL = 'users.CustomUser'
@@ -143,6 +146,9 @@ USE_TZ = True
 STATIC_ROOT = BASE_DIR / 'staticfiles'
 STATIC_URL = '/static/'
 
+MEDIA_ROOT = BASE_DIR / 'media'
+MEDIA_URL = '/media/'
+
 # STATICFILES_DIRS = [
 #     BASE_DIR / 'static',
 # ]
@@ -163,3 +169,111 @@ if not DEBUG:
     ]
     CSRF_COOKIE_DOMAIN = '.pytime.ru'
     SESSION_COOKIE_DOMAIN = '.pytime.ru'
+
+# CKEditor
+CKEDITOR_BASEPATH = "/static/ckeditor/ckeditor/"
+CKEDITOR_UPLOAD_PATH = "ckeditorUpload/"
+
+CKEDITOR_CONFIGS = {
+    'default': {
+        'skin': 'moono-lisa',
+        'toolbar_PyTimeAdminConfig': [
+            {
+                'name': 'document',
+                'items': [
+                    'Source', '-',
+                    'Save', 'Preview',
+                ]
+            },
+            {
+                'name': 'clipboard',
+                'items': [
+                    'Cut', 'Copy', 'Paste', 'PasteText', '-',
+                    'Undo', 'Redo',
+                ]
+            },
+            {
+                'name': 'editing',
+                'items': [
+                    'Find', 'Replace',
+                ]
+            },
+            {
+                'name': 'paragraph',
+                'items': [
+                    'BidiLtr', 'BidiRtl',
+                ]
+            },
+            {
+                'name': 'tools',
+                'items': [
+                    'Maximize', 'ShowBlocks', '-',
+                ]
+            },
+            {
+                'name': 'basicstyles',
+                'items': [
+                    'RemoveFormat',
+                ]
+            },
+            '/',
+            {
+                'name': 'styles',
+                'items': [
+                    'Styles', 'Format',
+                ]
+            },
+            {
+                'name': 'colors',
+                'items': [
+                    'TextColor', 'BGColor',
+                ]
+            },
+            {
+                'name': 'basicstyles',
+                'items': [
+                    'Bold', 'Italic', 'Underline', 'Strike', 'Subscript', 'Superscript',
+                ]
+            },
+            {
+                'name': 'paragraph',
+                'items': [
+                    'NumberedList', 'BulletedList', '-',
+                    'Outdent', 'Indent', '-',
+                    'Blockquote', 'CodeSnippet', 'CreateDiv', '-',
+                    'JustifyLeft', 'JustifyCenter', 'JustifyRight', 'JustifyBlock', '-',
+                ]
+            },
+            {
+                'name': 'links',
+                'items': [
+                    'Link', 'Unlink', 'Anchor',
+                ]
+            },
+            {
+                'name': 'insert',
+                'items': [
+                    'Image', 'Flash', 'Table', 'HorizontalRule', 'SpecialChar',
+                ]
+            },
+        ],
+        'toolbar': 'PyTimeAdminConfig',
+        'autoGrow_onStartup': True,
+        'autoGrow_maxHeight': '500',
+        'enterMode': 1,
+        'shiftEnterMode': 3,
+        'clipboard_handleImages': False,
+        "removePlugins": "exportpdf",
+        'extraPlugins': ','.join([
+            'codesnippet',
+            'placeholder',
+            'autogrow',
+            'scayt',
+        ]),
+        'codeSnippet_theme': 'monokai'
+    },
+}
+
+CKEDITOR_RESTRICT_BY_USER = True
+CKEDITOR_BROWSE_SHOW_DIRS = True
+CKEDITOR_RESTRICT_BY_DATE = True

@@ -1,0 +1,380 @@
+.hljs {
+    border-radius: 5px;
+}
+
+.body_project,
+.body_article {
+    h1 {
+        font-size: 2.5rem;
+        margin-bottom: 20px;
+    }
+
+    h2 {
+        font-size: 2rem;
+        margin-bottom: 20px;
+    }
+
+    h3 {
+        font-size: 1.75rem;
+        margin-bottom: 15px;
+    }
+
+    h4 {
+        font-size: 1.5rem;
+        margin-bottom: 15px;
+    }
+
+    h5 {
+        font-size: 1.25rem;
+        margin-bottom: 10px;
+    }
+
+    h6 {
+        font-size: 1rem;
+        margin-bottom: 10px;
+    }
+
+    a {
+        font-size: 1.15rem;
+        color: var(--hover-color);
+        text-decoration: underline;
+    }
+
+    ul {
+        padding-inline-start: 20px;
+    }
+
+    img {
+        max-width: 100%;
+        height: auto;
+        object-position: center;
+        border-radius: 5px;
+        margin-top: 1rem;
+        margin-bottom: 2rem;
+    }
+
+    hr {
+        color: var(--secondary-color);
+        border: solid;
+        border-width: 1px;
+        border-radius: 5px;
+        margin-top: 0px;
+    }
+
+    blockquote {
+      margin: 2em 0;
+      padding: 1.5em 2em;
+      font-style: italic;
+      color: #555;
+      border-left: 4px solid var(--hover-color);
+      background-color: #f9f9f9;
+      quotes: "“" "”" "‘" "’";
+    }
+
+    blockquote:before {
+      content: open-quote;
+      font-size: 4em;
+      line-height: 0.1em;
+      margin-right: 0.25em;
+      vertical-align: -0.4em;
+      color: #3498db;
+      opacity: 0.5;
+    }
+
+    blockquote p {
+      display: inline;
+    }
+
+    blockquote cite {
+      display: block;
+      text-align: right;
+      font-style: normal;
+      font-weight: 700;
+      color: var(--text-color);
+      margin-top: 1rem;
+    }
+
+    table {
+        display: block;
+        margin-top: 1rem;
+        margin-bottom: 2rem;
+        border: none;
+        overflow-x: auto;
+        width: max-content;
+        max-width: 100%;
+    }
+
+    table td {
+        align-content: center;
+        min-width: 150px;
+    }
+
+    table caption {
+        padding-top: 1rem;
+        padding-bottom: 1rem;
+        text-align: center;
+    }
+
+    table thead tr th:first-child {
+        border-radius: 5px 0 0 0;
+    }
+    
+    table thead tr th:last-child {
+        border-radius: 0 5px 0 0;
+    }
+
+    table tbody tr:nth-child(even) {
+        background: #F8F8F8;
+    }
+
+    table tbody tr:last-child td:first-child {
+        border-radius: 0 0 0 5px;
+    }
+
+    table tbody tr:last-child td:last-child {
+        border-radius: 0 0 5px 0;
+    }
+
+    thead th {
+        text-align: center;
+        font-weight: bold;
+        border: none;
+        padding: 10px;
+        background: #d8d8d8;
+        border-left: 1px solid #ccc;
+        border-right: 1px solid #ccc;
+    }
+    
+    tbody td {
+        text-align: center;
+        border-left: 1px solid #ccc;
+        border-right: 1px solid #ccc;
+        padding: 10px;
+        vertical-align: top;
+    }
+
+    thead tr th:first-child,
+    table tbody tr td:first-child {
+        border-left: none;
+    }
+    
+    thead tr th:last-child,
+    table tbody tr td:last-child {
+        border-right: none;
+    }
+    
+    tbody tr:nth-child(even) {
+        background: #f3f3f3;
+    }
+
+
+
+
+
+
+
+
+
+
+
+
+    /* XL - XXL gadgets version */
+    /* Extra large-Extra extra large monitors */
+    @media (min-width: 1200px) and (max-width: 1599px) {
+        h1 {
+            font-size: 2.25rem;
+        }
+        
+        h2 {
+            font-size: 1.875rem;
+        }
+        
+        h3 {
+            font-size: 1.625rem;
+        }
+        
+        h4 {
+            font-size: 1.375rem;
+        }
+        
+        h5 {
+            font-size: 1.125rem;
+        }
+        
+        h6 {
+            font-size: 0.9375rem;
+        }
+
+/*        img {
+            width: 80%;
+        }*/
+    }
+
+
+
+
+
+
+
+
+
+
+
+
+    /* LG - XL gadgets version */
+    /* large-Extra large monitors - notebook */
+    @media (min-width: 992px) and (max-width: 1199px) {
+        h1 {
+            font-size: 2rem;
+        }
+        
+        h2 {
+            font-size: 1.75rem;
+        }
+        
+        h3 {
+            font-size: 1.5rem;
+        }
+        
+        h4 {
+            font-size: 1.25rem;
+        }
+        
+        h5 {
+            font-size: 1.125rem;
+        }
+        
+        h6 {
+            font-size: 0.875rem;
+        }
+        
+/*        img {
+            width: 90%;
+        }*/
+    }
+
+
+
+
+
+
+
+
+
+
+
+
+    /* MD - LG gadgets version */
+    /* Medium-Large monitors - tablet */
+    @media (min-width: 768px) and (max-width: 991px) {
+        h1 {
+            font-size: 1.75rem;
+        }
+        
+        h2 {
+            font-size: 1.5rem;
+        }
+        
+        h3 {
+            font-size: 1.375rem;
+        }
+        
+        h4 {
+            font-size: 1.125rem;
+        }
+        
+        h5 {
+            font-size: 1rem;
+        }
+        
+        h6 {
+            font-size: 0.8125rem;
+        }
+        
+/*        img {
+            width: 90%;
+        }*/
+    }
+
+
+
+
+
+
+
+
+
+
+
+
+    /* SM - MD gadgets version */
+    /* Small-Medium monitors - horizontal (flipped) phone */
+    @media (min-width: 480px) and (max-width: 767px) {
+        h1 {
+            font-size: 1.5rem;
+        }
+        
+        h2 {
+            font-size: 1.375rem;
+        }
+        
+        h3 {
+            font-size: 1.25rem;
+        }
+        
+        h4 {
+            font-size: 1.125rem;
+        }
+        
+        h5 {
+            font-size: 1rem;
+        }
+        
+        h6 {
+            font-size: 0.8125rem;
+        }
+
+/*        img {
+            width: 100%;
+        }*/
+    }
+
+
+
+
+
+
+
+
+
+
+
+
+    /* XS - SM gadgets version */
+    /* Extra small-Small monitors - vertical phone */
+    @media (max-width: 479px) {
+        h1 {
+            font-size: 1.375rem;
+        }
+        
+        h2 {
+            font-size: 1.25rem;
+        }
+        
+        h3 {
+            font-size: 1.125rem;
+        }
+        
+        h4 {
+            font-size: 1rem;
+        }
+        
+        h5 {
+            font-size: 0.9375rem;
+        }
+        
+        h6 {
+            font-size: 0.75rem;
+        }
+    }
+}

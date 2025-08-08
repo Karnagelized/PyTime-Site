@@ -15,5 +15,10 @@ db.*
 .pg*
 .database/
 
-# Uploads
+# Staticfiles and Uploads
+media/
+staticfiles/
 uploads/
+
+# Inforamtions
+.data/
