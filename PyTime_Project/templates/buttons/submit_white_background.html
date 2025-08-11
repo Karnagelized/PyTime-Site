@@ -1,0 +1,11 @@
+<div class="block_submit_white_background d-flex">
+	{% if isSubmit %}
+		<button type="submit" class="submit_white_background w-100 d-flex align-items-center justify-content-center">
+			{{ name }}
+		</button>
+	{% else %}
+		<button type="button" class="submit_white_background w-100 d-flex align-items-center justify-content-center">
+			{{ name }}
+		</button>
+	{% endif %}
+</div>

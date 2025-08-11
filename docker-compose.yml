@@ -8,10 +8,16 @@ services:
       POSTGRES_DB: ${DB_NAME_PROD}
       POSTGRES_USER: ${DB_USER_PROD}
       POSTGRES_PASSWORD: ${DB_PASSWORD_PROD}
+      POSTGRESQL_SHARED_BUFFERS: 64MB
+      POSTGRESQL_EFFECTIVE_CACHE_SIZE: 192MB
     ports:
       - "${DB_PORT_PROD}:5432"
     volumes:
       - postgres_prod_data:/var/lib/postgresql/data
+    restart: always
+    mem_limit: 256M
+    memswap_limit: 512M
+    mem_reservation: 128M
 
   core:
     build:
@@ -25,6 +31,16 @@ services:
       - database_prod
     volumes:
       - static_volume:/pytime/staticfiles
+    restart: always
+    mem_limit: 512M
+    memswap_limit: 1G
+    mem_reservation: 128M
+#    healthcheck:
+#      test: curl -f https://pytime.ru/healthcheck || exit 1
+#      interval: 10s
+#      timeout: 10s
+#      retries: 3
+#      start_period: 30s
 
   nginx:
     image: nginx:latest
@@ -40,6 +56,10 @@ services:
     depends_on:
       - core
       - database_prod
+    restart: always
+    mem_limit: 128M
+    memswap_limit: 256M
+    mem_reservation: 64M
 
   certbot:
     image: certbot/certbot:latest

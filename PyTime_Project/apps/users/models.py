@@ -7,6 +7,7 @@ from django_bleach.models import BleachField
 class CustomUser(AbstractUser):
     aboutMe = models.CharField(null=True, max_length=255, blank=True, verbose_name='Обо мне')
     gitLink = models.URLField(null=True, blank=True, verbose_name='Ссылка на GitHub')
+    # TODO Дописать поля у модели юзера для Профиля
     # aboutMe = BleachField(
     #     null=True,
     #     max_length=255,

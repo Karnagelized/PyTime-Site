@@ -27,7 +27,7 @@ class Comment(models.Model):
         verbose_name_plural = 'Комментарии'
 
 
-    # Получить комментарии по типу и слагу поста(Проект или Статья)
+    # Получить комментарии по типу и слагу поста (Проект или Статья)
     @staticmethod
     def getAllByTypeAndSlug(*, slug:str, postType:str) -> QuerySet:
         # Проверка правильного указания типа поста
@@ -45,5 +45,5 @@ class Comment(models.Model):
 
     def __str__(self):
         return (
-            f'Comment by \"{self.author}\". Href - \"{self.contentType}/{self.contentSlug}\"'
+            f'Комментарий \"{self.author}\" в \"{self.contentType}/{self.contentSlug}\"'
         )

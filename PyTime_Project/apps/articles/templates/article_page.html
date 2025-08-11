@@ -16,7 +16,7 @@
 
 {% block main-container %}
 	<div class="main_content">
-		<div class="content-article">
+		<div class="content_article">
 			<div class="content_page_container">
 				<div class="container_up_side">
 					<h2 class="container_title text-center">
@@ -32,6 +32,7 @@
 					{% include 'all_tags.html' with itemData=articleData %}
 				</div>
 
+	        	{% include 'content/statistic/page_statistic.html' with content=articleData isArticleLiked=1 %}
 			</div>
 
 	        <!-- Separator line -->

@@ -206,11 +206,6 @@ class ProjectPageViewTestCase(TestCase):
         # Проверяем форму
         self.assertIn('writeCommentForm', postResponse.context)
 
-        self.assertIn(
-            'Пользователь не авторизован!',
-            postResponse.context['writeCommentForm'].non_field_errors(),
-        )
-
 
     def test_auth_user_send_valid_form(self):
         """

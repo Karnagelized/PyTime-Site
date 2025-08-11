@@ -10,34 +10,33 @@
             {% endif %}
         </div>
 
-        <div class="project_card_description mb-100">
-            <p class="project_card_title">
-                {{ project.title|truncatechars:100 }}
-            </p>
-            
-            <p class="project_card_text">
-                {{ project.description|truncatechars:100 }}
-            </p>
-        </div>
+        <div class="project_content d-flex flex-column justify-content-between">
+            <div class="project_content_up_side">
+                <div class="project_card_description mb-100">
+                    <p class="project_card_title">
+                        {{ project.title|truncatechars:140 }}
+                    </p>
+                    
+                    <p class="project_card_text mb-0">
+                        {{ project.description|truncatechars:140 }}
+                    </p>
+                </div>
+            </div>
 
-        <div class="project_card_view_block h-100 d-flex justify-content-between align-items-end">
-            <a href="{{ project.get_absolute_url }}" class="project_card_view_link">
-                Читать ❯
-            </a>
+            <div class="project_content_bottom_side">
+                {% url "likeProject" as likeArticleURL %}
+                {% include 'content/statistic/card_statistic.html' with content=project %}
 
-            <p class="project_card_datetime_published mb-0">
-                {{ project.datetimeCreate }}
-            </p>
-        </div>
+                <div class="project_card_view_block d-flex justify-content-between align-items-end">
+                    <a href="{{ project.get_absolute_url }}" class="project_card_view_link">
+                        Читать ❯
+                    </a>
 
-        <div class="project_card_view_block_tablet h-100 d-flex flex-column justify-content-end">
-            <p class="project_card_datetime_published mb-0">
-                {{ project.datetimeCreate }}
-            </p>
-
-            <a href="{{ project.get_absolute_url }}" class="project_card_view_link">
-                Читать ❯
-            </a>
+                    <p class="project_card_datetime_published mb-0">
+                        {{ project.datetimeCreate }}
+                    </p>
+                </div>
+            </div>
         </div>
     </div>
 {% endfor %}

@@ -11,6 +11,17 @@ class ProjectFactory(factory.django.DjangoModelFactory):
 
 
     @factory.post_generation
+    def likes(self, create, extracted, **kwargs):
+        if not create:
+            return
+
+        if extracted:
+            self.tags.set(extracted)
+        else:
+            self.tags.set([])
+
+
+    @factory.post_generation
     def tags(self, create, extracted, **kwargs):
         if not create:
             return

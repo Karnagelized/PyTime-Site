@@ -1,0 +1,27 @@
+<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+	<div class="modal-dialog modal-dialog-centered">
+		<div class="modal-content">
+			<div class="modal-header">
+				<h1 class="modal-title fs-5" id="exampleModalLabel">
+					Требуется авторизация!
+				</h1>
+				
+				<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Закрыть"></button>
+			</div>
+			
+			<div class="modal-body">
+				<p>
+					Чтобы ставить лайки, пожалуйста, войдите в свой аккаунт или зарегистрируйтесь.
+					Это займет меньше минуты!
+				</p>
+			</div>
+
+			<div class="modal-footer ">
+				<!-- Кнопка авторизации -->
+				{% url "loginUser" as loginUserURl %}
+					
+				{% include "buttons/link_white_background.html" with name="Авторизоваться" url_name=loginUserURl %}
+			</div>
+		</div>
+	</div>
+</div>

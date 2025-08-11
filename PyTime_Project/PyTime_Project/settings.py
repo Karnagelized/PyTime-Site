@@ -33,7 +33,7 @@ DEBUG = int(env('DEBUG'))
 
 ALLOWED_HOSTS = [
     *env('ALLOWED_HOSTS').split()
-]
+] + ['192.168.0.164']
 
 # Application definition
 INSTALLED_APPS = [
@@ -53,6 +53,7 @@ INSTALLED_APPS = [
     'apps.articles',
     'apps.projects',
     'apps.comments',
+    'apps.likes',
 ]
 
 AUTH_USER_MODEL = 'users.CustomUser'
@@ -105,6 +106,9 @@ DATABASES = {
         "NAME": env('DB_NAME_DEV') if DEBUG else env('DB_NAME_PROD'),
         "USER": env('DB_USER_DEV') if DEBUG else env('DB_USER_PROD'),
         "PASSWORD": env('DB_PASSWORD_DEV') if DEBUG else env('DB_PASSWORD_PROD'),
+        'TEST': {
+            'NAME': 'testing_' + env('DB_NAME_DEV') if DEBUG else env('DB_NAME_PROD'),
+        },
     }
 }
 

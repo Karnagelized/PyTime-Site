@@ -47,7 +47,7 @@ class ProjectListView(View):
 # Представление страницы Проектов
 class ProjectPageView(View):
     def post(self, request:HttpRequest, projectSlug:str, *args, **kwargs) -> HttpResponse:
-        projectData = Project.published.filter(slug=projectSlug).first()
+        projectData = get_object_or_404(Project, slug=projectSlug)
         commentForm = WriteCommentForm(request.POST)
 
         pageData = {
@@ -55,10 +55,10 @@ class ProjectPageView(View):
             'writeCommentForm': WriteCommentForm(),
         }
 
-        # Пользователь не имеет профиля или не авторизован
+        # Пользователь не авторизован
         if request.user.is_anonymous:
-            commentForm.add_error(field=None, error='Пользователь не авторизован!')
             pageData['writeCommentForm'] = commentForm
+            pageData['comments'] = Comment.getAllByTypeAndSlug(slug=articleSlug, postType='PROJECT')
 
             return render(request, 'project_page.html', context=pageData)
 
@@ -83,6 +83,10 @@ class ProjectPageView(View):
 
     def get(self, request:HttpRequest, projectSlug:str, *args, **kwargs) -> HttpResponse:
         projectData = get_object_or_404(Project.published, slug=projectSlug)
+
+        # Добавляем просмотр к статье
+        if not request.session.pop('skipViewIncrement', False):
+            projectData.increment_views()
 
         pageData = {
             'projectData': projectData,

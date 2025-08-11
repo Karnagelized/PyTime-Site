@@ -64,10 +64,16 @@ class ArticlePageView(View):
 
         # Пользователь не авторизован
         if request.user.is_anonymous:
-            commentForm.add_error(field=None, error='Пользователь не авторизован!')
             pageData['writeCommentForm'] = commentForm
+            pageData['comments'] = Comment.getAllByTypeAndSlug(slug=articleSlug, postType='ARTICLE')
 
             return render(request, 'article_page.html', context=pageData)
+
+        # Форма не прошла валидацию
+        if not commentForm.is_valid():
+            pageData['writeCommentForm'] = commentForm
+
+            return render(request, 'project_page.html', context=pageData)
 
         # Сохраняем комментарий
         newComment = commentForm.save(commit=False)
@@ -84,7 +90,10 @@ class ArticlePageView(View):
 
     def get(self, request:HttpRequest, articleSlug:str, *args, **kwargs) -> HttpResponse:
         articleData = get_object_or_404(Article.published, slug=articleSlug)
-        articleData.increment_views()
+
+        # Добавляем просмотр к статье
+        if not request.session.pop('skipViewIncrement', False):
+            articleData.increment_views()
 
         pageData = {
             'articleData': articleData,
