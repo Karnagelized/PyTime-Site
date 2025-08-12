@@ -13,12 +13,11 @@ __pycache__/
 # Database
 db.*
 .pg*
-.database/
 
 # Staticfiles and Uploads
 media/
 staticfiles/
 uploads/
 
-# Inforamtions
-.data/
+# Tests
+.coverage

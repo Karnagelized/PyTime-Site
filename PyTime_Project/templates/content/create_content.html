@@ -1,0 +1,14 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}
+	{{ title }}
+{% endblock title %}
+
+{% block ogTags %}
+	{% include 'meta/og_tags.html' with title=title description=og_description %}
+{% endblock %}
+
+{% block main-container %}
+	123123
+{% endblock main-container %}

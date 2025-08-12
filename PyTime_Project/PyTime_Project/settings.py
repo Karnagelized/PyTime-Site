@@ -95,6 +95,7 @@ TEMPLATES = [
 WSGI_APPLICATION = 'PyTime_Project.wsgi.application'
 
 
+
 # Database
 # https://docs.djangoproject.com/en/5.1/ref/settings/#databases
 
@@ -111,6 +112,7 @@ DATABASES = {
         },
     }
 }
+
 
 
 # Password validation
@@ -132,6 +134,7 @@ AUTH_PASSWORD_VALIDATORS = [
 ]
 
 
+
 # Internationalization
 # https://docs.djangoproject.com/en/5.1/topics/i18n/
 
@@ -142,6 +145,7 @@ TIME_ZONE = 'Asia/Yekaterinburg'
 USE_I18N = True
 
 USE_TZ = True
+
 
 
 # Static files (CSS, JavaScript, Images)
@@ -157,13 +161,15 @@ MEDIA_URL = '/media/'
 #     BASE_DIR / 'static',
 # ]
 
+
+
 # Default primary key field type
 # https://docs.djangoproject.com/en/5.1/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 
-# HTTPS
+# For HTTPS settings
 if not DEBUG:
     CSRF_COOKIE_SECURE = True
     SESSION_COOKIE_SECURE = True
@@ -174,7 +180,9 @@ if not DEBUG:
     CSRF_COOKIE_DOMAIN = '.pytime.ru'
     SESSION_COOKIE_DOMAIN = '.pytime.ru'
 
-# CKEditor
+
+
+# CKEditor settgins
 CKEDITOR_BASEPATH = "/static/ckeditor/ckeditor/"
 CKEDITOR_UPLOAD_PATH = "ckeditorUpload/"
 
@@ -281,3 +289,13 @@ CKEDITOR_CONFIGS = {
 CKEDITOR_RESTRICT_BY_USER = True
 CKEDITOR_BROWSE_SHOW_DIRS = True
 CKEDITOR_RESTRICT_BY_DATE = True
+
+
+
+# Bleach settings
+BLEACH_ALLOWED_TAGS = []
+BLEACH_ALLOWED_ATTRIBUTES = []
+BLEACH_ALLOWED_STYLES = []
+BLEACH_ALLOWED_PROTOCOLS = []
+BLEACH_STRIP_TAGS = True
+BLEACH_STRIP_COMMENTS = True

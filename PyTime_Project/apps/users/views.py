@@ -1,27 +1,87 @@
 
 from django.contrib.auth import login, logout
 from django.http import HttpRequest, HttpResponseNotAllowed
-from django.shortcuts import render, HttpResponse, redirect
-from apps.users.forms import UserLoginForm, UserRegistrationForm
+from django.shortcuts import render, HttpResponse, redirect, reverse
+from apps.users.forms import UserLoginForm, UserRegistrationForm, ProfileForm, AvatarProfileForm
+from apps.users.models import ProfileAvatarModel
 from apps.users.backends import EmailAuthBackend
 from django.views import View
+from random import choice
+
+
+# Загрузка собственного аватара Пользователю
+class UploadUserAvatar(View):
+    def post(self, request:HttpRequest) -> HttpResponse:
+        user = request.user
+        form = AvatarProfileForm(request.POST, request.FILES)
+
+        if not form.is_valid():
+            return redirect('profilePage')
+
+        form = form.save()
+        userAvatar = ProfileAvatarModel.objects.get(avatar=form.avatar)
+        user.avatar = userAvatar
+        user.save(update_fields=['avatar'])
+
+        return redirect('profilePage')
+
+
+    def get(self, request:HttpRequest) -> HttpResponse:
+        return HttpResponseNotAllowed(['GET'])
+
+
+# Генерация существующего аватара Пользователю
+class GenerateUserAvatar(View):
+    def post(self, request:HttpRequest) -> HttpResponse:
+        user = request.user
+        avatars = ProfileAvatarModel.objects.filter(isDefault=True).all()
+
+        if user.avatar and avatars.count() > 1:
+            avatars = ProfileAvatarModel.objects.filter(isDefault=True).exclude(id=user.avatar.id).all()
+
+        user.avatar = choice(avatars)
+        user.save(update_fields=['avatar'])
+
+        return redirect('profilePage')
+
+
+    def get(self, request:HttpRequest) -> HttpResponse:
+        return HttpResponseNotAllowed(['GET'])
 
 
 # Представление страницы Профиля Пользователя
 class UserProfileView(View):
-    def post(self, *args, **kwargs) -> HttpResponseNotAllowed:
-        return HttpResponseNotAllowed(['GET'])
+    def post(self, request:HttpRequest, *args, **kwargs) -> HttpResponseNotAllowed:
+        firstName = request.POST.get('first_name')
+        lastName = request.POST.get('last_name')
+        aboutMe = request.POST.get('aboutMe')
+
+        user = request.user
+        user.first_name = firstName
+        user.last_name = lastName
+        user.aboutMe = aboutMe
+        user.save(force_update=['first_name', 'last_name', 'aboutMe'])
+
+        return redirect('profilePage')
 
 
     def get(self, request:HttpRequest, *args, **kwargs) -> HttpResponse:
         if request.user.is_anonymous:
             return redirect('mainPage')
 
+        # Форма редактируемая Пользователем
+        avatarForm = AvatarProfileForm()
+        profileForm = ProfileForm(request.user)
+        generateAvatars = ProfileAvatarModel.objects.filter(isDefault=True).all()
+
         # Выбор раздела навигации
         pageData = {
             'title': f'Профиль {request.user.username} | PyTime',
             'og_description': f'Профиль {request.user.username}.',
             'navigationSelected': 'Profile',
+            'avatarForm': avatarForm,
+            'profileForm': profileForm,
+            'reloadAvatarIsPossible': True if generateAvatars.count() > 1 else False,
         }
 
         return render(request, 'profile.html', context=pageData)

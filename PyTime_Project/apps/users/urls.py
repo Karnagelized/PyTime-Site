@@ -1,7 +1,8 @@
 
 from django.urls import path
 from apps.users.views import (
-    UserProfileView, LoginUserView, LogoutUserView, RegistrationUserView,
+    UserProfileView, GenerateUserAvatar, UploadUserAvatar,
+    LoginUserView, LogoutUserView, RegistrationUserView,
     passwordResetEnterMail, passwordResetEnterCode, passwordResetEnterNewPassword
 )
 from PyTime_Project.settings import DEBUG
@@ -10,6 +11,9 @@ from PyTime_Project.settings import DEBUG
 # Маршруты приложения "users"
 urlpatterns = [
     path('profile', UserProfileView.as_view(), name='profilePage'),
+    path('save-profile', UserProfileView.as_view(), name='saveEditProfile'),
+    path('generate-avatar', GenerateUserAvatar.as_view(), name='generateAvatar'),
+    path('upload-avatar', UploadUserAvatar.as_view(), name='uploadAvatar'),
     path('login', LoginUserView.as_view(), name='loginUser'),
     path('logout', LogoutUserView.as_view(), name='logoutUser'),
     path('registration', RegistrationUserView.as_view(), name='registrationUser'),

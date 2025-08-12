@@ -1,3 +1,5 @@
+{% load static %}
+
 <div class="feedback_container d-flex flex-column justify-content-center align-items-center" id="comment_content">
 	<h2 class="container_title">
 		Оставьте свой комментарий
@@ -23,7 +25,7 @@
 			{% if request.user.is_authenticated %}
 				{% include 'buttons/submit_black_background.html' with name="Опубликовать" isSubmit=1 %}
 			{% else %}
-				<div data-bs-toggle="modal" data-bs-target="#exampleModal">
+				<div data-bs-toggle="modal" data-bs-target="#authForComment">
 					{% include 'buttons/submit_black_background.html' with name="Опубликовать" %}
 				</div>
 			{% endif %}
@@ -48,14 +50,27 @@
 		{% else %}
 			{% for comment in comments %}
 				<div class="container_comment">
-					<div class="container_comment_up_side d-flex justify-content-start">
-						<p class="comment_username mb-0">
-							{{ comment.author }}
-						</p>
+					<div class="container_comment_up_side d-flex w-100">
+						<div class="container_comment_left_side">
+							{% if comment.author.avatar %}
+								<img src="{{ request.url }}/media/{{ comment.author.avatar }}" class="comment_profile_image">
+							{% else %}
+								<img class="comment_profile_image" src="{% static 'core/img/errors/imageNotFound.png' %}">
+							{% endif %}
+						</div>
 
-						<p class="comment_date_published mb-0">
-							{{ comment.dateCreate }}
-						</p>
+						<div class="container_comment_right_side ms-3 d-flex align-items-center">
+							<p class="comment_username mb-0">
+								{{ comment.author }}
+							</p>
+
+							<p class="comment_date_published mb-0">
+								{{ comment.dateCreate }}
+							</p>
+						</div>
+
+
+
 					</div>
 
 					<div class="container_comment_bottom_side">
