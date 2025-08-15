@@ -12,6 +12,7 @@ https://docs.djangoproject.com/en/5.1/ref/settings/
 
 from pathlib import Path
 from django.conf.global_settings import ALLOWED_HOSTS
+from better_profanity import profanity
 import environ
 from os import path
 
@@ -33,7 +34,7 @@ DEBUG = int(env('DEBUG'))
 
 ALLOWED_HOSTS = [
     *env('ALLOWED_HOSTS').split()
-] + ['192.168.0.164']
+]
 
 # Application definition
 INSTALLED_APPS = [
@@ -299,3 +300,8 @@ BLEACH_ALLOWED_STYLES = []
 BLEACH_ALLOWED_PROTOCOLS = []
 BLEACH_STRIP_TAGS = True
 BLEACH_STRIP_COMMENTS = True
+
+
+
+# Profanity Settings
+profanity.load_censor_words_from_file(BASE_DIR / 'profanity/config.txt')

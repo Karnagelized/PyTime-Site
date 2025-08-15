@@ -1,0 +1,39 @@
+<div class="collapse content_reply_comment_block" id="collapseExample_{{ comment.pk }}">
+	<div class="content_reply_comment_form">
+		<form action="{% url 'replyComment' %}" id="feedback_form_id" method="post">
+			{% csrf_token %}
+
+			<div class="textarea_form w-100 ">
+				{{ writeCommentForm }}
+			</div>
+
+			<input type="hidden" name="commentType" value="{{ comment.contentType }}">
+			<input type="hidden" name="commentSlug" value="{{ comment.contentSlug }}">
+			<input type="hidden" name="commentID" value="{{ comment.pk }}">
+
+			{% if request.user.is_authenticated %}
+				<div class="reply_agrement_submit d-flex justify-content-between align-items-center">
+					<div class="reply_agrement_submit_left_side">
+						{% include 'agreement.html' %}
+					</div>
+
+					<div class="reply_agrement_submit_right_side">
+						{% include 'buttons/submit_black_background.html' with name="Ответить" isSubmit=1 %}
+					</div>
+				</div>
+			{% else %}
+				<div class="reply_agrement_submit d-flex justify-content-between align-items-center">
+					<div class="reply_agrement_submit_left_side">
+						{% include 'agreement.html' %}
+					</div>
+
+					<div class="reply_agrement_submit_right_side">
+						<div data-bs-toggle="modal" data-bs-target="#authForComment">
+							{% include 'buttons/submit_black_background.html' with name="Ответить" %}
+						</div>
+					</div>
+				</div>
+			{% endif %}
+		</form>
+	</div>
+</div>

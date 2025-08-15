@@ -1,0 +1,81 @@
+{% load static %}
+
+<div class="container_comment">
+	<div class="container_comment_up_side d-flex w-100">
+		<div class="container_comment_left_side">
+			{% if comment.author.avatar %}
+				<img src="{{ request.url }}/media/{{ comment.author.avatar }}" class="comment_profile_image">
+			{% else %}
+				<img class="comment_profile_image" src="{% static 'users/img/default.svg' %}">
+			{% endif %}
+		</div>
+
+		<div class="container_comment_right_side ms-3 d-flex align-items-center">
+			<p class="comment_username mb-0">
+				{{ comment.author }}
+			</p>
+
+			{% if comment.isReply %}
+				<p class="comment_to_whom_reply mb-0">
+					Ответ {{ comment.toWhomReply.username }}
+				</p>
+			{% endif %}
+
+			<p class="comment_date_published mb-0">
+				{{ comment.dateCreate|date:"d b Y H:m" }}
+			</p>
+		</div>
+	</div>
+
+	<div class="container_comment_bottom_side">
+		<p class="comment_content mb-0">
+			{{ comment.text }}
+		</p>
+	</div>
+
+	<div class="container_comment_statistic">
+		{% include 'content/statistic/comment_statistic.html' with comment=comment %}
+	</div>
+</div>
+
+
+
+<div class="container_comment_tablet d-flex flex-column">
+	<div class="container_comment_up_side d-flex w-100">
+		<div class="container_comment_left_side">
+			{% if comment.author.avatar %}
+				<img src="{{ request.url }}/media/{{ comment.author.avatar }}" class="comment_profile_image">
+			{% else %}
+				<img class="comment_profile_image" src="{% static 'users/img/default.svg' %}">
+			{% endif %}
+		</div>
+
+		<div class="container_comment_right_side ms-3 d-flex align-items-center">
+			<p class="comment_username mb-0">
+				{{ comment.author }}
+			</p>
+		</div>
+	</div>
+
+	<div class="container_comment_middle_side">
+		{% if comment.isReply %}
+			<p class="comment_to_whom_reply mb-0">
+				Ответ {{ comment.toWhomReply.username }}
+			</p>
+		{% endif %}
+
+		<p class="comment_date_published mb-0">
+			{{ comment.dateCreate|date:"d b Y H:m" }}
+		</p>
+	</div>
+
+	<div class="container_comment_bottom_side">
+		<p class="comment_content mb-0">
+			{{ comment.text }}
+		</p>
+	</div>
+
+	<div class="container_comment_statistic">
+		{% include 'content/statistic/comment_statistic.html' with comment=comment %}
+	</div>
+</div>

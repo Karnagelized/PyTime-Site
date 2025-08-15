@@ -1,0 +1,33 @@
+{% load static %}
+
+<div class="container_comments">
+	{% if not comments %}
+		<div class="container_comment_not_commet">
+			<div class="container_comment_up_side d-flex justify-content-start">
+				<p class="comment_username mb-0 mx-0">
+					Administrator
+				</p>
+			</div>
+
+			<div class="container_comment_bottom_side">
+				<p class="comment_content mb-0">
+					Эту тему еще никто не комментировал. Может, именно Вы зададите тон обсуждению? Что скажете? Оставьте комментарий — Ваше мнение важно для нас!
+				</p>
+			</div>
+		</div>
+	{% else %}
+		{% for comment in comments %}
+			{% include 'comment.html' with comment=comment %}
+
+			{% include 'collapse/content_reply_comment.html' with comment=comment %}
+
+			<div class="reply_comment_container">
+				{% for repliesComment in comment.getAllReplies %}
+					{% include 'comment.html' with comment=repliesComment %}
+
+					{% include 'collapse/content_reply_comment.html' with comment=repliesComment %}
+				{% endfor %}
+			</div>
+		{% endfor %}
+	{% endif %}
+</div>

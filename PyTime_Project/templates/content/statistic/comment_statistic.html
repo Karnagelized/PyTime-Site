@@ -1,0 +1,72 @@
+{% load static %}
+
+<div class="comment_statistic_container">
+	<div class="statistic_container_left_side d-flex">
+		<div class="content_likes me-4 d-flex">
+			<form action="{% url 'likeComment' %}" method="POST" class="d-flex align-items-center">
+				{% csrf_token %}
+
+				<input type="hidden" name="commentType" value="{{ comment.contentType }}">
+				<input type="hidden" name="commentSlug" value="{{ comment.contentSlug }}">
+				<input type="hidden" name="commentID" value="{{ comment.pk }}">
+
+				{% if request.user.is_authenticated %}
+					{% if request.user in comment.likes.all %}
+						<button type="submit" class="statistic_liked_button">
+							{% include 'icons/finger_like.html' %}
+						</button>
+					{% else %}
+						<button type="submit" class="statistic_like_button">
+							{% include 'icons/finger_like.html' %}
+						</button>
+					{% endif %}
+				{% else %}
+					<button type="button" class="statistic_like_button" data-bs-toggle="modal" data-bs-target="#authForLike">
+						{% include 'icons/finger_like.html' %}
+					</button>
+				{% endif %}
+
+				<p class="statistic_text mb-0">
+					{{ comment.getCountLikes }}
+				</p> 
+			</form>
+		</div>
+
+		<div class="content_dislikes me-4 d-flex">
+			<form action="{% url 'dislikeComment' %}" method="POST" class="d-flex align-items-center">
+				{% csrf_token %}
+
+				<input type="hidden" name="commentType" value="{{ comment.contentType }}">
+				<input type="hidden" name="commentSlug" value="{{ comment.contentSlug }}">
+				<input type="hidden" name="commentID" value="{{ comment.pk }}">
+
+				{% if request.user.is_authenticated %}
+					{% if request.user in comment.dislikes.all %}
+						<button type="submit" class="statistic_liked_button">
+							{% include 'icons/finger_dislike.html' %}
+						</button>
+					{% else %}
+						<button type="submit" class="statistic_like_button">
+							{% include 'icons/finger_dislike.html' %}
+						</button>
+					{% endif %}
+				{% else %}
+					<button type="button" class="statistic_like_button" data-bs-toggle="modal" data-bs-target="#authForDislike">
+						{% include 'icons/finger_dislike.html' %}
+					</button>
+				{% endif %}
+
+				<p class="statistic_text mb-0">
+					{{ comment.getCountDislikes }}
+				</p> 
+			</form>
+		</div>
+
+		<button type="button" class="content_reply_comment" data-bs-toggle="collapse" data-bs-target="#collapseExample_{{ comment.pk }}" aria-expanded="false" aria-controls="collapseExample_{{ comment.pk }}">
+			Ответить
+		</button>
+	</div>
+</div>
+
+{%  include 'modalWindows/need_authorization_for_like.html' %}
+{%  include 'modalWindows/need_authorization_for_dislike.html' %}

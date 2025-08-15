@@ -33,6 +33,7 @@ urlpatterns = [
     path('', include('apps.projects.urls')),
     path('', include('apps.articles.urls')),
     path('', include('apps.likes.urls')),
+    path('', include('apps.comments.urls')),
 ]
 
 

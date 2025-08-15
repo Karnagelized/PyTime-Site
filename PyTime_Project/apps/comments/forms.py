@@ -1,6 +1,7 @@
 
 from django import forms
 from apps.comments.models import Comment
+from better_profanity import profanity
 
 
 # Форма для блока с написанием комментария
@@ -17,6 +18,16 @@ class WriteCommentForm(forms.ModelForm):
             }
         )
     )
+
+
+    def clean_content(self):
+        content = self.cleaned_data['content']
+        print(content)
+
+        clean_content = profanity.censor(content, '*')
+        print(clean_content)
+
+        return clean_content
 
 
     class Meta:
