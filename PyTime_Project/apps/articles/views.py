@@ -69,11 +69,12 @@ class ArticlePageView(View):
 
             return render(request, 'article_page.html', context=pageData)
 
+        # TODO Дописать тест, когда появится валидация комментария
         # Форма не прошла валидацию
-        if not commentForm.is_valid():
-            pageData['writeCommentForm'] = commentForm
-
-            return render(request, 'project_page.html', context=pageData)
+        # if not commentForm.is_valid():
+        #     pageData['writeCommentForm'] = commentForm
+        #
+        #     return render(request, 'article_page.html', context=pageData)
 
         # Сохраняем комментарий
         newComment = commentForm.save(commit=False)

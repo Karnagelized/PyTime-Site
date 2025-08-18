@@ -16,8 +16,10 @@ class ProjectAdmin(admin.ModelAdmin):
     list_editable = ('isPublished',)
     ordering = ('-datetimeCreate',)
 
+
     def view_on_site(self, obj):
         return obj.get_absolute_url()
+
 
     class Media:
         css = {

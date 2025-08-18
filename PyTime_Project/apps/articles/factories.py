@@ -9,6 +9,7 @@ from apps.users.factories import UserCustomFactory
 # Фабрика для генерации информации о Статье
 class ArticleFactory(factory.django.DjangoModelFactory):
     slug = factory.Sequence(lambda n: f"articleSlug_{n}")
+    image = factory.django.ImageField()
 
 
     @factory.post_generation

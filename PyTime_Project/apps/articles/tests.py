@@ -4,6 +4,61 @@ from apps.users.factories import UserCustomFactory
 from apps.articles.factories import ArticleFactory
 from django.urls import reverse
 from apps.comments.forms import WriteCommentForm
+from apps.articles.models import Article
+from django.test import RequestFactory
+from apps.skills.factories import HardSkillsFactory
+from apps.articles.admin import ArticleAdmin
+from django.contrib.admin import AdminSite
+
+
+# Тестирование модели статей
+class ArticleModelTestCase(TestCase):
+    def test_str_dunder(self):
+        """
+            Тестируем правильный вывод str метода
+        """
+
+        article = ArticleFactory(
+            title='TitleArticle',
+        )
+
+        self.assertEquals(article.__str__(), 'TitleArticle')
+
+
+# Тестирование Админки для модели Статей
+class AdminArticleTestCase(TestCase):
+    def setUp(self):
+        self.site = AdminSite()
+        self.admin = ArticleAdmin(Article, self.site)
+        self.request = RequestFactory().get('/admin/')
+
+
+    # TODO Дописать тест для проверки Админки
+    # def test_tags_display(self):
+    #     """
+    #         Тестируем вывод тегов в Админке
+    #     """
+    #
+    #     article = ArticleFactory(tags=[])
+    #     self.assertEquals(self.admin.tagsDisplay(), '')
+    #
+    #     article = ArticleFactory(tags=[HardSkillsFactory(name='Skill_1')])
+    #     self.assertEquals(self.admin.tagsDisplay(), 'Skill_1')
+    #
+    #     article = ArticleFactory(tags=[
+    #         HardSkillsFactory(name='Skill_1'),
+    #         HardSkillsFactory(name='Skill_2')
+    #     ])
+    #     self.assertEquals(self.admin.tagsDisplay(), 'Skill_1, Skill_2')
+
+
+    def test_view_on_site(self):
+        """
+            Тестируем что ссылка в Админке создаётся правильно
+        """
+
+        article = ArticleFactory()
+        self.assertEquals(self.admin.view_on_site(article), article.get_absolute_url())
 
 
 # Тестирование представления страницы с информацией о Статьях
@@ -13,11 +68,11 @@ class ArticleAboutViewTestCase(TestCase):
             Тестируем, что при POST запросе страница возвращает статус 405
         """
 
-        postResponse = self.client.post(
+        response = self.client.post(
             reverse('articlesPage'),
         )
 
-        self.assertEquals(postResponse.status_code, 405)
+        self.assertEquals(response.status_code, 405)
 
 
     def test_get_request_with_empty_params(self):
@@ -25,12 +80,12 @@ class ArticleAboutViewTestCase(TestCase):
             Тестируем, что страница вернет статус 200 без переданных параметров
         """
 
-        postResponse = self.client.get(
+        response = self.client.get(
             reverse('articlesPage'),
             context={},
         )
 
-        self.assertEquals(postResponse.status_code, 200)
+        self.assertEquals(response.status_code, 200)
 
 
     def test_get_request_with_invalid_params(self):
@@ -38,7 +93,7 @@ class ArticleAboutViewTestCase(TestCase):
             Тестируем, что страница вернет статус 200 с неверными параметрами
         """
 
-        postResponse = self.client.get(
+        response = self.client.get(
             reverse('articlesPage'),
             context={
                 'navigationSelected': 'Invalid',
@@ -48,7 +103,7 @@ class ArticleAboutViewTestCase(TestCase):
             },
         )
 
-        self.assertEquals(postResponse.status_code, 200)
+        self.assertEquals(response.status_code, 200)
 
 
     def test_get_request_with_valid_params(self):
@@ -56,7 +111,7 @@ class ArticleAboutViewTestCase(TestCase):
             Тестируем, что страница вернет статус 200 с верными параметрами
         """
 
-        postResponse = self.client.get(
+        response = self.client.get(
             reverse('articlesPage'),
             context={
                 'navigationSelected': 'Articles',
@@ -65,7 +120,30 @@ class ArticleAboutViewTestCase(TestCase):
             },
         )
 
-        self.assertEquals(postResponse.status_code, 200)
+        self.assertEquals(response.status_code, 200)
+
+
+    def test_clear_image(self):
+        """
+            Тестируем, что если изображение посла будет отсутствовать в папке, изображение будет очищено
+        """
+
+        # Создаем 3 поста
+        for _ in range(3):
+            ArticleFactory()
+
+        # Последний 4-й пост
+        ArticleFactory(
+            image=''
+        )
+
+        response = self.client.get(reverse('articlesPage'))
+
+        self.assertContains(
+            response,
+            '<img src="/static/core/img/errors/imageNotFound.png" class="article_card_img">',
+            html=True
+        )
 
 
 # Тестирование представления страницы с карточками всех Статей
@@ -75,11 +153,11 @@ class ArticleListViewTestCase(TestCase):
             Тестируем, что при POST запросе страница возвращает статус 405
         """
 
-        postResponse = self.client.post(
+        response = self.client.post(
             reverse('allArticlesPage'),
         )
 
-        self.assertEquals(postResponse.status_code, 405)
+        self.assertEquals(response.status_code, 405)
 
 
     def test_get_request_with_empty_params(self):
@@ -87,12 +165,12 @@ class ArticleListViewTestCase(TestCase):
             Тестируем, что страница вернет статус 200 без переданных параметров
         """
 
-        postResponse = self.client.get(
+        response = self.client.get(
             reverse('allArticlesPage'),
             context={},
         )
 
-        self.assertEquals(postResponse.status_code, 200)
+        self.assertEquals(response.status_code, 200)
 
 
     def test_get_request_with_invalid_params(self):
@@ -100,7 +178,7 @@ class ArticleListViewTestCase(TestCase):
             Тестируем, что страница вернет статус 200 с неверными параметрами
         """
 
-        postResponse = self.client.get(
+        response = self.client.get(
             reverse('allArticlesPage'),
             context={
                 'allArticles': 'Invalid',
@@ -108,7 +186,7 @@ class ArticleListViewTestCase(TestCase):
             },
         )
 
-        self.assertEquals(postResponse.status_code, 200)
+        self.assertEquals(response.status_code, 200)
 
 
     def test_get_request_with_valid_params(self):
@@ -116,14 +194,14 @@ class ArticleListViewTestCase(TestCase):
             Тестируем, что страница вернет статус 200 с верными параметрами
         """
 
-        postResponse = self.client.get(
+        response = self.client.get(
             reverse('allArticlesPage'),
             context={
                 'allArticles': ArticleFactory.create_batch(20),
             },
         )
 
-        self.assertEquals(postResponse.status_code, 200)
+        self.assertEquals(response.status_code, 200)
 
 
 # Тестирование представления страницы Стати
@@ -139,11 +217,11 @@ class ArticlePageViewTestCase(TestCase):
             UserCustomFactory()
         )
 
-        getResponse = self.client.get(
+        response = self.client.get(
             reverse('articlePage', kwargs={'articleSlug': 'invalid-slug'}),
         )
 
-        self.assertEquals(getResponse.status_code, 404)
+        self.assertEquals(response.status_code, 404)
 
 
     def test_exist_page_returns_200(self):
@@ -154,11 +232,11 @@ class ArticlePageViewTestCase(TestCase):
 
         article = ArticleFactory()
 
-        getResponse = self.client.get(
+        response = self.client.get(
             reverse('articlePage', kwargs={'articleSlug': article.slug}),
         )
 
-        self.assertEquals(getResponse.status_code, 200)
+        self.assertEquals(response.status_code, 200)
 
 
     def test_page_with_invalid_params(self):
@@ -168,7 +246,7 @@ class ArticlePageViewTestCase(TestCase):
 
         article = ArticleFactory()
 
-        postResponse = self.client.get(
+        response = self.client.get(
             reverse('articlePage', kwargs={'articleSlug': article.slug}),
             context={
                 'articleData': 'Invalid',
@@ -178,7 +256,7 @@ class ArticlePageViewTestCase(TestCase):
             },
         )
 
-        self.assertEquals(postResponse.status_code, 200)
+        self.assertEquals(response.status_code, 200)
 
 
     def test_anonymous_prohibited_sending_form(self):
@@ -195,16 +273,16 @@ class ArticlePageViewTestCase(TestCase):
             'content': 'Test',
         }
 
-        postResponse = self.client.post(
+        response = self.client.post(
             reverse('articlePage', kwargs={'articleSlug': article.slug}),
             data=formData,
         )
 
         # Проверяем, что страница возвращает код 200
-        self.assertEquals(postResponse.status_code, 200)
+        self.assertEquals(response.status_code, 200)
 
         # Проверяем форму
-        self.assertIn('writeCommentForm', postResponse.context)
+        self.assertIn('writeCommentForm', response.context)
 
 
     def test_auth_user_send_valid_form(self):
@@ -223,7 +301,7 @@ class ArticlePageViewTestCase(TestCase):
             'content': 'Test',
         }
 
-        postResponse = self.client.post(
+        response = self.client.post(
             reverse('articlePage', kwargs={'articleSlug': article.slug}),
             follow=True,
             data=formData,
@@ -231,11 +309,11 @@ class ArticlePageViewTestCase(TestCase):
 
         # Проверяем, что страница возвращает код 302.
         # Произошло обновление страницы
-        self.assertEquals(postResponse.status_code, 200)
+        self.assertEquals(response.status_code, 200)
 
         # Проверяем форму
-        self.assertIn('comments', postResponse.context)
+        self.assertIn('comments', response.context)
         self.assertContains(
-            postResponse,
+            response,
             'Test'
         )

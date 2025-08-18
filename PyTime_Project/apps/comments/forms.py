@@ -22,10 +22,7 @@ class WriteCommentForm(forms.ModelForm):
 
     def clean_content(self):
         content = self.cleaned_data['content']
-        print(content)
-
         clean_content = profanity.censor(content, '*')
-        print(clean_content)
 
         return clean_content
 

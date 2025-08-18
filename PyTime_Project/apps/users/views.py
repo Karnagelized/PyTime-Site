@@ -36,6 +36,9 @@ class GenerateUserAvatar(View):
         user = request.user
         avatars = ProfileAvatarModel.objects.filter(isDefault=True).all()
 
+        if avatars.count() < 2:
+            return redirect('profilePage')
+
         if user.avatar and avatars.count() > 1:
             avatars = ProfileAvatarModel.objects.filter(isDefault=True).exclude(id=user.avatar.id).all()
 
@@ -51,7 +54,10 @@ class GenerateUserAvatar(View):
 
 # Представление страницы Профиля Пользователя
 class UserProfileView(View):
-    def post(self, request:HttpRequest, *args, **kwargs) -> HttpResponseNotAllowed:
+    def post(self, request:HttpRequest, *args, **kwargs) -> HttpResponse:
+        if request.user.is_anonymous:
+            return redirect('mainPage')
+
         firstName = request.POST.get('first_name')
         lastName = request.POST.get('last_name')
         aboutMe = request.POST.get('aboutMe')
@@ -60,7 +66,7 @@ class UserProfileView(View):
         user.first_name = firstName
         user.last_name = lastName
         user.aboutMe = aboutMe
-        user.save(force_update=['first_name', 'last_name', 'aboutMe'])
+        user.save(update_fields=['first_name', 'last_name', 'aboutMe'])
 
         return redirect('profilePage')
 

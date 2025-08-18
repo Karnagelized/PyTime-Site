@@ -12,11 +12,11 @@ class MainViewTestCase(TestCase):
             Тестируем, что при POST запросе страница возвращает статус 405
         """
 
-        postResponse = self.client.post(
+        response = self.client.post(
             reverse('mainPage'),
         )
 
-        self.assertEquals(postResponse.status_code, 405)
+        self.assertEquals(response.status_code, 405)
 
 
     def test_get_request_with_empty_params(self):
@@ -24,13 +24,13 @@ class MainViewTestCase(TestCase):
             Тестируем, что страница вернет статус 200 без переданных параметров
         """
 
-        getResponse = self.client.get(
+        response = self.client.get(
             reverse('mainPage'),
             context={},
         )
 
         # Проверяем код статуса
-        self.assertEquals(getResponse.status_code, 200)
+        self.assertEquals(response.status_code, 200)
 
 
     def test_get_request_with_invalid_params(self):
@@ -38,7 +38,7 @@ class MainViewTestCase(TestCase):
             Тестируем, что страница вернет статус 200 с неверными параметрами
         """
 
-        getResponse = self.client.get(
+        response = self.client.get(
             reverse('mainPage'),
             context={
                 'user': 'Invalid',
@@ -48,7 +48,7 @@ class MainViewTestCase(TestCase):
         )
 
         # Проверяем код статуса
-        self.assertEquals(getResponse.status_code, 200)
+        self.assertEquals(response.status_code, 200)
 
 
     def test_get_request_with_valid_params(self):
@@ -65,7 +65,7 @@ class MainViewTestCase(TestCase):
         ]
 
         for skillCategory in skillsCategoryData[::-1]:
-            getResponse = self.client.get(
+            response = self.client.get(
                 reverse('mainPage'),
                 context={
                     'user': UserCustomFactory(),
@@ -74,7 +74,7 @@ class MainViewTestCase(TestCase):
             )
 
             # Проверяем код статуса
-            self.assertEquals(getResponse.status_code, 200)
+            self.assertEquals(response.status_code, 200)
 
 
 # Тестирование представления страницы с Резюме
@@ -84,11 +84,11 @@ class ResumeViewTestCase(TestCase):
             Тестируем, что при POST запросе страница возвращает статус 405
         """
 
-        postResponse = self.client.post(
+        response = self.client.post(
             reverse('resumePage'),
         )
 
-        self.assertEquals(postResponse.status_code, 405)
+        self.assertEquals(response.status_code, 405)
 
 
     def test_get_request_with_empty_params(self):
@@ -96,13 +96,13 @@ class ResumeViewTestCase(TestCase):
             Тестируем, что страница вернет статус 200 без переданных параметров
         """
 
-        getResponse = self.client.get(
+        response = self.client.get(
             reverse('resumePage'),
             context={},
         )
 
         # Проверяем код статуса
-        self.assertEquals(getResponse.status_code, 200)
+        self.assertEquals(response.status_code, 200)
 
 
     def test_get_request_with_invalid_params(self):
@@ -110,7 +110,7 @@ class ResumeViewTestCase(TestCase):
             Тестируем, что страница вернет статус 200 с неверными параметрами
         """
 
-        getResponse = self.client.get(
+        response = self.client.get(
             reverse('resumePage'),
             context={
                 'navigationSelected': 'Invalid',
@@ -120,7 +120,7 @@ class ResumeViewTestCase(TestCase):
         )
 
         # Проверяем код статуса
-        self.assertEquals(getResponse.status_code, 200)
+        self.assertEquals(response.status_code, 200)
 
 
     def test_get_request_with_valid_params(self):
@@ -137,7 +137,7 @@ class ResumeViewTestCase(TestCase):
         ]
 
         for skillCategory in skillsCategoryData:
-            getResponse = self.client.get(
+            response = self.client.get(
                 reverse('resumePage'),
                 context={
                     'navigationSelected': 'Resume',
@@ -146,21 +146,25 @@ class ResumeViewTestCase(TestCase):
             )
 
             # Проверяем код статуса
-            self.assertEquals(getResponse.status_code, 200)
+            self.assertEquals(response.status_code, 200)
 
 
 # Тестирование представления Пользовательского соглашения
 class UserAgreementsViewTestCase(TestCase):
+    def setUp(self):
+        self.client.logout()
+
+
     def test_post_request_not_allowed(self):
         """
             Тестируем, что при POST запросе страница возвращает статус 405
         """
 
-        postResponse = self.client.post(
+        response = self.client.post(
             reverse('userAgreement'),
         )
 
-        self.assertEquals(postResponse.status_code, 405)
+        self.assertEquals(response.status_code, 405)
 
 
     def test_get_request_with_empty_params(self):
@@ -168,25 +172,29 @@ class UserAgreementsViewTestCase(TestCase):
             Тестируем, что при GET запросе страница возвращает статус 200
         """
 
-        postResponse = self.client.get(
+        response = self.client.get(
             reverse('userAgreement'),
         )
 
-        self.assertEquals(postResponse.status_code, 200)
+        self.assertEquals(response.status_code, 200)
 
 
 # Тестирование представления Политики конфиденциальности
 class PrivacyViewTestCase(TestCase):
+    def setUp(self):
+        self.client.logout()
+
+
     def test_post_request_not_allowed(self):
         """
             Тестируем, что при POST запросе страница возвращает статус 405
         """
 
-        postResponse = self.client.post(
+        response = self.client.post(
             reverse('privacy'),
         )
 
-        self.assertEquals(postResponse.status_code, 405)
+        self.assertEquals(response.status_code, 405)
 
 
     def test_get_request_with_empty_params(self):
@@ -194,11 +202,41 @@ class PrivacyViewTestCase(TestCase):
             Тестируем, что при GET запросе страница возвращает статус 200
         """
 
-        postResponse = self.client.get(
+        response = self.client.get(
             reverse('privacy'),
         )
 
-        self.assertEquals(postResponse.status_code, 200)
+        self.assertEquals(response.status_code, 200)
+
+
+# Тестирование представления страницы контактов
+class ContactViewTestCase(TestCase):
+    def setUp(self):
+        self.client.logout()
+
+
+    def test_post_request_not_allowed(self):
+        """
+            Тестируем, что POST запрос отключен и возвращает статус 405
+        """
+
+        response = self.client.post(
+            reverse('contactPage'),
+        )
+
+        self.assertEquals(response.status_code, 405)
+
+
+    def test_get_request_not_allowed(self):
+        """
+            Тестируем, что страницы не существует и страница возвращает статус 404
+        """
+
+        response = self.client.get(
+            reverse('contactPage'),
+        )
+
+        self.assertEquals(response.status_code, 404)
 
 
 # Тестирование представления страницы 400 ошибки - Bad request
@@ -208,11 +246,11 @@ class BadRequestViewTestCase(TestCase):
             Тестируем, что при POST запросе страница возвращает статус 405
         """
 
-        postResponse = self.client.post(
+        response = self.client.post(
             reverse('badRequest'),
         )
 
-        self.assertEquals(postResponse.status_code, 405)
+        self.assertEquals(response.status_code, 405)
 
 
     def test_get_request_with_empty_params(self):
@@ -220,25 +258,29 @@ class BadRequestViewTestCase(TestCase):
             Тестируем, что при GET запросе страница возвращает статус 400
         """
 
-        postResponse = self.client.get(
+        response = self.client.get(
             reverse('badRequest'),
         )
 
-        self.assertEquals(postResponse.status_code, 400)
+        self.assertEquals(response.status_code, 400)
 
 
 # Тестирование представления страницы 403 ошибки - Forbidden
 class ForbiddenViewTestCase(TestCase):
+    def setUp(self):
+        self.client.logout()
+
+
     def test_post_request_not_allowed(self):
         """
             Тестируем, что при POST запросе страница возвращает статус 405
         """
 
-        postResponse = self.client.post(
+        response = self.client.post(
             reverse('forbidden'),
         )
 
-        self.assertEquals(postResponse.status_code, 405)
+        self.assertEquals(response.status_code, 405)
 
 
     def test_get_request_with_empty_params(self):
@@ -246,25 +288,29 @@ class ForbiddenViewTestCase(TestCase):
             Тестируем, что при GET запросе страница возвращает статус 403
         """
 
-        postResponse = self.client.get(
+        response = self.client.get(
             reverse('forbidden'),
         )
 
-        self.assertEquals(postResponse.status_code, 403)
+        self.assertEquals(response.status_code, 403)
 
 
 # Тестирование представления страницы 404 ошибки - Page not found
 class PageNotFoundViewTestCase(TestCase):
+    def setUp(self):
+        self.client.logout()
+
+
     def test_post_request_not_allowed(self):
         """
             Тестируем, что при POST запросе страница возвращает статус 405
         """
 
-        postResponse = self.client.post(
+        response = self.client.post(
             reverse('pageNotFound'),
         )
 
-        self.assertEquals(postResponse.status_code, 405)
+        self.assertEquals(response.status_code, 405)
 
 
     def test_get_request_with_empty_params(self):
@@ -272,25 +318,29 @@ class PageNotFoundViewTestCase(TestCase):
             Тестируем, что при GET запросе страница возвращает статус 404
         """
 
-        postResponse = self.client.get(
+        response = self.client.get(
             reverse('pageNotFound'),
         )
 
-        self.assertEquals(postResponse.status_code, 404)
+        self.assertEquals(response.status_code, 404)
 
 
 # Тестирование представления страницы 500 ошибки - Internal server error
 class InternalServerErrorViewTestCase(TestCase):
+    def setUp(self):
+        self.client.logout()
+
+
     def test_post_request_not_allowed(self):
         """
             Тестируем, что при POST запросе страница возвращает статус 405
         """
 
-        postResponse = self.client.post(
+        response = self.client.post(
             reverse('internalServerError'),
         )
 
-        self.assertEquals(postResponse.status_code, 405)
+        self.assertEquals(response.status_code, 405)
 
 
     def test_get_request_with_empty_params(self):
@@ -298,25 +348,29 @@ class InternalServerErrorViewTestCase(TestCase):
             Тестируем, что при GET запросе страница возвращает статус 500
         """
 
-        postResponse = self.client.get(
+        response = self.client.get(
             reverse('internalServerError'),
         )
 
-        self.assertEquals(postResponse.status_code, 500)
+        self.assertEquals(response.status_code, 500)
 
 
 # Тестирование представления страницы 503 ошибки - Service is unavailable
 class ServiceIsUnavailableViewTestCase(TestCase):
+    def setUp(self):
+        self.client.logout()
+
+
     def test_post_request_not_allowed(self):
         """
             Тестируем, что при POST запросе страница возвращает статус 405
         """
 
-        postResponse = self.client.post(
+        response = self.client.post(
             reverse('serviceUnavailable'),
         )
 
-        self.assertEquals(postResponse.status_code, 405)
+        self.assertEquals(response.status_code, 405)
 
 
     def test_get_request_with_empty_params(self):
@@ -324,9 +378,9 @@ class ServiceIsUnavailableViewTestCase(TestCase):
             Тестируем, что при GET запросе страница возвращает статус 503
         """
 
-        postResponse = self.client.get(
+        response = self.client.get(
             reverse('serviceUnavailable'),
         )
 
-        self.assertEquals(postResponse.status_code, 503)
+        self.assertEquals(response.status_code, 503)
 
