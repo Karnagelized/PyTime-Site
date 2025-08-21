@@ -48,6 +48,7 @@ INSTALLED_APPS = [
     'django_bleach',
     'ckeditor',
     'ckeditor_uploader',
+    'django_recaptcha',
     'apps.core',
     'apps.users',
     'apps.tags',
@@ -56,6 +57,7 @@ INSTALLED_APPS = [
     'apps.projects',
     'apps.comments',
     'apps.likes',
+    'apps.mail',
 ]
 
 AUTH_USER_MODEL = 'users.CustomUser'
@@ -308,3 +310,23 @@ BLEACH_STRIP_COMMENTS = True
 
 # Profanity Settings
 profanity.load_censor_words_from_file(BASE_DIR / 'profanity/config.txt')
+
+
+
+# reCapcha
+RECAPTCHA_PUBLIC_KEY = env('RECAPTCHA_PUBLIC_KEY')
+RECAPTCHA_PRIVATE_KEY = env('RECAPTCHA_PRIVATE_KEY')
+
+if DEBUG:
+    RECAPTCHA_PUBLIC_KEY = env('RECAPTCHA_PUBLIC_KEY_DEV')
+    RECAPTCHA_PRIVATE_KEY = env('RECAPTCHA_PRIVATE_KEY_DEV')
+
+
+
+# Email settings
+EMAIL_HOST = env('EMAIL_HOST')
+EMAIL_PORT = env('EMAIL_PORT')
+EMAIL_HOST_USER = env('EMAIL_HOST_USER')
+EMAIL_HOST_PASSWORD = env('EMAIL_HOST_PASSWORD')
+EMAIL_USE_SSL = True
+EMAIL_ROOT = 'pytime@mail.ru'

@@ -1,14 +1,14 @@
 <div class="block_button_white_background d-flex">
 	{% if id_name %}
-		<a href="#{{ id_name }}" class="button_white_background w-100 d-flex align-items-center justify-content-center">
+		<a href="#{{ id_name }}" name="{% if buttonName %}{{ buttonName }}{% else %}Not-given{% endif %}" class="button_white_background w-100 d-flex align-items-center justify-content-center">
 			{{ name }}
 		</a>
 	{% elif url_name %}
-		<a href="{{ url_name }}" class="button_white_background w-100 d-flex align-items-center justify-content-center">
+		<a href="{{ url_name }}" name="{% if buttonName %}{{ buttonName }}{% else %}Not-given{% endif %}" class="button_white_background w-100 d-flex align-items-center justify-content-center">
 			{{ name }}
 		</a>
 	{% else %}
-		<a href="/notFoundURL" class="button_white_background w-100 d-flex align-items-center justify-content-center">
+		<a href="/notFoundURL" name="{% if buttonName %}{{ buttonName }}{% else %}Not-given{% endif %}" class="button_white_background w-100 d-flex align-items-center justify-content-center">
 			{{ name }}
 		</a>
 	{% endif %}

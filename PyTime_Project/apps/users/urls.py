@@ -2,7 +2,7 @@
 from django.urls import path
 from apps.users.views import (
     UserProfileView, GenerateUserAvatar, UploadUserAvatar,
-    LoginUserView, LogoutUserView, RegistrationUserView,
+    LoginUserView, LogoutUserView, RegistrationUserView, NeedVerifyEmailView,
     passwordResetEnterMail, passwordResetEnterCode, passwordResetEnterNewPassword
 )
 from PyTime_Project.settings import DEBUG
@@ -17,6 +17,7 @@ urlpatterns = [
     path('login', LoginUserView.as_view(), name='loginUser'),
     path('logout', LogoutUserView.as_view(), name='logoutUser'),
     path('registration', RegistrationUserView.as_view(), name='registrationUser'),
+    path('need-verify-email', NeedVerifyEmailView.as_view(), name='needVerifyEmail'),
 ]
 
 if DEBUG:

@@ -1,10 +1,10 @@
 <div class="block_submit_black_background d-flex">
 	{% if isSubmit %}
-		<button type="submit" class="submit_black_background w-100 d-flex align-items-center justify-content-center">
+		<button type="submit" name="{% if buttonName %}{{ buttonName }}{% else %}Not-given{% endif %}" class="submit_black_background w-100 d-flex align-items-center justify-content-center">
 			{{ name }}
 		</button>
 	{% else %}
-		<button type="button" class="submit_black_background w-100 d-flex align-items-center justify-content-center">
+		<button type="button" name="{% if buttonName %}{{ buttonName }}{% else %}Not-given{% endif %}" class="submit_black_background w-100 d-flex align-items-center justify-content-center">
 			{{ name }}
 		</button>
 	{% endif %}

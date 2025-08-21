@@ -1,16 +1,24 @@
 
 from django.contrib.auth import login, logout
 from django.http import HttpRequest, HttpResponseNotAllowed
-from django.shortcuts import render, HttpResponse, redirect, reverse
-from apps.users.forms import UserLoginForm, UserRegistrationForm, ProfileForm, AvatarProfileForm
-from apps.users.models import ProfileAvatarModel
+from django.shortcuts import render, HttpResponse, redirect
+from apps.users.forms import (
+    UserLoginForm, UserRegistrationForm, ProfileForm, AvatarProfileForm, UserVerifyEmail,
+)
+from apps.users.models import ProfileAvatarModel, EmailVerification, CustomUser
 from apps.users.backends import EmailAuthBackend
 from django.views import View
 from random import choice
+from mixins.authenticated import LoginRequiredMixin
+from apps.mail.models import VerifyEmail
 
 
-# Загрузка собственного аватара Пользователю
+
 class UploadUserAvatar(View):
+    """
+        Представление для загрузки пользовательского аватара в профиль Пользователя
+    """
+
     def post(self, request:HttpRequest) -> HttpResponse:
         user = request.user
         form = AvatarProfileForm(request.POST, request.FILES)
@@ -30,8 +38,12 @@ class UploadUserAvatar(View):
         return HttpResponseNotAllowed(['GET'])
 
 
-# Генерация существующего аватара Пользователю
+
 class GenerateUserAvatar(View):
+    """
+        Представление для установки существующего аватара Пользователя
+    """
+
     def post(self, request:HttpRequest) -> HttpResponse:
         user = request.user
         avatars = ProfileAvatarModel.objects.filter(isDefault=True).all()
@@ -52,32 +64,28 @@ class GenerateUserAvatar(View):
         return HttpResponseNotAllowed(['GET'])
 
 
-# Представление страницы Профиля Пользователя
-class UserProfileView(View):
+
+class UserProfileView(LoginRequiredMixin, View):
+    """
+        Представление страницы профиля Пользователя на сайте
+    """
+
     def post(self, request:HttpRequest, *args, **kwargs) -> HttpResponse:
-        if request.user.is_anonymous:
-            return redirect('mainPage')
+        form = ProfileForm(user=request.user, data=request.POST, *args, **kwargs)
 
-        firstName = request.POST.get('first_name')
-        lastName = request.POST.get('last_name')
-        aboutMe = request.POST.get('aboutMe')
+        # Валидация формы
+        if not form.is_valid():
+            return render(request, 'profile.html', context={'profileForm': form})
 
-        user = request.user
-        user.first_name = firstName
-        user.last_name = lastName
-        user.aboutMe = aboutMe
-        user.save(update_fields=['first_name', 'last_name', 'aboutMe'])
+        form.save()
 
         return redirect('profilePage')
 
 
     def get(self, request:HttpRequest, *args, **kwargs) -> HttpResponse:
-        if request.user.is_anonymous:
-            return redirect('mainPage')
-
         # Форма редактируемая Пользователем
         avatarForm = AvatarProfileForm()
-        profileForm = ProfileForm(request.user)
+        profileForm = ProfileForm(user=request.user)
         generateAvatars = ProfileAvatarModel.objects.filter(isDefault=True).all()
 
         # Выбор раздела навигации
@@ -93,8 +101,12 @@ class UserProfileView(View):
         return render(request, 'profile.html', context=pageData)
 
 
-# Представление регистрации Пользователя
+
 class RegistrationUserView(View):
+    """
+        Представление регистрации Пользователя на сайте
+    """
+
     def post(self, request:HttpRequest, *args, **kwargs) -> HttpResponse:
         registrationForm = UserRegistrationForm(request.POST)
 
@@ -110,10 +122,30 @@ class RegistrationUserView(View):
 
         # Создаём объект Пользователя без сохранения в БД
         newUser = registrationForm.save(commit=False)
+        newUser.is_active = False
         newUser.set_password(registrationForm.cleaned_data['password'])
         newUser.save()
 
-        return redirect('loginUser')
+        # Отправляем на почту код подтверждения
+        successSendEmail = VerifyEmail.send(
+            user=newUser,
+        )
+
+        if not successSendEmail:
+            newUser.delete()
+
+            registrationForm.add_error(
+                'email',
+                'Почта не существует или введена неправильно.'
+            )
+
+            return render(request, 'registration.html', context=pageData)
+
+        # Сохраняем в сессии Email
+        self.request.session['userEmail'] = newUser.email
+        self.request.session['needEmailVerification'] = True
+
+        return redirect('needVerifyEmail')
 
 
     def get(self, request:HttpRequest, *args, **kwargs) -> HttpResponse:
@@ -129,8 +161,136 @@ class RegistrationUserView(View):
         return render(request, 'registration.html', context=pageData)
 
 
-# Представление авторизации Пользователя
+
+class NeedVerifyEmailView(View):
+    """
+        Класс для представления о необходимости подтвердить почту
+    """
+
+    def post(self, request:HttpRequest, *args, **kwargs) -> HttpResponse:
+        """
+            Обработка подтверждения почты Пользователя на странице подтверждения почты
+        """
+
+        # Обработка нажатия кнопки с заменой кода
+        if 'resendCode' in request.POST:
+            return self.__sendCodeAgain(request, *args, **kwargs)
+
+        userEmail = self.request.session['userEmail']
+        user = CustomUser.objects.filter(email=userEmail).first()
+        verificationCode = EmailVerification.objects.filter(user=user).first()
+        form = UserVerifyEmail(request.POST)
+
+        pageData = {
+            'title': f'Подтверждение почты | PyTime',
+            'og_description': f'Подтверждение почты для авторизации в аккаунт.',
+            'verifyForm': form,
+        }
+
+        if not form.is_valid():
+            return render(request, 'verify_email.html', context=pageData)
+
+        # Код действителен не более чем 15 минут
+        if verificationCode.isExpired():
+            form.add_error(
+                'code',
+                'Код больше не действителен.',
+            )
+
+            return render(request, 'verify_email.html', context=pageData)
+
+        if int(verificationCode.code) != int(form.cleaned_data['code']):
+            form.add_error(
+                'code',
+                'Код не совпадает.',
+            )
+
+            return render(request, 'verify_email.html', context=pageData)
+
+        verificationCode.delete()
+        user.is_active = True
+        user.save(update_fields=['is_active'])
+
+        userAuthenticate = EmailAuthBackend().authenticate(request, email=userEmail, password=user.password)
+
+        # Аутентификация не прошла
+        if not user or not user.is_authenticated:
+            form = UserLoginForm()
+
+            form.add_error(
+                'email',
+                'Ошибка авторизации.'
+            )
+
+            pageData = {
+                'title': f'Авторизация | PyTime',
+                'og_description': f'Вход в личный кабинет с помощью email и пароля.',
+                'navigationSelected': 'Authorization',
+                'loginForm': form,
+            }
+
+            return render(request, 'authorization.html', context=pageData)
+
+        # Авторизуем Пользователя
+        login(request, user=user)
+
+        # Удаляем из сессии userEmail и needEmailVerification Пользователя
+        self.request.session.delete('userEmail')
+        self.request.session.delete('needEmailVerification')
+
+        return redirect('mainPage')
+
+
+    def __sendCodeAgain(self, request:HttpRequest, *args, **kwargs) -> HttpResponse:
+        """
+            Отправка кода повторно на почту Пользователя
+        """
+
+        userEmail = self.request.session['userEmail']
+        user = CustomUser.objects.filter(email=userEmail).first()
+        form = UserVerifyEmail()
+
+        pageData = {
+            'title': f'Подтверждение почты | PyTime',
+            'og_description': f'Подтверждение почты для авторизации в аккаунт.',
+            'verifyForm': form,
+        }
+
+        # Отправляем на почту код подтверждения
+        successSendEmail = VerifyEmail.send(
+            user=user,
+        )
+
+        return self.get(request, *args, **kwargs)
+
+
+    def get(self, request:HttpRequest, *args, **kwargs) -> HttpResponse:
+        """
+            Обработка страницы подтверждения почты
+        """
+
+        if request.user.is_authenticated:
+            return redirect('mainPage')
+
+        # Если Анонимный Пользователь зашёл на страницу подтверждения почты
+        if not self.request.session.get('needEmailVerification', False):
+            return redirect('mainPage')
+
+        pageData = {
+            'title': f'Подтверждение почты | PyTime',
+            'og_description': f'Подтверждение почты для авторизации в аккаунт.',
+            'verifyForm': UserVerifyEmail(),
+        }
+
+        return render(request, 'verify_email.html', context=pageData)
+
+
+
 class LoginUserView(View):
+    """
+        Представление для авторизации Пользователя на сайте
+    """
+
     def post(self, request:HttpRequest, *args, **kwargs) -> HttpResponse:
         pageData = {
             'title': f'Авторизация | PyTime',
@@ -151,6 +311,10 @@ class LoginUserView(View):
         password = loginForm.cleaned_data['password']
 
         user = EmailAuthBackend().authenticate(request, email=email, password=password)
+
+        # Требуется подтверждение почты
+        if user and not user.is_active:
+            return redirect('needVerifyEmail')
 
         # Аутентификация не прошла
         if not user or not user.is_authenticated:
@@ -178,8 +342,12 @@ class LoginUserView(View):
         return render(request, 'authorization.html', context=pageData)
 
 
-# Представление страницы выхода из профиля Пользователя
+
 class LogoutUserView(View):
+    """
+        Представление для выхода из профиля Пользователем на сайте
+    """
+
     def post(self, *args, **kwargs) -> HttpResponseNotAllowed:
         return HttpResponseNotAllowed(['GET'])
 
@@ -191,8 +359,13 @@ class LogoutUserView(View):
         return redirect('loginUser')
 
 
-# Страница для восстановления пароля Пользователя - Ввод почты
+
 def passwordResetEnterMail(request: HttpRequest) -> HttpResponse:
+    """
+        Представление для восстановления пароля Пользователем
+        Этап - ввод почты
+    """
+
     # Заглушка - В реализации
     return redirect('mainPage')
 
@@ -204,8 +377,13 @@ def passwordResetEnterMail(request: HttpRequest) -> HttpResponse:
     return render(request, 'recovery_password/enter_mail.html')
 
 
-# Страница для восстановления пароля Пользователя - Ввод кода
+
 def passwordResetEnterCode(request: HttpRequest) -> HttpResponse:
+    """
+        Представление для восстановления пароля Пользователем
+        Этап - ввод кода
+    """
+
     # Заглушка - В реализации
     return redirect('mainPage')
 
@@ -217,8 +395,13 @@ def passwordResetEnterCode(request: HttpRequest) -> HttpResponse:
     return render(request, 'recovery_password/confirm_mail_by_code.html')
 
 
-# Страница для восстановления пароля Пользователя - Ввод нового пароля
+
 def passwordResetEnterNewPassword(request: HttpRequest) -> HttpResponse:
+    """
+        Представление для восстановления пароля Пользователем
+        Этап - ввод нового пароля
+    """
+
     # Заглушка - В реализации
     return redirect('mainPage')
 

@@ -2,6 +2,9 @@
 from django.db import models
 from django.contrib.auth.models import AbstractUser
 from django_bleach.models import BleachField
+from apps.users.utils import UserModelUtils
+from django.utils.crypto import get_random_string
+from django.utils import timezone
 
 
 # Модель, для выбора аватаров Пользователя
@@ -26,25 +29,36 @@ class ProfileAvatarModel(models.Model):
 
 # Модель профиля Пользователя
 class CustomUser(AbstractUser):
+    username = models.CharField(
+        unique=True,
+        max_length=50,
+        default=UserModelUtils.get,
+        verbose_name='Никнейм'
+    )
+
+    email = models.EmailField(
+        unique=True,
+        verbose_name='Email'
+    )
+
     first_name = BleachField(
-        default='Anonymous',
+        default='',
         blank=True,
-        max_length=100,
+        max_length=80,
         verbose_name='Имя'
     )
 
     last_name = BleachField(
-        default='User',
+        default='',
         blank=True,
-        max_length=100,
+        max_length=80,
         verbose_name='Фамилия'
     )
 
     aboutMe = BleachField(
-        null=True,
         default='',
-        max_length=255,
         blank=True,
+        max_length=255,
         verbose_name='Обо мне'
     )
 
@@ -65,3 +79,57 @@ class CustomUser(AbstractUser):
 
     def __str__(self):
         return f'{self.username}'
+
+
+
+class EmailVerification(models.Model):
+    """
+        Модель, для хранения кодов подтверждения почты
+    """
+
+    user = models.ForeignKey(
+        CustomUser,
+        on_delete=models.CASCADE,
+        verbose_name='Пользователь',
+    )
+
+    code = models.CharField(
+        max_length=6,
+        verbose_name='Код подтверждения',
+    )
+
+    timeCreate = models.DateTimeField(
+        auto_now_add=True,
+    )
+
+
+    def isExpired(self, expiration_minutes:int=15) -> bool:
+        """
+            Проверяет, истек ли срок действия кода
+        """
+
+        return (timezone.now() - self.timeCreate).total_seconds() > 60 * 15
+
+
+    @classmethod
+    def create(cls, user:'CustomUser') -> 'EmailVerification':
+        """
+            Создает новый код для пользователя, удаляя старые
+        """
+
+        # Удаляем старые коды пользователя
+        cls.objects.filter(user=user).delete()
+
+        # Создаем новый код
+        code = get_random_string(6, '0123456789')
+        return cls.objects.create(user=user, code=code)
+
+
+    class Meta:
+        verbose_name = 'Пользователь'
+        verbose_name_plural = 'Пользователи'
+        ordering = ['-timeCreate']
+
+
+    def __str__(self):
+        return f'{self.user.username} - {self.code}'

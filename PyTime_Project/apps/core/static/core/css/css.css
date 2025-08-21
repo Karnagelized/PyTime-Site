@@ -73,6 +73,10 @@ ul {
     padding-inline-start: 0px;
 }
 
+input {
+    font-size: 1.05rem;
+}
+
 a {
     text-decoration: none;
     font-size: 1rem;
@@ -150,7 +154,6 @@ button {
     padding-top: 50px;
     padding-bottom: 50px;
 }
-
 
 .header_container_tablet,
 .main_greeting_tablet,
@@ -822,20 +825,20 @@ button {
     border-color: var(--form-error-color);
 }
 
+.errorlist {
+    margin-bottom: 5px;
+
+    li {
+        list-style-type: none;
+        text-decoration: underline;
+        color: var(--form-error-color);
+    } 
+}
+
 .authentication_form {
     .container_form_label {
         font-size: 1rem;
         margin-bottom: 5px;
-    }
-
-    ul {
-        margin-bottom: 5px;
-
-        li {
-            list-style-type: none;
-            text-decoration: underline;
-            color: var(--form-error-color);
-        } 
     }
 
     .button_submit {
@@ -855,18 +858,6 @@ button {
     .button_submit:hover {
         background-color: #FFFFFF;
         color: #000000;
-    }
-}
-
-.feedback_form {
-    ul {
-        margin-bottom: 5px;
-
-        li {
-            list-style-type: none;
-            text-decoration: underline;
-            color: var(--form-error-color);
-        } 
     }
 }
 
@@ -994,6 +985,21 @@ button {
 .modal-content {
     border-radius: var(--default-button-border-radius);
 }
+
+.verify-code-input {
+    letter-spacing: 10px;
+    margin-right: -10px;
+}
+
+.verify-code-input::placeholder {
+    letter-spacing: normal;
+}
+
+
+
+
+
+
 
 
 
@@ -1908,6 +1914,10 @@ button {
         .block_submit_white_background {
             margin-top: 20px;
         }
+    }
+
+    .authentication_block {
+        padding: 20px;
     }
 }
 
