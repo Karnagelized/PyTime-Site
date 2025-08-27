@@ -3,7 +3,7 @@ services:
     image: postgres:16.9-alpine
     container_name: database_dev
     env_file:
-      - ../.env
+      - .env
     environment:
       POSTGRES_DB: ${DB_NAME_DEV}
       POSTGRES_USER: ${DB_USER_DEV}
