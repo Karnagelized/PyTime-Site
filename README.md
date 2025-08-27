@@ -51,7 +51,7 @@
   <img src="./README/img/pages/Articles.png">  
 </p>
 <p align="center">
-  📰 Страница статей
+  📖 Страница статей
 </p>
 
 <br>
@@ -60,7 +60,7 @@
   <img src="./README/img/pages/Projects.png">  
 </p>
 <p align="center">
-  📌 Страница проектов
+  💼 Страница проектов
 </p>
 
 <br>
@@ -69,7 +69,7 @@
   <img src="./README/img/pages/Resume.png">  
 </p>
 <p align="center">
-  📄 Страница резюме
+  📝 Страница резюме
 </p>
 
 <br>
@@ -78,7 +78,7 @@
   <img src="./README/img/pages/Contact.png">  
 </p>
 <p align="center">
-  📄 Страница контактов
+  📧 Страница контактов
 </p>
 
 <br>
@@ -87,7 +87,7 @@
   <img src="./README/img/pages/Profile.png">  
 </p>
 <p align="center">
-  📄 Профиль Пользователя
+   🔐 Профиль Пользователя
 </p>
 
 ---
@@ -160,13 +160,16 @@
 Для тестирования использовалась технология `UnitTest`, а для отслеживания 
 покрытия кода тестами применялась библиотека `coverage`. В проекте достигнуто 
 `99% покрытия тестами`, что обеспечивает высокую надежность и стабильность 
-работы приложения. Тесты охватывают все основные модули, включая 
+работы приложения.
+
+Тесты охватывают все основные модули, включая 
 пользовательскую аутентификацию, работу с статьями и проектами, систему 
 комментариев и функционал электронной почты.
 
 <p align="center">
   <img src="./README/img/coverage/1.png">
   <img src="./README/img/coverage/2.png">
+  <img src="./README/img/coverage/3.png">
 </p>
 <p align="center">
   📈 Результаты покрытия тестами проекта
@@ -177,17 +180,17 @@
 
 ```
 PyTime Site
-├── LICENSE               # Лицензия
-├── docker-compose.yml    # Контеризация приложения
+├── LICENSE                   # Лицензия
+├── docker-compose.yml        # Контеризация приложения
 ├── README.md
 ├── .gitattributes
 ├── .gitignore
-├── README/               # Файлы для README.md
-├── conf/                 # Nginx конфиг
-├── dev_database/         # Контеризация тестовой БД
-└── PyTime_Project/       # Корневая папка проекта
-    ├── PyTime_Project/   # Основные файлы Django приложения
-    ├── apps/             # Директрория приложений
+├── README/                   # Файлы для README.md
+├── conf/                     # Nginx конфиг
+├── dev_database/             # Контеризация тестовой БД
+└── PyTime_Project/           # Корневая папка проекта
+    ├── PyTime_Project/       # Основные файлы Django приложения
+    ├── apps/                 # Директрория приложений
     │   ├── core/
     │   ├── users/
     │   ├── articles/
@@ -197,7 +200,7 @@ PyTime Site
     │   ├── skills/
     │   ├── mail/
     │   └── likes/
-    ├── servises/         # Директрория сервисов (В разработке)
+    ├── servises/             # Директрория сервисов (В разработке)
     │   ├── servises_1/
     │   ├── ...
     │   └── servises_N/
@@ -227,7 +230,7 @@ PyTime Site
 ---
 
 ### 🔗 Ссылки
-<div align="center" style="display: flex; justify-content: space-evenly">
+<div align="center">
     <a href="https://t.me/masikantonov" style="text-decoration:none;">
         <img src="https://img.shields.io/badge/Telegram-2CA5E0?style=for-the-badge&logo=telegram&logoColor=white"/>
     </a>
