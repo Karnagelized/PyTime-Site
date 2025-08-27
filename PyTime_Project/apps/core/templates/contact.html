@@ -1,0 +1,164 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}
+    {{ title }}
+{% endblock title %}
+
+{% block ogTags %}
+	{% include 'meta/og_tags.html' with title=title description=og_description %}
+{% endblock %}
+
+{% block main-container %}
+    <div class="main_content">
+		<div class="contact_short_container text-center d-flex flex-column align-items-center justify-content-center">
+            <p class="one_word_description">
+                Контакты
+            </p>
+
+		    <h2 class="container_title">
+		    	Свяжитесь со мной
+		    </h2>
+
+		    <p class="container_text mb-0">
+		    	Готов обсудить ваш проект, ответить на вопросы или просто пообщаться о технологиях. Выберите удобный способ связи ниже.
+		    </p>
+		</div>
+
+        <!-- Separator line -->
+        <hr class="content_separator">
+
+        <div class="content_container">
+        	<div class="container_up_side d-flex align-items-center justify-content-between">
+        		<div class="container_left_side">
+	                <p class="one_word_description">
+	                    Ответственность
+	                </p>
+
+	               	<h2 class="container_text">
+	                    Почему <u class="underline_title">стоит</u> со мной работать?
+	                </h2>
+
+	                <p class="container_text">
+	                    В мире Web-разработки важно не только качество кода, но и понимание бизнес-задач. Я стремлюсь создавать решения, которые не только технически безупречны, но и приносят реальную пользу бизнесу.
+	                </p>
+	        	</div>
+
+	        	<img class="container_image" src="/static/core/img/contact/contact.jpg">
+        	</div>
+
+        	<div class="container_bottom_side why_me_cards_block d-grid">
+		        {% include 'contact/why_me_cards.html' %}
+        	</div>
+        </div>
+
+        <div class="content_container_tablet d-flex flex-column align-items-center">
+        	<div class="container_up_side d-flex flex-column align-items-center">
+                <p class="one_word_description">
+                    Ответственность
+                </p>
+
+               	<h2 class="container_text">
+                    Почему <u class="underline_title">стоит</u> со мной работать?
+                </h2>
+
+                <p class="container_text text-center">
+                    В мире Web-разработки важно не только качество кода, но и понимание бизнес-задач. Я стремлюсь создавать решения, которые не только технически безупречны, но и приносят реальную пользу бизнесу.
+                </p>
+        	</div>
+
+        	<img class="container_image_tablet" src="/static/core/img/contact/contact.jpg">
+
+        	<div class="container_bottom_side why_me_cards_block d-grid">
+		        {% include 'contact/why_me_cards.html' %}
+        	</div>
+        </div>
+
+        <!-- Separator line -->
+        <hr class="content_separator">
+
+		<div class="contact_short_container">
+            <div class="container_up_side text-center d-flex flex-column align-items-center justify-content-center">
+            	<p class="one_word_description">
+	                Настойчивость
+	            </p>
+
+			    <h2 class="container_title">
+			    	Готовы начать проект?
+			    </h2>
+
+			    <p class="container_text mb-0">
+			    	Свяжитесь со мной любым удобным способом. Обычно я отвечаю в течение нескольких часов в рабочее время.
+			    </p>
+            </div>
+
+            <div class="container_bottom_side perseverance_contact_block d-grid pb-0">
+		        <div class="contact_card">
+		            <h4 class="contact_card_title mb-3">
+		            	Соблюдение сроков
+		            </h4>
+		            
+		            <p class="contact_card_text mb-0">
+		            	Точно оцениваю время реализации и строго придерживаюсь дедлайнов. Ваше время ценно, и я уважаю это, обеспечивая своевременную delivery проектов.
+		            </p>
+		        </div>
+
+		        <div class="contact_card">
+		            <h4 class="contact_card_title mb-3">
+		            	Непрерывное развитие
+		            </h4>
+		            
+		            <p class="contact_card_text mb-0">
+		            	Постоянно совершенствую навыки и изучаю новые технологии. Это позволяет предлагать актуальные и современные решения для ваших задач.
+		            </p>
+		        </div>
+
+		        <div class="contact_card">
+		            <h4 class="contact_card_title mb-3">
+		            	Партнерский подход
+		            </h4>
+		            
+		            <p class="contact_card_text mb-0">
+		            	Работаю как полноценный партнер, а не просто исполнитель. Вникаю в бизнес-задачи, предлагаю улучшения и решения, которые напрямую влияют на ваш успех.
+		            </p>
+		        </div>
+            </div>
+		</div>
+
+        <!-- Separator line -->
+        <hr class="content_separator">
+
+        {% if feedbackMessageForm %}
+	        <div class="contact_short_container">
+	        	<h2 class="mb-4 text-center">
+	        		Форма обратной связи
+	        	</h2>
+
+	        	<p class="container_text text-center mb-0">
+	        		Опишите вашу задачу, и я свяжусь с вами для обсуждения деталей и возможностей сотрудничества.
+	        	</p>
+
+	        	<div class="contact_form_block d-flex flex-column align-items-center pt-5">
+	        		{% if isSuccessSend %}
+	        			<div class="success_send_message_block">
+		        			<p class="success_send_message text-center mb-0">
+	        					Сообщение было успешно отправно Разработчику!
+	        				</p>
+	        			</div>
+
+	        		{% endif %}
+
+	        		<form action="" method="POST" class="contact_form">
+		        		{% csrf_token %}
+
+		        		{{ feedbackMessageForm }}
+
+		        		<div class="button_block d-flex justify-content-center">
+		    	    		{% include 'buttons/submit_black_background.html' with name='Отправить' isSubmit=1 %}
+		        		</div>
+		        	</form>
+	        	</div>
+	        </div>
+	    {% endif %}
+    </div>
+{% endblock main-container %}

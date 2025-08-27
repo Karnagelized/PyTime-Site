@@ -3,10 +3,15 @@ from typing import Union
 from django.contrib.auth import get_user_model
 from django.contrib.auth.backends import ModelBackend
 from django.contrib.auth.base_user import AbstractBaseUser
+from apps.users.models import CustomUser
 
 
 class EmailAuthBackend(ModelBackend):
-    def authenticate(self, request, email=None, password=None, **kwargs) -> Union[AbstractBaseUser, None]:
+    """
+        Кастомная система аутентификации Пользователя через почту
+    """
+
+    def authenticate(self, request, email=None, password=None, **kwargs) -> Union[CustomUser, None]:
         UserModel = get_user_model()
 
         try:

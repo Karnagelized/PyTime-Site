@@ -3,6 +3,10 @@ from time import time
 
 
 class UserModelUtils():
+    """
+        Утилиты для кастомной модели Пользователя
+    """
+
     @classmethod
     def get(cls) -> str:
         """

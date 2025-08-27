@@ -2,8 +2,12 @@
 from django.db import models
 
 
-# Модель для тегов
+
 class Tag(models.Model):
+    """
+        Модель Тегов
+    """
+
     name = models.CharField(max_length=50, unique=True, verbose_name='Название')
     datetimeCreate = models.DateTimeField(auto_now_add=True, verbose_name='Дата создания')
     datetimeUpdate = models.DateTimeField(auto_now=True, verbose_name='Дата изменения')

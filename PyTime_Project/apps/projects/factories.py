@@ -5,8 +5,12 @@ from numpy.random import random_integers
 from apps.tags.factories import TagFactory
 
 
-# Фабрика для генерации информации о Проекте
+
 class ProjectFactory(factory.django.DjangoModelFactory):
+    """
+        Фабрика для генерации информации о Проекте
+    """
+
     slug = factory.Sequence(lambda n: f"projectSlug_{n}")
 
 

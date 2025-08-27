@@ -8,8 +8,11 @@ from apps.comments.models import Comment
 from apps.comments.factories import CommentFactory
 
 
-# Тестирование представления страницы для лайков Статей
 class ArticleLikeTestCase(TestCase):
+    """
+        Тестирование представления страницы для лайков Статей
+    """
+
     def test_not_auth_user_add_like(self):
         """
             Тестируем, что не авторизованный Пользователь не может поставить лайк существующей статье
@@ -186,8 +189,12 @@ class ArticleLikeTestCase(TestCase):
         self.assertEqual(article.likes.count(), 0)
 
 
-# Тестирование представления страницы для лайков Проектов
+
 class ProjectLikeTestCase(TestCase):
+    """
+        Тестирование представления страницы для лайков Проектов
+    """
+
     def test_not_auth_user_add_like(self):
         """
             Тестируем, что не авторизованный Пользователь не может поставить лайк существующему проекту
@@ -364,15 +371,20 @@ class ProjectLikeTestCase(TestCase):
         self.assertEqual(project.likes.count(), 0)
 
 
-# Тестирование представления страницы для лайков Комментария
+
 class CommentLikeViewTestCase(TestCase):
+    """
+        Тестирование представления страницы для лайков Комментария
+    """
+
     def test_add_like_in_article(self):
         """
-            Тестируем, что не Пользователь может поставить лайк существующему комментарию у статьи
+            Тестируем, что Пользователь может поставить лайк существующему комментарию у статьи
         """
 
-        user = UserCustomFactory(username='CustomUser')
-        # replayedUser = UserCustomFactory(username='ReplayedUser')
+        user = UserCustomFactory(
+            username='CustomUser',
+        )
         self.client.force_login(user)
 
         article = ArticleFactory(slug='articleSlugTest')
@@ -419,12 +431,13 @@ class CommentLikeViewTestCase(TestCase):
 
     def test_add_like_with_dislike_in_article(self):
         """
-            Тестируем, что не Пользователь может поставить лайк существующему комментарию у статьи,
+            Тестируем, что Пользователь может поставить лайк существующему комментарию у статьи,
             где уже поставил дизлайк. В таком случае дизлайк уберётся, а лайк останется
         """
 
-        user = UserCustomFactory(username='CustomUser')
-        # replayedUser = UserCustomFactory(username='ReplayedUser')
+        user = UserCustomFactory(
+            username='CustomUser',
+        )
         self.client.force_login(user)
 
         article = ArticleFactory(slug='articleSlugTest')
@@ -471,11 +484,12 @@ class CommentLikeViewTestCase(TestCase):
 
     def test_add_like_in_project(self):
         """
-            Тестируем, что не Пользователь может поставить лайк существующему комментарию у проекта
+            Тестируем, что Пользователь может поставить лайк существующему комментарию у проекта
         """
 
-        user = UserCustomFactory(username='CustomUser')
-        # replayedUser = UserCustomFactory(username='ReplayedUser')
+        user = UserCustomFactory(
+            username='CustomUser',
+        )
         self.client.force_login(user)
 
         project = ProjectFactory(slug='projectSlugTest')
@@ -522,12 +536,13 @@ class CommentLikeViewTestCase(TestCase):
 
     def test_add_like_with_dislike_in_project(self):
         """
-            Тестируем, что не Пользователь может поставить лайк существующему комментарию у проекта,
+            Тестируем, что Пользователь может поставить лайк существующему комментарию у проекта,
             где уже поставил дизлайк. В таком случае дизлайк уберётся, а лайк останется
         """
 
-        user = UserCustomFactory(username='CustomUser')
-        # replayedUser = UserCustomFactory(username='ReplayedUser')
+        user = UserCustomFactory(
+            username='CustomUser',
+        )
         self.client.force_login(user)
 
         project = ProjectFactory(slug='projectSlugTest')
@@ -572,15 +587,20 @@ class CommentLikeViewTestCase(TestCase):
         self.assertEqual(comment.dislikes.count(), 0)
 
 
-# Тестирование представления страницы для дизлайков Комментария
+
 class CommentDislikeViewTestCase(TestCase):
+    """
+        Тестирование представления страницы для дизлайков Комментария
+    """
+
     def test_add_dislike_in_article(self):
         """
-            Тестируем, что не Пользователь может поставить дизлайк существующему комментарию у статьи
+            Тестируем, что Пользователь может поставить дизлайк существующему комментарию у статьи
         """
 
-        user = UserCustomFactory(username='CustomUser')
-        # replayedUser = UserCustomFactory(username='ReplayedUser')
+        user = UserCustomFactory(
+            username='CustomUser',
+        )
         self.client.force_login(user)
 
         article = ArticleFactory(slug='articleSlugTest')
@@ -627,12 +647,13 @@ class CommentDislikeViewTestCase(TestCase):
 
     def test_add_like_with_like_in_article(self):
         """
-            Тестируем, что не Пользователь может поставить дизлайк существующему комментарию у статьи,
+            Тестируем, что Пользователь может поставить дизлайк существующему комментарию у статьи,
             где уже поставил лайк. В таком случае лайк уберётся, а дизлайк останется
         """
 
-        user = UserCustomFactory(username='CustomUser')
-        # replayedUser = UserCustomFactory(username='ReplayedUser')
+        user = UserCustomFactory(
+            username='CustomUser',
+        )
         self.client.force_login(user)
 
         article = ArticleFactory(slug='articleSlugTest')
@@ -679,11 +700,12 @@ class CommentDislikeViewTestCase(TestCase):
 
     def test_add_like_in_project(self):
         """
-            Тестируем, что не Пользователь может поставить дизлайк существующему комментарию у проекта
+            Тестируем, что Пользователь может поставить дизлайк существующему комментарию у проекта
         """
 
-        user = UserCustomFactory(username='CustomUser')
-        # replayedUser = UserCustomFactory(username='ReplayedUser')
+        user = UserCustomFactory(
+            username='CustomUser',
+        )
         self.client.force_login(user)
 
         project = ProjectFactory(slug='projectSlugTest')
@@ -730,12 +752,13 @@ class CommentDislikeViewTestCase(TestCase):
 
     def test_add_like_with_dislike_in_project(self):
         """
-            Тестируем, что не Пользователь может поставить дизлайк существующему комментарию у проекта,
+            Тестируем, что Пользователь может поставить дизлайк существующему комментарию у проекта,
             где уже поставил лайк. В таком случае лайк уберётся, а дизлайк останется
         """
 
-        user = UserCustomFactory(username='CustomUser')
-        # replayedUser = UserCustomFactory(username='ReplayedUser')
+        user = UserCustomFactory(
+            username='CustomUser',
+        )
         self.client.force_login(user)
 
         project = ProjectFactory(slug='projectSlugTest')

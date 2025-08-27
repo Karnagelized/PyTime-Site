@@ -7,8 +7,11 @@ from ckeditor_uploader.fields import RichTextUploadingField
 from apps.comments.models import Comment
 
 
-# Модель для статей
+
 class Article(models.Model):
+    """
+        Модель Статей
+    """
     slug = models.SlugField(unique=True, verbose_name='Слаг')
     title = models.CharField(max_length=150, verbose_name='Заголовок')
     description = models.CharField(max_length=500, blank=True, verbose_name='Описание')
@@ -25,6 +28,7 @@ class Article(models.Model):
     objects = models.Manager()
     # Менеджер, возвращающий все опубликованные статьи
     published = PublishedManager()
+
 
     class Meta:
         verbose_name = 'Статья'

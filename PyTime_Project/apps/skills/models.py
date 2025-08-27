@@ -3,8 +3,12 @@ from django.db import models
 from apps.skills.managers import VisibleHardSkillsCategoryManager
 
 
-# Модель для Hard скиллов
+
 class HardSkills(models.Model):
+    """
+        Модель для Hard скиллов
+    """
+
     name = models.CharField(unique=True, blank=False, max_length=50, verbose_name='Название')
     isVisible = models.BooleanField(default=True, verbose_name='Видимость')
     dateCreate = models.DateTimeField(blank=False, auto_now_add=True, verbose_name='Дата создания')
@@ -19,8 +23,12 @@ class HardSkills(models.Model):
         return f'{self.name}'
 
 
-# Модель для категорий Hard скиллов
+
 class HardSkillsCategory(models.Model):
+    """
+        Модель для категорий Hard скиллов
+    """
+
     name = models.CharField(unique=True, blank=False, max_length=50, verbose_name='Название')
     position = models.PositiveSmallIntegerField(blank=False, default=0, verbose_name='Позиция')
     skills = models.ManyToManyField(HardSkills, blank=True)

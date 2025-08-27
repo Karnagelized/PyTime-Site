@@ -11,8 +11,12 @@ from django.contrib.admin.sites import AdminSite
 from django.test import RequestFactory
 
 
-# Тестирование модели проектов
+
 class ProjectModelTestCase(TestCase):
+    """
+        Тестирование модели Проектов
+    """
+
     def test_str_dunder(self):
         """
             Тестируем правильный вывод str метода
@@ -26,31 +30,16 @@ class ProjectModelTestCase(TestCase):
         self.assertEquals(project.__str__(), 'SlugProject - TitleProject')
 
 
-# Тестирование Админки для модели Проектов
+
 class AdminProjectTestCase(TestCase):
+    """
+        Тестирование Админки для модели Проектов
+    """
+
     def setUp(self):
         self.site = AdminSite()
         self.admin = ProjectAdmin(Project, self.site)
         self.request = RequestFactory().get('/admin/')
-
-
-    # TODO Дописать тест для проверки Админки
-    # def test_tags_display(self):
-    #     """
-    #         Тестируем вывод тегов в Админке
-    #     """
-    #
-    #     project = ProjectFactory(tags=[])
-    #     self.assertEquals(self.admin.tagsDisplay(project), '')
-    #
-    #     project = ProjectFactory(tags=[HardSkillsFactory(name='Skill_1')])
-    #     self.assertEquals(self.admin.tagsDisplay(project), 'Skill_1')
-    #
-    #     project = ProjectFactory(tags=[
-    #         HardSkillsFactory(name='Skill_1'),
-    #         HardSkillsFactory(name='Skill_2')
-    #     ])
-    #     self.assertEquals(self.admin.tagsDisplay(project), 'Skill_1, Skill_2')
 
 
     def test_view_on_site(self):
@@ -62,8 +51,12 @@ class AdminProjectTestCase(TestCase):
         self.assertEquals(self.admin.view_on_site(project), project.get_absolute_url())
 
 
-# Тестирование представления страницы с информацией о Проектах
+
 class ProjectAboutViewTestCase(TestCase):
+    """
+        Тестирование представления страницы с информацией о Проектах
+    """
+
     def test_post_request_not_allowed(self):
         """
             Тестируем, что при POST запросе страница возвращает статус 405
@@ -124,8 +117,12 @@ class ProjectAboutViewTestCase(TestCase):
         self.assertEquals(response.status_code, 200)
 
 
-# Тестирование представления страницы с карточками всех Проектов
+
 class ProjectListViewTestCase(TestCase):
+    """
+        Тестирование представления страницы с карточками всех Проектов
+    """
+
     def test_post_request_not_allowed(self):
         """
             Тестируем, что при POST запросе страница возвращает статус 405
@@ -182,8 +179,12 @@ class ProjectListViewTestCase(TestCase):
         self.assertEquals(response.status_code, 200)
 
 
-# Тестирование представления страницы Проекта
+
 class ProjectPageViewTestCase(TestCase):
+    """
+        Тестирование представления страницы Проекта
+    """
+
     def test_not_exist_page_returns_404(self):
         """
             Тестируем, что при попытке перехода на несуществующий проект
@@ -295,10 +296,3 @@ class ProjectPageViewTestCase(TestCase):
             response,
             'Test'
         )
-
-    # TODO Дописать тест, когда появится валидация комментария
-    def test__invalid_form(self):
-        """
-            Тестируем, что при не прошедшей форме валидацию, Пользователь будет перенаправлен на главную страницу
-        """
-        pass

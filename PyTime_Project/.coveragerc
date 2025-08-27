@@ -7,3 +7,5 @@ omit =
     manage.py
     backends.py
     factories.py
+    */settings.py
+    */urls.py

@@ -73,10 +73,6 @@ ul {
     padding-inline-start: 0px;
 }
 
-input {
-    font-size: 1.05rem;
-}
-
 a {
     text-decoration: none;
     font-size: 1rem;
@@ -995,8 +991,54 @@ button {
     letter-spacing: normal;
 }
 
+.perseverance_contact_block,
+.contact_short_container {
+    padding-top: 50px;
+    padding-bottom: 50px;
+}
 
+.perseverance_contact_block,
+.why_me_cards_block {
+    grid-template-columns: repeat(3, 1fr);
+    gap: 30px;
+    padding-top: 50px;
+}
 
+.contact_card {
+    padding: 10px;
+    background-color: #f8f9fa;
+    border-radius: 10px;
+    transition: .3s ease;
+    border-left: solid;
+    border-width: 5px;
+    border-color: var(--hover-color);
+}
+
+.contact_card:hover {
+    transform: translateY(-10px);
+}
+
+.contact_form {
+    label {
+        margin-bottom: .5rem;
+    }
+}
+
+.success_send_message_block {
+    padding: 20px;
+    background-color: #24a87f;
+    border-radius: var(--default-button-border-radius);
+    margin-bottom: 20px;
+    transition: .3s ease;
+}
+
+.success_send_message_block:hover {
+    transform: translateY(-10px);
+}
+
+.success_send_message {
+    color: #FFFFFF;
+}
 
 
 
@@ -1412,7 +1454,15 @@ button {
         padding-left: 0px;
         padding-right: 0px;
     }
+
+    .perseverance_contact_block,
+    .why_me_cards_block {
+        grid-template-columns: repeat(2, 1fr);
+    }
 }
+
+
+
 
 
 
@@ -1634,7 +1684,32 @@ button {
             margin-top: 20px;
         }
     }
+
+    .perseverance_contact_block,
+    .why_me_cards_block {
+        grid-template-columns: repeat(2, 1fr);
+    }
 }
+
+
+
+
+
+
+
+
+
+
+
+@media (max-width: 550px) {
+    .perseverance_contact_block,
+    .why_me_cards_block {
+        grid-template-columns: repeat(1, 1fr);
+    }
+}
+
+
+
 
 
 
@@ -1654,6 +1729,9 @@ button {
         margin-bottom: 20px;
     }
 }
+
+
+
 
 
 
@@ -1918,6 +1996,11 @@ button {
 
     .authentication_block {
         padding: 20px;
+    }
+
+    .perseverance_contact_block,
+    .why_me_cards_block {
+        grid-template-columns: repeat(1, 1fr);
     }
 }
 

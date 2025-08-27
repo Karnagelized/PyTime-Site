@@ -4,8 +4,12 @@ from django.db import models
 from apps.users.models import CustomUser
 
 
-# Модель для комментариев
+
 class Comment(models.Model):
+    """
+        Модель для Комментариев
+    """
+
     ARTICLE = ('ARTICLE', 'article')
     PROJECT = ('PROJECT', 'project')
 

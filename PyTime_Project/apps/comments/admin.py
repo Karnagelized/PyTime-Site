@@ -5,6 +5,10 @@ from .models import Comment
 
 @admin.register(Comment)
 class CommentAdmin(admin.ModelAdmin):
+    """
+        Админ модель для Комментариев
+    """
+
     view_on_site = False
 
     list_display = (

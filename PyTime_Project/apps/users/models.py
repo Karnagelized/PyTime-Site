@@ -7,8 +7,12 @@ from django.utils.crypto import get_random_string
 from django.utils import timezone
 
 
-# Модель, для выбора аватаров Пользователя
+
 class ProfileAvatarModel(models.Model):
+    """
+        Модель, для выбора Аватара Пользователя
+    """
+
     isDefault = models.BooleanField(default=False)
 
     avatar = models.FileField(
@@ -27,8 +31,12 @@ class ProfileAvatarModel(models.Model):
         return f'{self.avatar.name}'
 
 
-# Модель профиля Пользователя
+
 class CustomUser(AbstractUser):
+    """
+        Модель Профиля Пользователя
+    """
+
     username = models.CharField(
         unique=True,
         max_length=50,
@@ -103,12 +111,13 @@ class EmailVerification(models.Model):
     )
 
 
-    def isExpired(self, expiration_minutes:int=15) -> bool:
+    def isExpired(self, expirationMinutes:int=15) -> bool:
         """
-            Проверяет, истек ли срок действия кода
+            Проверяет, истек ли срок действия кода.
+            Если истек, возвращается True, иначе False
         """
 
-        return (timezone.now() - self.timeCreate).total_seconds() > 60 * 15
+        return (timezone.now() - self.timeCreate).total_seconds() > 60 * expirationMinutes
 
 
     @classmethod

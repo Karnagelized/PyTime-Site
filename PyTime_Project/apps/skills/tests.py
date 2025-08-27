@@ -3,8 +3,12 @@ from django.test import TestCase
 from apps.skills.factories import HardSkillsFactory, HardSkillsCategoryFactory
 
 
-# Тестирование модели скиллов
+
 class HardSkillsModelTestCase(TestCase):
+    """
+        Тестирование модели Скиллов
+    """
+
     def test_str_dunder(self):
         """
             Тестируем правильный вывод str метода
@@ -17,11 +21,15 @@ class HardSkillsModelTestCase(TestCase):
         self.assertEquals(hardSkills.__str__(), 'HardSkillsName')
 
 
-# Тестирование Админки для модели скиллов
+
 class AdminHardSkillsTestCase(TestCase):
+    """
+        Тестирование Админки для модели Скиллов
+    """
+
     def test_display_skills(self):
         """
-            Тестирование вывода скиилов
+            Тестирование вывода Скиллов
         """
 
         hardSkillsCategory = HardSkillsCategoryFactory(

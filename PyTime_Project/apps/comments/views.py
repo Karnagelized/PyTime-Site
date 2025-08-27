@@ -5,8 +5,12 @@ from django.shortcuts import redirect, reverse
 from django.views import View
 
 
-# Представление для обработки ответа на комментарий
+
 class ReplyCommentView(View):
+    """
+        Представление для обработки ответа на комментарий
+    """
+
     def post(self, request, *args, **kwargs):
         user = request.user
         contentType = request.POST.get('commentType')

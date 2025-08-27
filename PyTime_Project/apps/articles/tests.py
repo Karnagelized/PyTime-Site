@@ -11,8 +11,12 @@ from apps.articles.admin import ArticleAdmin
 from django.contrib.admin import AdminSite
 
 
-# Тестирование модели статей
+
 class ArticleModelTestCase(TestCase):
+    """
+        Тестирование модели Статей
+    """
+
     def test_str_dunder(self):
         """
             Тестируем правильный вывод str метода
@@ -25,31 +29,16 @@ class ArticleModelTestCase(TestCase):
         self.assertEquals(article.__str__(), 'TitleArticle')
 
 
-# Тестирование Админки для модели Статей
+
 class AdminArticleTestCase(TestCase):
+    """
+        Тестирование Админки для модели Статей
+    """
+
     def setUp(self):
         self.site = AdminSite()
         self.admin = ArticleAdmin(Article, self.site)
         self.request = RequestFactory().get('/admin/')
-
-
-    # TODO Дописать тест для проверки Админки
-    # def test_tags_display(self):
-    #     """
-    #         Тестируем вывод тегов в Админке
-    #     """
-    #
-    #     article = ArticleFactory(tags=[])
-    #     self.assertEquals(self.admin.tagsDisplay(), '')
-    #
-    #     article = ArticleFactory(tags=[HardSkillsFactory(name='Skill_1')])
-    #     self.assertEquals(self.admin.tagsDisplay(), 'Skill_1')
-    #
-    #     article = ArticleFactory(tags=[
-    #         HardSkillsFactory(name='Skill_1'),
-    #         HardSkillsFactory(name='Skill_2')
-    #     ])
-    #     self.assertEquals(self.admin.tagsDisplay(), 'Skill_1, Skill_2')
 
 
     def test_view_on_site(self):
@@ -61,8 +50,12 @@ class AdminArticleTestCase(TestCase):
         self.assertEquals(self.admin.view_on_site(article), article.get_absolute_url())
 
 
-# Тестирование представления страницы с информацией о Статьях
+
 class ArticleAboutViewTestCase(TestCase):
+    """
+        Тестирование представления страницы с информацией о Статьях
+    """
+
     def test_post_request_not_allowed(self):
         """
             Тестируем, что при POST запросе страница возвращает статус 405
@@ -146,8 +139,12 @@ class ArticleAboutViewTestCase(TestCase):
         )
 
 
-# Тестирование представления страницы с карточками всех Статей
+
 class ArticleListViewTestCase(TestCase):
+    """
+        Тестирование представления страницы с карточками всех Статей
+    """
+
     def test_post_request_not_allowed(self):
         """
             Тестируем, что при POST запросе страница возвращает статус 405
@@ -204,8 +201,12 @@ class ArticleListViewTestCase(TestCase):
         self.assertEquals(response.status_code, 200)
 
 
-# Тестирование представления страницы Стати
+
 class ArticlePageViewTestCase(TestCase):
+    """
+        Тестирование представления страницы Статьи
+    """
+
     def test_not_exist_page_returns_404(self):
         """
             Тестируем, что при попытке перехода на несуществующую статью

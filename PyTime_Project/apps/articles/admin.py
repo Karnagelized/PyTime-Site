@@ -3,9 +3,13 @@ from django.contrib import admin
 from apps.articles.models import Article
 
 
-# Админ модель для Статей
+
 @admin.register(Article)
 class ArticleAdmin(admin.ModelAdmin):
+    """
+        Админ модель для Статей
+    """
+
     @admin.display(description="Теги")
     def tagsDisplay(self):
         return ', '.join([f'{tag}' for tag in  self.tags.all()])

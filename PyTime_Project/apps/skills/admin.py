@@ -3,9 +3,13 @@ from django.contrib import admin
 from apps.skills.models import HardSkillsCategory, HardSkills
 
 
-# Админ модель для Hard скиллов
+
 @admin.register(HardSkills)
 class HardSkillsAdmin(admin.ModelAdmin):
+    """
+        Админ модель для Hard скиллов
+    """
+
     view_on_site = False
 
     list_display = ('name', 'isVisible', 'dateCreate',)
@@ -14,9 +18,13 @@ class HardSkillsAdmin(admin.ModelAdmin):
     ordering = ('name',)
 
 
-# Админ модель для категорий Hard скиллов
+
 @admin.register(HardSkillsCategory)
 class HardSkillsCategoryAdmin(admin.ModelAdmin):
+    """
+        Админ модель для категорий Hard скиллов
+    """
+
     view_on_site = False
 
     @admin.display(description='Скиллы')

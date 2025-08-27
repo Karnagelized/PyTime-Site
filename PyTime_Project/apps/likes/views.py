@@ -9,8 +9,12 @@ from apps.comments.models import Comment
 from apps.comments.forms import WriteCommentForm
 
 
-# Представление для лайков Статей
+
 class ArticleLikeView(View):
+    """
+        Представление для лайков Статей
+    """
+
     def post(self, request, *args, **kwargs):
         user = request.user
         slug = request.POST.get('contentSlug')
@@ -37,8 +41,12 @@ class ArticleLikeView(View):
         return redirect(parentURL, kwargs={'isFromLike': True})
 
 
-# Представление для лайков Проектов
+
 class ProjectsLikeView(View):
+    """
+        Представление для лайков Проектов
+    """
+
     def post(self, request, *args, **kwargs):
         user = request.user
         slug = request.POST.get('contentSlug')
@@ -65,8 +73,12 @@ class ProjectsLikeView(View):
         return redirect(parentURL, kwargs={'isFromLike': True})
 
 
-# Представление для лайков комментария
+
 class CommentsLikeView(View):
+    """
+        Представление для лайков Комментария
+    """
+
     def post(self, request, *args, **kwargs):
         contentType = request.POST.get('commentType')
         contentSlug = request.POST.get('commentSlug')
@@ -88,8 +100,12 @@ class CommentsLikeView(View):
             return redirect(reverse('projectPage', kwargs={'projectSlug': contentSlug}))
 
 
-# Представление для дизлайков комментария
+
 class CommentsDislikeView(View):
+    """
+        Представление для дизлайков Комментария
+    """
+
     def post(self, request, *args, **kwargs):
         contentType = request.POST.get('commentType')
         contentSlug = request.POST.get('commentSlug')

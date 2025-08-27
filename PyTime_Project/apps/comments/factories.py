@@ -6,8 +6,12 @@ from apps.users.factories import UserCustomFactory
 from numpy.random import random_integers
 
 
-# Фабрика для генерации комментариев
+
 class CommentFactory(factory.django.DjangoModelFactory):
+    """
+        Фабрика для генерации комментариев
+    """
+
     contentSlug = factory.Sequence(lambda n: f"commentSlug_{n}")
     contentType = fuzzy.FuzzyChoice(choices=[_[0] for _ in Comment.COMMENT_TYPE])
     author = factory.SubFactory(UserCustomFactory)

@@ -4,8 +4,12 @@ from apps.skills.models import HardSkills, HardSkillsCategory
 from numpy.random import random_integers
 
 
-# Фабрика для генерации Hard скиллов
+
 class HardSkillsFactory(factory.django.DjangoModelFactory):
+    """
+        Фабрика для генерации Hard скиллов
+    """
+
     name = factory.Sequence(lambda n: f"HardSkill_{n}")
 
 
@@ -13,8 +17,12 @@ class HardSkillsFactory(factory.django.DjangoModelFactory):
         model = HardSkills
 
 
-# Фабрика для генерации категорий Hard скиллов
+
 class HardSkillsCategoryFactory(factory.django.DjangoModelFactory):
+    """
+        Фабрика для генерации категорий Hard скиллов
+    """
+
     name = factory.Sequence(lambda n: f"hardSkillsCategory_{n}")
 
 

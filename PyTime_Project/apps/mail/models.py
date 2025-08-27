@@ -2,13 +2,57 @@
 from django.db import models
 from django.core.mail import send_mail
 from django.template.loader import render_to_string
-from PyTime_Project.settings import EMAIL_ROOT
+from PyTime_Project.settings import EMAIL_ROOT, EMAIL_CREATOR
 from apps.users.models import EmailVerification
 
 
-class VerifyEmail():
+
+class Mail():
     """
-        Класс для отправки ссылки с кодом подтверждения
+        Базовый класс для работы с Почтой
+    """
+
+    @classmethod
+    def sendMessage(cls, *, subject:str, message:str, email:str) -> bool:
+        try:
+            send_mail(
+                subject=subject,
+                message=message,
+                from_email=EMAIL_ROOT,
+                recipient_list=[email],
+            )
+
+            return True
+        except Exception as e:
+            # TODO Добавить логирование
+            print(e)
+
+        return False
+
+
+    @classmethod
+    def sendMessageHTML(cls, *, subject:str, email:str, messageHTML:str) -> bool:
+        try:
+            send_mail(
+                subject=subject,
+                message='Message',
+                html_message=messageHTML,
+                from_email=EMAIL_ROOT,
+                recipient_list=[email],
+            )
+
+            return True
+        except Exception as e:
+            # TODO Добавить логирование
+            print(e)
+
+        return False
+
+
+
+class VerifyEmail(Mail):
+    """
+        Класс для подтверждения почты через код, приходящий на почту Пользователя
     """
 
     @classmethod
@@ -32,20 +76,44 @@ class VerifyEmail():
             user=user,
         )
 
-        try:
-            send_mail(
-                subject=cls.__getSubject(),
-                message='Message',
-                html_message=cls.__getMessageHTML(verificationCode.code),
-                from_email=EMAIL_ROOT,
-                recipient_list=[user.email],
-            )
+        isSuccessSend = cls.sendMessageHTML(
+            subject=cls.__getSubject(),
+            email=user.email,
+            messageHTML=cls.__getMessageHTML(verificationCode.code),
+        )
 
-            return True
-        except Exception as e:
-            # TODO Добавить логирование
+        if not isSuccessSend:
             verificationCode.delete()
 
-            print(e)
+        return isSuccessSend
 
-        return False
+
+
+class SendFeedback(Mail):
+    """
+        Класс, для отправки обратной связи на странице контактов на почту Разработчика
+    """
+
+    @classmethod
+    def __getSubject(cls, username:str) -> str:
+        return f'Обратная связь: Новое сообщение от {username}'
+
+
+    @classmethod
+    def __getMessage(cls, text:str, email:str, username:str) -> str:
+        return text + (
+            '\n\n' +
+            f'\nИмя отправителя: {username}' +
+            f'\nПочта отправителя: {email}'
+        )
+
+
+    @classmethod
+    def send(cls, *, email:str, username:str, text:str) -> bool:
+        isSuccessSend = cls.sendMessage(
+            subject=cls.__getSubject(username),
+            email=EMAIL_CREATOR,
+            message=cls.__getMessage(text, email, username),
+        )
+
+        return isSuccessSend

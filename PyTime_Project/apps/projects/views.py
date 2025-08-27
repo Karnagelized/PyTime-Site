@@ -8,8 +8,12 @@ from apps.comments.forms import WriteCommentForm
 from django.views import View
 
 
-# Представление страницы с информацией о Проектах
+
 class ProjectAboutView(View):
+    """
+        Представление страницы с информацией о Проектах
+    """
+
     def post(self, *args, **kwargs) -> HttpResponseNotAllowed:
         return HttpResponseNotAllowed(['GET'])
 
@@ -28,8 +32,12 @@ class ProjectAboutView(View):
         return render(request, 'projects.html', context=pageData)
 
 
-# Представление страницы с карточками всех Проектов
+
 class ProjectListView(View):
+    """
+        Представление страницы с карточками всех Проектов
+    """
+
     def post(self, *args, **kwargs) -> HttpResponseNotAllowed:
         return HttpResponseNotAllowed(['GET'])
 
@@ -44,8 +52,12 @@ class ProjectListView(View):
         return render(request, 'all_projects.html', context=pageData)
 
 
-# Представление страницы Проектов
+
 class ProjectPageView(View):
+    """
+        Представление страницы Проектов
+    """
+
     def post(self, request:HttpRequest, projectSlug:str, *args, **kwargs) -> HttpResponse:
         projectData = get_object_or_404(Project, slug=projectSlug)
         commentForm = WriteCommentForm(request.POST)
@@ -61,13 +73,6 @@ class ProjectPageView(View):
             pageData['comments'] = Comment.getAllByTypeAndSlug(slug=projectSlug, postType='PROJECT')
 
             return render(request, 'project_page.html', context=pageData)
-
-        # TODO Дописать тест, когда появится валидация комментария
-        # Форма не прошла валидацию
-        # if not commentForm.is_valid():
-        #     pageData['writeCommentForm'] = commentForm
-        #
-        #     return render(request, 'project_page.html', context=pageData)
 
         # Сохраняем комментарий
         newComment = commentForm.save(commit=False)

@@ -9,6 +9,10 @@ env = environ.Env()
 
 
 class Command(BaseCommand):
+    """
+        Команда для создания суперпользователя по данным из ENV
+    """
+
     def handle(self, *args, **options):
         __SUPERUSER_USERNAME = env('DJANGO_SUPERUSER_USERNAME')
         __SUPERUSER_EMAIL = env('DJANGO_SUPERUSER_EMAIL')

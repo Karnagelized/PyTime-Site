@@ -4,8 +4,12 @@ from apps.comments.models import Comment
 from better_profanity import profanity
 
 
-# Форма для блока с написанием комментария
+
 class WriteCommentForm(forms.ModelForm):
+    """
+        Форма для блока с написанием комментария
+    """
+
     content = forms.CharField(
         max_length=1500,
         min_length=3,

@@ -5,9 +5,13 @@ from .forms import CustomUserCreationForm, CustomUserChangeForm
 from django.contrib.auth.admin import UserAdmin
 
 
-# Регистрируем CustomUser в Админке
+
 @admin.register(CustomUser)
 class CustomUserAdmin(UserAdmin):
+    """
+        Регистрируем модель CustomUser в Админке
+    """
+
     add_form = CustomUserCreationForm
     form = CustomUserChangeForm
     model = CustomUser
@@ -17,6 +21,10 @@ class CustomUserAdmin(UserAdmin):
 
 @admin.register(ProfileAvatarModel)
 class ProfileAvatarAdmin(admin.ModelAdmin):
+    """
+        Админ модель для просмотра Аватаров Пользователя
+    """
+
     list_display = ('id', 'avatar')
     list_display_links = ('id',)
 

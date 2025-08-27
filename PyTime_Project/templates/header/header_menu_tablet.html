@@ -48,6 +48,21 @@
     <hr class="base_content_separator w-100">
 
     <li class="header_menu_nav_item w-100 d-flex align-items-center">
+        {% if navigationSelected != "Contact" %}
+            <a class="header_menu_link nav-link mb-0 w-100 text-center nav-link p-0" href="{% url 'contactPage' %}">
+                Контакты
+            </a>
+        {% else %}
+            <p class="selected_header_menu_link mb-0 w-100 text-center nav-link p-0" href="{% url 'contactPage' %}">
+                Контакты
+            </p>
+        {% endif %}
+    </li>
+
+    <!-- Separator line -->
+    <hr class="base_content_separator w-100">
+
+    <li class="header_menu_nav_item w-100 d-flex align-items-center">
         {% if user.is_authenticated %}
             {% if navigationSelected != "Profile" %}
                 <a class="header_menu_link nav-link mb-0 w-100 text-center nav-link p-0" href="{% url 'profilePage' %}">

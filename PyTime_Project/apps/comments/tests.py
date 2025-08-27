@@ -9,8 +9,12 @@ from apps.users.factories import UserCustomFactory
 from django.urls import reverse
 
 
-# Тестирование модели Comment
+
 class CommentsModelTestCase(TestCase):
+    """
+        Тестирование модели Comment
+    """
+
     def test_str_dunder(self):
         """
             Тестируем правильный вывод str метода
@@ -86,22 +90,17 @@ class CommentsModelTestCase(TestCase):
         self.assertEqual(Comment.getAllByTypeAndSlug(**data).count(), 10)
 
 
-# Тестирование представления для ответа на комментарий
+
 class ReplyCommentViewTestCase(TestCase):
+    """
+        Тестирование представления для ответа на комментарий
+    """
+
     def setUp(self):
         self.user = UserCustomFactory()
         self.client.force_login(
             self.user
         )
-
-
-    # TODO Дописать тест, когда появится валидация комментария
-    def test_comment_form_is_invalid(self):
-        """
-            Тестируем, когда форма комментария не валидна
-            происходит редирект на страницу контента с кодом 302
-        """
-        pass
 
 
     def test_comment_form_is_valid_for_article(self):
@@ -182,12 +181,3 @@ class ReplyCommentViewTestCase(TestCase):
         self.assertEqual(newComment.author, self.user)
         self.assertEqual(newComment.text, replyText)
         self.assertEqual(newComment.isReply, True)
-
-
-
-
-
-
-
-
-

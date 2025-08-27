@@ -6,8 +6,12 @@ from apps.tags.factories import TagFactory
 from apps.users.factories import UserCustomFactory
 
 
-# Фабрика для генерации информации о Статье
+
 class ArticleFactory(factory.django.DjangoModelFactory):
+    """
+        Фабрика для генерации Статьи
+    """
+
     slug = factory.Sequence(lambda n: f"articleSlug_{n}")
     image = factory.django.ImageField()
 

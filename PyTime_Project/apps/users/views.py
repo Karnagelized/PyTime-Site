@@ -143,7 +143,7 @@ class RegistrationUserView(View):
 
         # Сохраняем в сессии Email
         self.request.session['userEmail'] = newUser.email
-        self.request.session['needEmailVerification'] = True
+        self.request.session.save()
 
         return redirect('needVerifyEmail')
 
@@ -211,11 +211,14 @@ class NeedVerifyEmailView(View):
         user.is_active = True
         user.save(update_fields=['is_active'])
 
-        userAuthenticate = EmailAuthBackend().authenticate(request, email=userEmail, password=user.password)
+        userAuthenticate = EmailAuthBackend().authenticate(
+            request, email=userEmail, password=user.password
+        )
 
         # Аутентификация не прошла
-        if not user or not user.is_authenticated:
-            form = UserLoginForm()
+        if not userAuthenticate or not userAuthenticate.is_authenticated:
+            form = UserLoginForm({'email': userEmail})
+            form.is_valid()
 
             form.add_error(
                 'email',
@@ -234,9 +237,9 @@ class NeedVerifyEmailView(View):
         # Авторизуем Пользователя
         login(request, user=user)
 
-        # Удаляем из сессии userEmail и needEmailVerification Пользователя
+        # Удаляем из сессии userEmail
         self.request.session.delete('userEmail')
-        self.request.session.delete('needEmailVerification')
+        self.request.session.save()
 
         return redirect('mainPage')
 
@@ -272,8 +275,8 @@ class NeedVerifyEmailView(View):
         if request.user.is_authenticated:
             return redirect('mainPage')
 
-        # Если Анонимный Пользователь зашёл на страницу подтверждения почты
-        if not self.request.session.get('needEmailVerification', False):
+        # Если Пользователь вручную зашёл на страницу подтверждения почты
+        if not self.request.session.get('userEmail', False):
             return redirect('mainPage')
 
         pageData = {
@@ -314,6 +317,9 @@ class LoginUserView(View):
 
         # Требуется подтверждение почты
         if user and not user.is_active:
+            # Сохраняем в сессии Email
+            self.request.session['userEmail'] = email
+
             return redirect('needVerifyEmail')
 
         # Аутентификация не прошла

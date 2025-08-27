@@ -15,7 +15,6 @@ class CustomUserCreationForm(AdminUserCreationForm):
         Форма для создания Пользователя в Админке
     """
 
-
     class Meta(UserCreationForm):
         model = CustomUser
         fields =  ('username', 'email', 'first_name', 'last_name', 'aboutMe', 'avatar')
@@ -26,7 +25,6 @@ class CustomUserChangeForm(UserChangeForm):
     """
         Форма для изменения Пользователя в Админке
     """
-
 
     class Meta:
         model = CustomUser
@@ -107,6 +105,7 @@ class UserVerifyEmail(forms.Form):
             attrs={
                 'class': 'container_form_input verify-code-input w-100 text-center',
                 'maxlength': '6',
+                'minlength': '6',
                 'pattern': '[0-9]{6}',
                 'inputmode': 'numeric',
                 'autocomplete': 'off',
@@ -123,12 +122,6 @@ class UserVerifyEmail(forms.Form):
         if not code.isdigit():
             raise forms.ValidationError(
                 'Код должен содержать только цифры'
-            )
-
-        # Проверяем длину
-        if len(code) != 6:
-            raise forms.ValidationError(
-                'Код должен содержать ровно 6 цифр'
             )
 
         return code
@@ -273,12 +266,16 @@ class ProfileForm(forms.ModelForm):
         username = self.cleaned_data['username']
         userFind = CustomUser.objects.filter(username=username).first()
 
+        if userFind is None:
+            return username
+
         if self.data.get('email') != userFind.email:
             raise forms.ValidationError(
                 'Такое Имя Пользователя уже занято!'
             )
 
         return username
+
 
 
 class AvatarProfileForm(forms.ModelForm):

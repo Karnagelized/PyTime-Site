@@ -10,8 +10,12 @@ from django.views import View
 from PyTime_Project.settings import MEDIA_ROOT
 
 
-# Представление страницы с информацией о Статьях
+
 class ArticleAboutView(View):
+    """
+        Представление страницы предпросмотра статей с информацией о Статьях
+    """
+
     def post(self, *args, **kwargs) -> HttpResponseNotAllowed:
         return HttpResponseNotAllowed(['GET'])
 
@@ -35,8 +39,12 @@ class ArticleAboutView(View):
         return render(request, 'articles.html', context=pageData)
 
 
-# Представление страницы с карточками всех Статей
+
 class ArticleListView(View):
+    """
+        Представление страницы с карточками всех Статей
+    """
+
     def post(self, *args, **kwargs) -> HttpResponseNotAllowed:
         return HttpResponseNotAllowed(['GET'])
 
@@ -51,8 +59,12 @@ class ArticleListView(View):
         return render(request, 'all_articles.html', context=pageData)
 
 
-# Представление страницы Статей
+
 class ArticlePageView(View):
+    """
+        Представление страницы Статей
+    """
+
     def post(self, request:HttpRequest, articleSlug:str, *args, **kwargs) -> HttpResponse:
         articleData = get_object_or_404(Article, slug=articleSlug)
         commentForm = WriteCommentForm(request.POST)
@@ -68,13 +80,6 @@ class ArticlePageView(View):
             pageData['comments'] = Comment.getAllByTypeAndSlug(slug=articleSlug, postType='ARTICLE')
 
             return render(request, 'article_page.html', context=pageData)
-
-        # TODO Дописать тест, когда появится валидация комментария
-        # Форма не прошла валидацию
-        # if not commentForm.is_valid():
-        #     pageData['writeCommentForm'] = commentForm
-        #
-        #     return render(request, 'article_page.html', context=pageData)
 
         # Сохраняем комментарий
         newComment = commentForm.save(commit=False)
