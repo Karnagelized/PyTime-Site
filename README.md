@@ -26,53 +26,26 @@
 
 **Основная цель** – презентация квалификации разработчика потенциальным работодателям и 
 коллегам, а также хранение и структурирование полезной информации в форме блога и портфолио. 
-Здесь Вы найдете примеры кода, описания реализованных проектов и сведения об образовании и опыте
+Здесь вы найдете примеры кода, описания реализованных проектов и сведения об образовании и опыте
 работы.
 
 **PyTime** – это виртуальная визитная карточка, отражающая страсть к разработке и стремление к
 постоянному профессиональному росту.
 
-### 🌐 Ссылка на [PyTime.ru - Мой личный сайт на Django](https://www.pytime.ru/)
+### 🌐 Ссылка на [PyTime.ru - Начало Backend разработчика на Python](https://www.pytime.ru/)
 
 ---
 
 ## 📷 Изображения с сайта
 
-
-<p align="center">
-  Адаптивность
-</p>
-
 <p align="center">
   <img src="./README/img/pages/Desktop.png">
 </p>
 <p align="center">
-  💻 Десктопная версия
+  💻 Главная страница
 </p>
 
 <br>
-
-<p align="center">
-  <img src="./README/img/pages/Tablet.png">
-</p>
-<p align="center">
-  📋 Планшетная версия
-</p>
-
-<br>
-  
-<p align="center">
-  <img src="./README/img/pages/Phone.png">  
-</p>
-<p align="center">
-  📱 Телефонная версия
-</p>
-
----
-
-<p align="center">
-  Другие страницы
-</p>
 
 <p align="center">
   <img src="./README/img/pages/Articles.png">  
@@ -96,7 +69,25 @@
   <img src="./README/img/pages/Resume.png">  
 </p>
 <p align="center">
-  📄 Страница с резюме
+  📄 Страница резюме
+</p>
+
+<br>
+
+<p align="center">
+  <img src="./README/img/pages/Contact.png">  
+</p>
+<p align="center">
+  📄 Страница контактов
+</p>
+
+<br>
+
+<p align="center">
+  <img src="./README/img/pages/Profile.png">  
+</p>
+<p align="center">
+  📄 Профиль Пользователя
 </p>
 
 ---
@@ -104,8 +95,10 @@
 ## 🌍 Доступные URL-адреса
 - Главная страница: `pytime.ru/`
 - Статьи: `pytime.ru/articles/`
+- Все статьи: `pytime.ru/all-articles/`
 - Проекты: `pytime.ru/projects/`
-- Контакты: `pytime.ru/contact/` (В разработке)
+- Все проекты: `pytime.ru/all-projects/`
+- Контакты: `pytime.ru/contact/`
 - Сервисы: `pytime.ru/services/` (В разработке)
 - Пользовательское соглашение: `pytime.ru/agreement/`
 - Политика конфиденциальности: `pytime.ru/privacy/`
@@ -120,7 +113,7 @@
   - Резюме
   - Описание проектов
   - Статьи
-  - Контакты (В разработке)
+  - Контакты
   - Сервисы (В разработке)
 - Система аутентификации
   - Регистрация
@@ -146,34 +139,77 @@
 - GitHub Actions (CI/CD)
 
 ### 📑 Основные библиотеки
-- django-extensions 3.2.3+
-- factory_boy 3.3.3+
 - gunicorn 23.0.0+
+- psycopg2 2.9.10+
+- django-extensions 3.2.3+
+- django-environ 0.12.0+
+- django-ckeditor 6.7.3+
+- django-recaptcha 4.1.0+
+- django-bleach 3.1.0+
+- bleach 5.0.1+
+- factory_boy 3.3.3+
 - pillow 11.1.0+
 - numpy 2.3.1+
-- psycopg2 2.9.10+
-- django-environ 0.12.0+
+- better-profanity 0.7.0+ 
+- coverage==7.10.4
 
 ---
+
+## 📊 Тестирование
+
+Для тестирования использовалась технология `UnitTest`, а для отслеживания 
+покрытия кода тестами применялась библиотека `coverage`. В проекте достигнуто 
+`99% покрытия тестами`, что обеспечивает высокую надежность и стабильность 
+работы приложения. Тесты охватывают все основные модули, включая 
+пользовательскую аутентификацию, работу с статьями и проектами, систему 
+комментариев и функционал электронной почты.
+
+<p align="center">
+  <img src="./README/img/coverage/1.png">
+  <img src="./README/img/coverage/2.png">
+</p>
+<p align="center">
+  📈 Результаты покрытия тестами проекта
+</p>
+
 
 ## 📂 Структура проекта
 
 ```
 PyTime Site
-├── README/               # README проекта
-├── requirements.txt      # Зависимости проекта
 ├── LICENSE               # Лицензия
-├── conf/                 # Nginx конфиг
 ├── docker-compose.yml    # Контеризация приложения
+├── README.md
+├── .gitattributes
+├── .gitignore
+├── README/               # Файлы для README.md
+├── conf/                 # Nginx конфиг
+├── dev_database/         # Контеризация тестовой БД
 └── PyTime_Project/       # Корневая папка проекта
-    ├── PyTime_Project/   # Основные приложения Django
-    ├── core/             # Основное приложение PyTime
-    ├── servises_1/       # В разработке...
-    ├── ...
-    ├── servises_N/       # В разработке...
-    ├── templates/        # HTML шаблоны
-    ├── uploads/          # Загруженные изображения
-    └── manage.py         # Скрипт управления Django
+    ├── PyTime_Project/   # Основные файлы Django приложения
+    ├── apps/             # Директрория приложений
+    │   ├── core/
+    │   ├── users/
+    │   ├── articles/
+    │   ├── projects/
+    │   ├── tags/
+    │   ├── comments/
+    │   ├── skills/
+    │   ├── mail/
+    │   └── likes/
+    ├── servises/         # Директрория сервисов (В разработке)
+    │   ├── servises_1/
+    │   ├── ...
+    │   └── servises_N/
+    ├── .coveragerc           # Настройки coverage
+    ├── .dockerignore
+    ├── Dockerfile            # Docker файл приложения
+    ├── requirements.prod.txt # Библиотеки для продакшена
+    ├── requirements.txt      # Библиотеки для разработки
+    ├── managers/             # Менеджеры приложений
+    ├── mixins/               # Миксины приложений
+    ├── templates/            # HTML шаблоны
+    └── manage.py             # Скрипт управления Django
 ```
 
 ---
@@ -191,16 +227,14 @@ PyTime Site
 ---
 
 ### 🔗 Ссылки
-<div align="center">
-    <a href="https://github.com/Karnagelized" style="text-decoration:none;">
-        <img src="https://github.com/Karnagelized/assets/blob/main/social/Github_icon.png" width="7%" alt="" />
-    </a>
-    <img src="https://github.com/Karnagelized/assets/blob/main/social/logo-transparent.png" width="7%" alt="" />
+<div align="center" style="display: flex; justify-content: space-evenly">
     <a href="https://t.me/masikantonov" style="text-decoration:none;">
-        <img src="https://github.com/Karnagelized/assets/blob/main/social/Telegram_icon.png" width="7%" alt="" />
+        <img src="https://img.shields.io/badge/Telegram-2CA5E0?style=for-the-badge&logo=telegram&logoColor=white"/>
     </a>
-    <img src="https://github.com/Karnagelized/assets/blob/main/social/logo-transparent.png" width="7%" alt="" />
     <a href="https://vk.com/masikantonov" style="text-decoration:none;">
-        <img src="https://github.com/Karnagelized/assets/blob/main/social/VK_icon.png" width="7%" alt="" />
+        <img src="https://img.shields.io/badge/VKontakte-2CA5E0?style=for-the-badge&color=0077ff&logo=vk&logoColor=white"/>
+    </a>
+    <a href="https://pytime.ru" style="text-decoration:none;">
+        <img src="https://img.shields.io/badge/PyTime.ru-ffffff?style=for-the-badge&color=0077c2"/>
     </a>
 </div>

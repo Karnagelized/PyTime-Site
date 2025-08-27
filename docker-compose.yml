@@ -35,12 +35,6 @@ services:
     mem_limit: 512M
     memswap_limit: 1G
     mem_reservation: 128M
-#    healthcheck:
-#      test: curl -f https://pytime.ru/healthcheck || exit 1
-#      interval: 10s
-#      timeout: 10s
-#      retries: 3
-#      start_period: 30s
 
   nginx:
     image: nginx:latest
