@@ -1,0 +1,28 @@
+services:
+  database_dev:
+    image: postgres:16.9-alpine
+    container_name: database_dev
+    env_file:
+      - ../.env
+    environment:
+      POSTGRES_DB: ${DB_NAME_DEV}
+      POSTGRES_USER: ${DB_USER_DEV}
+      POSTGRES_PASSWORD: ${DB_PASSWORD_DEV}
+      POSTGRESQL_SHARED_BUFFERS: 64MB
+      POSTGRESQL_EFFECTIVE_CACHE_SIZE: 192MB
+    ports:
+      - "${DB_PORT_DEV}:5432"
+    volumes:
+      - postgres_dev_data:/var/lib/postgresql/data
+    restart: always
+    mem_limit: 256M
+    memswap_limit: 512M
+    mem_reservation: 128M
+
+volumes:
+  postgres_dev_data:
+
+networks:
+  default:
+    name: pytime_network_dev
+    driver: bridge

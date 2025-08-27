@@ -1,0 +1,52 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}
+	{{ title }}
+{% endblock title %}
+
+{% block ogTags %}
+	{% include 'meta/og_tags.html' with title=title description=og_description %}
+{% endblock %}
+
+{% block extraHead %}
+	<script src="{% static 'users/js/verify_code_input.js' %}"></script>
+{% endblock extraHead %}
+
+{% block main-container %}
+	<div class="main_content">
+		<div class="authentication_container d-flex align-items-center justify-content-center">
+			<div class="authentication_block">
+				<p class="container_title ">
+					Подтвредите свою почту
+				</p>
+				
+				<p class="container_text text-center">
+					Вам был отправлен 6-значный код подтверждения на почту. Введите его ниже для завершения регистрации.
+				</p>
+
+				<form action="" method="POST">
+					{% csrf_token %}
+
+					{{ verifyForm }}
+
+					<div class="d-flex justify-content-center">
+						{% include "buttons/submit_black_background.html" with name="Подтвредить" isSubmit=1 %}
+					</div>
+				</form>
+
+				<hr class="base_content_separator mx-0">
+
+				<form action="" method="POST" class="d-flex justify-content-between align-items-center">
+					{% csrf_token %}
+
+					<p class="container_text mb-0">
+						Не пришёл код?
+					</p>
+
+					{% include "buttons/submit_white_background.html" with name="Отправить снова" buttonName='resendCode' isSubmit=1 %}
+				</form>
+			</div>
+		</div>
+	</div>
+{% endblock %}

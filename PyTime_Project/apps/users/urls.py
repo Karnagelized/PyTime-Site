@@ -1,0 +1,28 @@
+
+from django.urls import path
+from apps.users.views import (
+    UserProfileView, GenerateUserAvatar, UploadUserAvatar,
+    LoginUserView, LogoutUserView, RegistrationUserView, NeedVerifyEmailView,
+    passwordResetEnterMail, passwordResetEnterCode, passwordResetEnterNewPassword
+)
+from PyTime_Project.settings import DEBUG
+
+
+# Маршруты приложения "users"
+urlpatterns = [
+    path('profile', UserProfileView.as_view(), name='profilePage'),
+    path('save-profile', UserProfileView.as_view(), name='saveEditProfile'),
+    path('generate-avatar', GenerateUserAvatar.as_view(), name='generateAvatar'),
+    path('upload-avatar', UploadUserAvatar.as_view(), name='uploadAvatar'),
+    path('login', LoginUserView.as_view(), name='loginUser'),
+    path('logout', LogoutUserView.as_view(), name='logoutUser'),
+    path('registration', RegistrationUserView.as_view(), name='registrationUser'),
+    path('need-verify-email', NeedVerifyEmailView.as_view(), name='needVerifyEmail'),
+]
+
+if DEBUG:
+    urlpatterns += [
+        path('password-reset', passwordResetEnterMail, name='passwordResetEnterMail'),
+        path('password-reset-enter-code', passwordResetEnterCode, name='passwordResetEnterCode'),
+        path('password-reset-enter-password', passwordResetEnterNewPassword, name='passwordResetEnterNewPassword'),
+    ]

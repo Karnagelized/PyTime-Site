@@ -1,0 +1,52 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block extraHead %}
+    <link rel="stylesheet" href="{% static 'core/css/custom_ckeditor.css' %}">
+    {% include 'content/ckeditor_highlight.html' %}
+{% endblock extraHead %}
+
+{% block title %}
+	{{ articleData.title }}
+{% endblock title %}
+
+{% block ogTags %}
+	{% include 'meta/og_tags.html' with title=articleData.title description=articleData.description %}
+{% endblock %}
+
+{% block main-container %}
+	<div class="main_content">
+		<div class="content_article">
+			<div class="content_page_container">
+				<div class="container_up_side">
+					<h2 class="container_title text-center">
+						{{ articleData.title }}
+					</h2>
+
+					<p class="container_text mb-0">
+						{{ articleData.description }}
+					</p>
+				</div>
+
+				<div class="container_bottom_side mt-3">
+					{% include 'all_tags.html' with itemData=articleData %}
+				</div>
+
+	        	{% include 'content/statistic/page_statistic.html' with content=articleData isArticleLiked=1 %}
+			</div>
+
+	        <!-- Separator line -->
+	        <hr class="content_separator">
+
+			<div class="body_article">
+	            {{ articleData.text|safe }}
+			</div>
+
+	        <!-- Separator line -->
+	        <hr class="content_separator">
+
+	        <!-- Write a comment block -->
+	        {% include 'write_comment.html' %}
+		</div>
+	</div>	
+{% endblock %}

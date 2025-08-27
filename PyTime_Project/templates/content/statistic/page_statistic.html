@@ -1,0 +1,146 @@
+{% load static %}
+
+{% block extraHead %}
+	<script src="{% static 'core/js/content.js' %}"></script>
+{% endblock %}
+
+<div class="page_statistic_container d-flex justify-content-between">
+	<div class="statistic_container_left_side d-flex">
+		<div class="content_publish_datetime align-content-center">
+			<p class="statistic_text ms-0 mb-0">
+				{{ content.datetimeCreate }}
+			</p>
+		</div>
+
+		<div class="content_views ms-4 d-flex align-items-center">
+			{% include 'icons/views.html' with className='statistic_svg' %}
+
+			<p class="statistic_text mb-0">
+				{{ content.views }}
+			</p>
+		</div>
+	</div>
+
+	<div class="statistic_container_right_side d-flex">
+		<div class="content_likes me-4 d-flex align-items-center">
+			{% if isArticleLiked %}
+				{% url "likeArticle" as likeContentURL %}
+			{% else %}
+				{% url "likeProject" as likeContentURL %}
+			{% endif %}
+
+			{% if request.user.is_authenticated %}
+				<form action="{{ likeContentURL }}" method="POST">
+					{% csrf_token %}
+					<input type="hidden" name="contentSlug" value="{{ content.slug }}">
+					<input type="hidden" name="parentURL" value="{{ request.build_absolute_uri }}">
+
+					{% if request.user in content.likes.all %}
+						<button type="submit" class="statistic_liked_button">
+							{% include 'icons/like_pressed.html' %}
+						</button>
+					{% else %}
+						<button type="submit" class="statistic_like_button">
+							{% include 'icons/like.html' %}
+						</button>
+					{% endif %}
+				</form>
+			{% else %}
+				<button type="button" class="statistic_like_button" data-bs-toggle="modal" data-bs-target="#authForLike">
+					{% include 'icons/like.html' %}
+				</button>
+
+			{% endif %}
+
+			<p class="statistic_text mb-0">
+				{{ content.get_value_likes }}
+			</p>
+		</div>
+
+		<div class="content_comments me-4 d-flex align-items-center">
+			<a href="#comment_content" class="statistic_comment_button">
+				{% include 'icons/comment.html' %}
+			</a>
+
+			<p class="statistic_text mb-0">
+				{{ content.get_value_comments }}
+			</p>
+		</div>
+
+		{% include 'content/drop-menu/share_links.html' %}
+	</div>
+</div>
+
+
+
+{%  include 'modalWindows/need_authorization_for_like.html' %}
+
+
+
+<!-- Tablet/Phone version -->
+<div class="page_statistic_container_tablet d-flex flex-column align-items-center">
+	<div class="statistic_container_up_side d-flex">
+		<div class="content_publish_datetime align-content-center">
+			<p class="statistic_text ms-0 mb-0">
+				{{ content.datetimeCreate }}
+			</p>
+		</div>
+
+		<div class="content_views ms-4 d-flex align-items-center">
+			{% include 'icons/views.html' with className='statistic_svg' %}
+
+			<p class="statistic_text mb-0">
+				{{ content.views }}
+			</p>
+		</div>
+	</div>
+
+	<div class="statistic_container_bottom_side d-flex">
+		<div class="content_likes me-4 d-flex align-items-center">
+			{% if isArticleLiked %}
+				{% url "likeArticle" as likeContentURL %}
+			{% else %}
+				{% url "likeProject" as likeContentURL %}
+			{% endif %}
+
+			{% if request.user.is_authenticated %}
+				<form action="{{ likeArticleURL }}" method="POST">
+					{% csrf_token %}
+					<input type="hidden" name="contentSlug" value="{{ content.slug }}">
+					<input type="hidden" name="parentURL" value="{{ request.build_absolute_uri }}">
+
+					{% if request.user in content.likes.all %}
+						<button type="submit" class="statistic_liked_button">
+							{% include 'icons/like_pressed.html' %}
+						</button>
+					{% else %}
+						<button type="submit" class="statistic_like_button">
+							{% include 'icons/like.html' %}
+						</button>
+					{% endif %}
+				</form>
+			{% else %}
+				<button type="button" class="statistic_like_button" data-bs-toggle="modal" data-bs-target="#authForLike">
+					{% include 'icons/like.html' %}
+				</button>
+			{% endif %}
+
+			<p class="statistic_text mb-0">
+				{{ content.get_value_likes }}
+			</p>
+		</div>
+
+		<div class="content_comments me-4 d-flex align-items-center">
+			<a href="#comment_content_tablet" class="statistic_comment_button">
+				{% include 'icons/comment.html' %}
+			</a>
+
+
+			<p class="statistic_text mb-0">
+				{{ content.get_value_comments }}
+			</p>
+		</div>
+
+		{% include 'content/drop-menu/share_links.html' %}
+	</div>
+</div>

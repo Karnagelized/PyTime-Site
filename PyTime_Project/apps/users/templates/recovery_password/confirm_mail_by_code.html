@@ -1,0 +1,55 @@
+{% extends 'base.html' %}
+
+{% block title %}
+	{{ title }}
+{% endblock title %}
+
+{% block ogTags %}
+	{% include 'meta/og_tags.html' with title=title description=og_description %}
+{% endblock %}
+
+{% block main-container %}
+	<div class="main_content">
+		<div class="authentication_container d-flex align-items-center justify-content-center">
+			<div class="authentication_block">
+				<p class="container_title">
+					Подтвердите почту
+				</p>
+
+				<p class="container_short_text">
+					Вам отправлен шестизначный код подтверждения на test@mail.ru. Введите его ниже, чтобы подтвердить свой адрес электронной почты.
+				</p>
+				
+				<form action="#" class="container_form_block">
+					<p class="container_form_title">
+						Код
+					</p>
+
+					<input required type="text" placeholder="Введите шестизначный код" class="container_form_input w-100" minlength="6" maxlength="6">
+
+					<!-- Кнопка отправки кода -->
+					<div class="authentication_button_block d-flex justify-content-center">
+                        <!-- TODO при DEBUG = FALSE будет выдавать ошибку 500 -->
+{#                        {% url "serviceUnavailable" as serviceUnavailableUrl %}#}
+
+{#		                {% include "buttons/link_black_background.html" with name="Отправить код" url_name=serviceUnavailableUrl %}#}
+					</div>
+				</form>
+
+				<hr class="base_content_separator mx-0">
+
+				<div class="container_not_recive_code d-flex justify-content-between align-items-center">
+					<p class="container_text mb-0">
+						Не получили код?
+					</p>
+
+					<!-- Кнопка повторной отправки кода -->
+                    <!-- TODO при DEBUG = FALSE будет выдавать ошибку 500 -->
+{#					<a href="{% url 'serviceUnavailable' %}" class="container_link">#}
+{#						<u>Отправить повторно</u>#}
+{#					</a>#}
+				</div>
+			</div>
+		</div>
+	</div>
+{% endblock %}

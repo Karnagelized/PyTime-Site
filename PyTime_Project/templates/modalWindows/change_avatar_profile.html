@@ -1,0 +1,29 @@
+<div class="modal fade" id="changeAvatarProfile" tabindex="-1" aria-labelledby="changeAvatarProfileLabel" aria-hidden="true">
+	<div class="modal-dialog modal-dialog-centered">
+		<div class="modal-content">
+			<div class="modal-header">
+				<h1 class="modal-title fs-5" id="changeAvatarProfileLabel">
+					Выберите аватар на PyTime
+				</h1>
+				
+				<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Закрыть"></button>
+			</div>
+			
+			<div class="modal-body">
+				<p class="mb-0">
+					Добавьте фотографию или логотип. Ваш аватар будет виден в комментариях!
+				</p>
+			</div>
+
+			<div class="modal-footer change_avatar_profile_modal_footer justify-content-around">
+				<form action="{% url 'uploadAvatar' %}" method="POST" enctype="multipart/form-data" class="d-flex justify-content-center align-items-center">
+					{% csrf_token %}
+
+					{{ avatarForm }}
+
+					{% include "buttons/submit_white_background.html" with name="Загрузить" isSubmit=1 %}
+				</form>
+			</div>
+		</div>
+	</div>
+</div>

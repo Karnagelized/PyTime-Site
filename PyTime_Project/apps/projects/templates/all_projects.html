@@ -1,0 +1,34 @@
+{% extends "base.html" %}
+
+{% block title %}
+    {{ title }}
+{% endblock title %}
+
+{% block ogTags %}
+	{% include 'meta/og_tags.html' with title=title description=og_description %}
+{% endblock %}
+
+{% block main-container %}
+	<div class="main_content">
+		<!-- Preview all projects -->
+		<div class="all_preview_projects">
+            {% include 'check_last_projects.html' %}
+			
+			{% if allProjects|length != 0 %}
+				<div class="preview_all_projects_bottom_side">
+					<div class="preview_all_projects_line">
+	                    {% include 'project_card.html' with projects=allProjects %}
+					</div>
+				</div>
+            {% else %}
+				{% include 'content/section_is_empty.html' %}
+            {% endif %}
+		</div>
+
+        <!-- Separator line -->
+        <hr class="content_separator">
+
+		<!-- Explore my blog -->
+		{% include 'explore_my_work/expole_my_blog.html' %}
+	</div>
+{% endblock %}

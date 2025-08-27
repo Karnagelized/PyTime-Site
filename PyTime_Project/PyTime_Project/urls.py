@@ -17,7 +17,7 @@ Including another URLconf
 
 from django.contrib import admin
 from django.urls import path, include
-from core.views import (
+from apps.core.views import (
     BadRequestView, ForbiddenView, PageNotFoundView,
     InternalServerErrorView, ServiceUnavailableView
 )
@@ -26,8 +26,14 @@ from django.conf import settings
 
 
 urlpatterns = [
-    path('admin', admin.site.urls),
-    path('', include('core.urls')),
+    path('admin/', admin.site.urls),
+    path('ckeditor/', include('ckeditor_uploader.urls')),
+    path('', include('apps.core.urls')),
+    path('', include('apps.users.urls')),
+    path('', include('apps.projects.urls')),
+    path('', include('apps.articles.urls')),
+    path('', include('apps.likes.urls')),
+    path('', include('apps.comments.urls')),
 ]
 
 

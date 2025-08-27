@@ -11,10 +11,11 @@ https://docs.djangoproject.com/en/5.1/ref/settings/
 """
 
 from pathlib import Path
-
 from django.conf.global_settings import ALLOWED_HOSTS
+from better_profanity import profanity
 import environ
 from os import path
+
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -44,10 +45,24 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'core',
+    'django_bleach',
+    'ckeditor',
+    'ckeditor_uploader',
+    'django_recaptcha',
+    'apps.core',
+    'apps.users',
+    'apps.tags',
+    'apps.skills',
+    'apps.articles',
+    'apps.projects',
+    'apps.comments',
+    'apps.likes',
+    'apps.mail',
 ]
 
-AUTH_USER_MODEL = 'core.CustomUser'
+AUTH_USER_MODEL = 'users.CustomUser'
+LOGIN_URL = 'login/'
+LOGIN_REDIRECT_URL = 'login/'
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
@@ -86,6 +101,7 @@ TEMPLATES = [
 WSGI_APPLICATION = 'PyTime_Project.wsgi.application'
 
 
+
 # Database
 # https://docs.djangoproject.com/en/5.1/ref/settings/#databases
 
@@ -93,12 +109,16 @@ DATABASES = {
     "default": {
         "ENGINE": "django.db.backends.postgresql",
         "HOST": env('HOST'),
-        "PORT": env('DB_PORT'),
-        "NAME": env('DB_NAME'),
-        "USER": env('DB_USER'),
-        "PASSWORD": env('DB_PASSWORD'),
+        "PORT": env('DB_PORT_DEV') if DEBUG else env('DB_PORT_PROD'),
+        "NAME": env('DB_NAME_DEV') if DEBUG else env('DB_NAME_PROD'),
+        "USER": env('DB_USER_DEV') if DEBUG else env('DB_USER_PROD'),
+        "PASSWORD": env('DB_PASSWORD_DEV') if DEBUG else env('DB_PASSWORD_PROD'),
+        'TEST': {
+            'NAME': 'testing_' + env('DB_NAME_DEV') if DEBUG else env('DB_NAME_PROD'),
+        },
     }
 }
+
 
 
 # Password validation
@@ -120,6 +140,7 @@ AUTH_PASSWORD_VALIDATORS = [
 ]
 
 
+
 # Internationalization
 # https://docs.djangoproject.com/en/5.1/topics/i18n/
 
@@ -132,15 +153,21 @@ USE_I18N = True
 USE_TZ = True
 
 
+
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/5.1/howto/static-files/
 
 STATIC_ROOT = BASE_DIR / 'staticfiles'
 STATIC_URL = '/static/'
 
+MEDIA_ROOT = BASE_DIR / 'media'
+MEDIA_URL = '/media/'
+
 # STATICFILES_DIRS = [
 #     BASE_DIR / 'static',
 # ]
+
+
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/5.1/ref/settings/#default-auto-field
@@ -148,12 +175,159 @@ STATIC_URL = '/static/'
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 
-# HTTPS
-CSRF_COOKIE_SECURE = True
-SESSION_COOKIE_SECURE = True
-CSRF_TRUSTED_ORIGINS = [
-    'https://pytime.ru',
-    'https://www.pytime.ru',
-]
-CSRF_COOKIE_DOMAIN = '.pytime.ru'
-SESSION_COOKIE_DOMAIN = '.pytime.ru'
+# For HTTPS settings
+if not DEBUG:
+    CSRF_COOKIE_SECURE = True
+    SESSION_COOKIE_SECURE = True
+    CSRF_TRUSTED_ORIGINS = [
+        'https://pytime.ru',
+        'https://www.pytime.ru',
+    ]
+    CSRF_COOKIE_DOMAIN = '.pytime.ru'
+    SESSION_COOKIE_DOMAIN = '.pytime.ru'
+
+
+
+# CKEditor settgins
+CKEDITOR_BASEPATH = "/static/ckeditor/ckeditor/"
+CKEDITOR_UPLOAD_PATH = "ckeditorUpload/"
+
+CKEDITOR_CONFIGS = {
+    'default': {
+        'skin': 'moono-lisa',
+        'toolbar_PyTimeAdminConfig': [
+            {
+                'name': 'document',
+                'items': [
+                    'Source', '-',
+                    'Save', 'Preview',
+                ]
+            },
+            {
+                'name': 'clipboard',
+                'items': [
+                    'Cut', 'Copy', 'Paste', 'PasteText', '-',
+                    'Undo', 'Redo',
+                ]
+            },
+            {
+                'name': 'editing',
+                'items': [
+                    'Find', 'Replace',
+                ]
+            },
+            {
+                'name': 'paragraph',
+                'items': [
+                    'BidiLtr', 'BidiRtl',
+                ]
+            },
+            {
+                'name': 'tools',
+                'items': [
+                    'Maximize', 'ShowBlocks', '-',
+                ]
+            },
+            {
+                'name': 'basicstyles',
+                'items': [
+                    'RemoveFormat',
+                ]
+            },
+            '/',
+            {
+                'name': 'styles',
+                'items': [
+                    'Styles', 'Format',
+                ]
+            },
+            {
+                'name': 'colors',
+                'items': [
+                    'TextColor', 'BGColor',
+                ]
+            },
+            {
+                'name': 'basicstyles',
+                'items': [
+                    'Bold', 'Italic', 'Underline', 'Strike', 'Subscript', 'Superscript',
+                ]
+            },
+            {
+                'name': 'paragraph',
+                'items': [
+                    'NumberedList', 'BulletedList', '-',
+                    'Outdent', 'Indent', '-',
+                    'Blockquote', 'CodeSnippet', 'CreateDiv', '-',
+                    'JustifyLeft', 'JustifyCenter', 'JustifyRight', 'JustifyBlock', '-',
+                ]
+            },
+            {
+                'name': 'links',
+                'items': [
+                    'Link', 'Unlink', 'Anchor',
+                ]
+            },
+            {
+                'name': 'insert',
+                'items': [
+                    'Image', 'Flash', 'Table', 'HorizontalRule', 'SpecialChar',
+                ]
+            },
+        ],
+        'toolbar': 'PyTimeAdminConfig',
+        'autoGrow_onStartup': True,
+        'autoGrow_maxHeight': '500',
+        'enterMode': 1,
+        'shiftEnterMode': 3,
+        'clipboard_handleImages': False,
+        "removePlugins": "exportpdf",
+        'extraPlugins': ','.join([
+            'codesnippet',
+            'placeholder',
+            'autogrow',
+            'scayt',
+        ]),
+        'codeSnippet_theme': 'monokai'
+    },
+}
+
+CKEDITOR_RESTRICT_BY_USER = True
+CKEDITOR_BROWSE_SHOW_DIRS = True
+CKEDITOR_RESTRICT_BY_DATE = True
+
+
+
+# Bleach settings
+BLEACH_ALLOWED_TAGS = []
+BLEACH_ALLOWED_ATTRIBUTES = []
+BLEACH_ALLOWED_STYLES = []
+BLEACH_ALLOWED_PROTOCOLS = []
+BLEACH_STRIP_TAGS = True
+BLEACH_STRIP_COMMENTS = True
+
+
+
+# Profanity Settings
+profanity.load_censor_words_from_file(BASE_DIR / 'profanity/config.txt')
+
+
+
+# reCapcha
+RECAPTCHA_PUBLIC_KEY = env('RECAPTCHA_PUBLIC_KEY')
+RECAPTCHA_PRIVATE_KEY = env('RECAPTCHA_PRIVATE_KEY')
+
+if DEBUG:
+    RECAPTCHA_PUBLIC_KEY = env('RECAPTCHA_PUBLIC_KEY_DEV')
+    RECAPTCHA_PRIVATE_KEY = env('RECAPTCHA_PRIVATE_KEY_DEV')
+
+
+
+# Email settings
+EMAIL_HOST = env('EMAIL_HOST')
+EMAIL_PORT = env('EMAIL_PORT')
+EMAIL_HOST_USER = env('EMAIL_HOST_USER')
+EMAIL_HOST_PASSWORD = env('EMAIL_HOST_PASSWORD')
+EMAIL_USE_SSL = True
+EMAIL_ROOT = 'pytime@mail.ru'
+EMAIL_CREATOR = env('EMAIL_CREATOR')

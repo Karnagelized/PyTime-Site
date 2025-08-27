@@ -1,0 +1,49 @@
+<ul class="header_menu_nav list-unstyled m-0 d-flex align-items-center">
+  <li class="header_menu_nav_item">
+    {% if navigationSelected != "Projects" %}
+      <a class="header_menu_link nav-link mx-2 p-0 d-flex justify-content-center" href="{% url 'projectsPage' %}">
+          Проекты
+      </a>
+    {% else %}
+      <p class="selected_header_menu_link nav-link mb-0 mx-2 p-0 d-flex justify-content-center" href="{% url 'projectsPage' %}">
+          Проекты
+      </p>
+    {% endif %} 
+  </li>
+  
+  <li class="header_menu_nav_item">
+    {% if navigationSelected != "Articles" %}
+      <a class="header_menu_link nav-link mx-2 p-0 d-flex align-items-center justify-content-center" href="{% url 'articlesPage' %}">
+        Статьи
+    </a>
+    {% else %}
+      <p class="selected_header_menu_link nav-link mb-0 mx-2 p-0 d-flex align-items-center justify-content-center" href="{% url 'articlesPage' %}">
+        Статьи
+    </p>
+    {% endif %} 
+  </li>
+
+  <li class="header_menu_nav_item">
+    {% if navigationSelected != "Resume" %}
+      <a class="header_menu_link nav-link mx-2 p-0 d-flex align-items-center justify-content-center" href="{% url 'resumePage' %}">
+        Резюме
+    </a>
+    {% else %}
+      <p class="selected_header_menu_link nav-link mb-0 mx-2 p-0 d-flex align-items-center justify-content-center" href="{% url 'resumePage' %}">
+        Резюме
+      </p>
+    {% endif %} 
+  </li>
+
+  <li class="header_menu_nav_item">
+    {% if navigationSelected != "Contact" %}
+      <a class="header_menu_link nav-link mx-2 p-0 d-flex align-items-center justify-content-center" href="{% url 'contactPage' %}">
+        Контакты
+    </a>
+    {% else %}
+      <p class="selected_header_menu_link nav-link mb-0 mx-2 p-0 d-flex align-items-center justify-content-center" href="{% url 'contactPage' %}">
+        Контакты
+      </p>
+    {% endif %} 
+  </li>
+</ul>

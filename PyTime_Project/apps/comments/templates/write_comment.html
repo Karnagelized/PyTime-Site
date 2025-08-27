@@ -1,0 +1,57 @@
+{% load static %}
+
+<div class="feedback_container d-flex flex-column justify-content-center" id="comment_content">
+	<h2 class="container_title text-center">
+		Оставьте свой комментарий
+	</h2>
+
+	<form action="#feedback_form_id" class="feedback_form" id="feedback_form_id" method="POST">
+		{% csrf_token %}
+
+        {{ writeCommentForm }}
+
+		<div class="feedback_publish_container d-flex justify-content-between align-items-center">
+			{% include 'agreement.html' %}
+
+			{% if request.user.is_authenticated %}
+				{% include 'buttons/submit_black_background.html' with name="Опубликовать" isSubmit=1 %}
+			{% else %}
+				<div data-bs-toggle="modal" data-bs-target="#authForComment" class="d-flex justify-content-center">
+					{% include 'buttons/submit_black_background.html' with name="Опубликовать" %}
+				</div>
+			{% endif %}
+		</div>
+	</form>
+
+	{% include 'show_comments.html' %}
+</div>
+
+
+{%  include 'modalWindows/need_authorization_for_comment.html' %}
+
+
+<div class="feedback_container_tablet d-flex flex-column justify-content-center align-items-center" id="comment_content_tablet">
+	<h2 class="container_title text-center">
+		Оставьте свой комментарий
+	</h2>
+
+	<form action="#feedback_form_id" class="feedback_form w-100" id="feedback_form_id" method="POST">
+		{% csrf_token %}
+
+        {{ writeCommentForm }}
+
+		<div class="feedback_publish_container d-flex flex-column justify-content-between align-items-center">
+			{% include 'agreement.html' %}
+
+			{% if request.user.is_authenticated %}
+				{% include 'buttons/submit_black_background.html' with name="Опубликовать" isSubmit=1 %}
+			{% else %}
+				<div data-bs-toggle="modal" data-bs-target="#authForComment" class="d-flex justify-content-center">
+					{% include 'buttons/submit_black_background.html' with name="Опубликовать" %}
+				</div>
+			{% endif %}
+		</div>
+	</form>
+
+	{% include 'show_comments.html' %}
+</div>

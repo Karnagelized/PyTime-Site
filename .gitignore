@@ -10,11 +10,17 @@ __pycache__/
 # PyCharm
 .idea/
 
-# SQLite
+# Database
 db.*
-
-# PostgreSQL
 .pg*
 
-# Uploads
+# Staticfiles and Uploads
+media/
+staticfiles/
 uploads/
+
+# Tests
+.coverage
+
+# Profanity words
+profanity

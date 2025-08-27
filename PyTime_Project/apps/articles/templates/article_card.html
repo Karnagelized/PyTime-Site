@@ -1,0 +1,43 @@
+{% load static %}
+
+{% for article in articles %}
+    <div class="article_card d-flex flex-column">
+        <div class="article_card_img_block">
+            {% if article.image %}
+                <img src="{{ article.image.url }}" class="article_card_img">
+            {% else %}
+                <img src="{% static 'core/img/errors/imageNotFound.png' %}" class="article_card_img">
+            {% endif %}
+        </div>
+
+        <div class="article_content d-flex flex-column justify-content-between">
+            <div class="article_content_up_side">
+                <div class="article_card_description mb-100">
+                    <p class="article_card_title">
+                        {{ article.title|truncatechars:140 }}
+                    </p>
+                    
+                    <p class="article_card_text mb-0">
+                        {{ article.description|truncatechars:140 }}
+                    </p>
+                </div>    
+            </div>
+
+            <div class="article_content_bottom_side">
+                {% url "likeArticle" as likeArticleURL %}
+                {% include 'content/statistic/card_statistic.html' with content=article isArticleLiked=1 %}
+
+                <div class="article_card_view_block d-flex justify-content-between align-items-end">
+                    <a href="{{ article.get_absolute_url }}" class="article_card_view_link">
+                        Читать ❯
+                    </a>
+
+                    <p class="article_card_datetime_published mb-0">
+                        {{ article.datetimeCreate }}
+                    </p>
+                </div>
+            </div>
+        </div>
+        
+    </div>
+{% endfor %}

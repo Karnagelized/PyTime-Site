@@ -1,0 +1,92 @@
+<ul class="header_menu_nav mb-0 list-unstyled d-flex flex-column align-items-center justify-content-center">
+    <!-- Separator line -->
+    <hr class="base_content_separator w-100">
+
+    <li class="header_menu_nav_item w-100 d-flex align-items-center">
+        {% if navigationSelected != "Projects" %}
+            <a class="header_menu_link nav-link mb-0 w-100 text-center nav-link p-0" href="{% url 'projectsPage' %}">
+                Проекты
+            </a>
+        {% else %}
+            <p class="selected_header_menu_link mb-0 w-100 text-center nav-link p-0" href="{% url 'projectsPage' %}">
+                Проекты
+            </p>
+        {% endif %}
+    </li>
+
+    <!-- Separator line -->
+    <hr class="base_content_separator w-100">
+
+    <li class="header_menu_nav_item w-100 d-flex align-items-center">
+        {% if navigationSelected != "Articles" %}
+            <a class="header_menu_link nav-link mb-0 w-100 text-center nav-link p-0" href="{% url 'articlesPage' %}">
+                Статьи
+            </a>
+        {% else %}
+            <p class="selected_header_menu_link mb-0 w-100 text-center nav-link p-0" href="{% url 'articlesPage' %}">
+                Статьи
+            </p>
+        {% endif %}
+    </li>
+
+    <!-- Separator line -->
+    <hr class="base_content_separator w-100">
+
+    <li class="header_menu_nav_item w-100 d-flex align-items-center">
+        {% if navigationSelected != "Resume" %}
+            <a class="header_menu_link nav-link mb-0 w-100 text-center nav-link p-0" href="{% url 'resumePage' %}">
+                Резюме
+            </a>
+        {% else %}
+            <p class="selected_header_menu_link mb-0 w-100 text-center nav-link p-0" href="{% url 'resumePage' %}">
+                Резюме
+            </p>
+        {% endif %}
+    </li>
+
+    <!-- Separator line -->
+    <hr class="base_content_separator w-100">
+
+    <li class="header_menu_nav_item w-100 d-flex align-items-center">
+        {% if navigationSelected != "Contact" %}
+            <a class="header_menu_link nav-link mb-0 w-100 text-center nav-link p-0" href="{% url 'contactPage' %}">
+                Контакты
+            </a>
+        {% else %}
+            <p class="selected_header_menu_link mb-0 w-100 text-center nav-link p-0" href="{% url 'contactPage' %}">
+                Контакты
+            </p>
+        {% endif %}
+    </li>
+
+    <!-- Separator line -->
+    <hr class="base_content_separator w-100">
+
+    <li class="header_menu_nav_item w-100 d-flex align-items-center">
+        {% if user.is_authenticated %}
+            {% if navigationSelected != "Profile" %}
+                <a class="header_menu_link nav-link mb-0 w-100 text-center nav-link p-0" href="{% url 'profilePage' %}">
+                    Профиль
+                </a>
+            {% else %}
+                <p class="selected_header_menu_link mb-0 w-100 text-center nav-link p-0" href="{% url 'profilePage' %}">
+                    Профиль
+                </p>
+            {% endif %}
+        {% else %}
+            {% if navigationSelected != "Authorization" %}
+                <a class="header_menu_link nav-link mb-0 w-100 text-center nav-link p-0" href="{% url 'loginUser' %}">
+                    Авторизация
+                </a>
+            {% else %}
+                <p class="selected_header_menu_link mb-0 w-100 text-center nav-link p-0" href="{% url 'loginUser' %}">
+                    Авторизация
+                </p>
+            {% endif %}
+        {% endif %}
+
+    </li>
+
+    <!-- Separator line -->
+    <hr class="base_content_separator w-100">
+</ul>

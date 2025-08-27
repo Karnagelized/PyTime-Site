@@ -1,0 +1,54 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        
+        <title>
+            Подтверждение Email | PyTime
+        </title>
+    </head>
+    
+    <body>
+        <div style="max-width: 800px; margin: 0 auto; font-family: Roboto Regular, sans-serif;">
+            <h1 style="margin-top: 0px; margin-bottom: 50px; color: #59A5F5; font-size: 32px; text-align: center;">
+                Добро пожаловать на PyTime!
+            </h1>
+
+            <p style="margin-top: 0px; margin-bottom: 50px; font-size: 20px; text-align:center;">
+                Рады видеть вас в сообществе PyTime! Остался всего один шаг — подтвердите свой email, чтобы начать пользоваться всеми возможностями.
+            </p>
+
+            <p style="margin-top: 0px; margin-bottom: 0px; font-size: 20px; text-align:center; font-weight: bold;">
+                Код для подтверждения email
+            </p>
+
+            <div style="margin-top: 20px; margin-bottom: 20px; padding: 20px; background: #f3f4f6; text-align: center; border-radius: 10px;">
+                <strong style="font-size: 24px; letter-spacing: 5px;">
+                    {{ verificationCode }}
+                </strong>
+            </div>
+
+            <p style="margin-top: 0px; margin-bottom: 50px; font-size: 20px; text-align:center;">
+                <b>Скопируте</b> этот код <b>и вставьте</b> на странице подтверждения. Код действителен в течение 15 минут.
+            </p>
+            
+            <div>
+                <p style="margin-top: 0px; margin-bottom: 50px; font-size: 20px; font-weight: bold; text-align: center;">
+                    С заботой о вашей безопасности, Разрабочтик PyTime
+                </p>
+
+                <p style="margin-top: 0px; margin-bottom: 50px; color: #59A5F5; font-size: 24px; font-weight: bold; text-align: center;">
+                    Удачного кодинга!
+                </p>
+            </div>
+
+            <hr>
+
+            <p style="margin-top: 20px; margin-bottom: 0px; color: #6b7280; font-size: 20px; text-align: center;">
+                Если вы не регистрировались на PyTime, проигнорируйте это письмо.<br>
+            </p>
+        </div>
+    </body>
+</html>
