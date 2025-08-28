@@ -211,29 +211,6 @@ class NeedVerifyEmailView(View):
         user.is_active = True
         user.save(update_fields=['is_active'])
 
-        userAuthenticate = EmailAuthBackend().authenticate(
-            request, email=userEmail, password=user.password
-        )
-
-        # Аутентификация не прошла
-        if not userAuthenticate or not userAuthenticate.is_authenticated:
-            form = UserLoginForm({'email': userEmail})
-            form.is_valid()
-
-            form.add_error(
-                'email',
-                'Ошибка авторизации.'
-            )
-
-            pageData = {
-                'title': f'Авторизация | PyTime',
-                'og_description': f'Вход в личный кабинет с помощью email и пароля.',
-                'navigationSelected': 'Authorization',
-                'loginForm': form,
-            }
-
-            return render(request, 'authorization.html', context=pageData)
-
         # Авторизуем Пользователя
         login(request, user=user)
 

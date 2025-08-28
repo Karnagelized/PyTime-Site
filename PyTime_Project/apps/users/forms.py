@@ -199,7 +199,7 @@ class ProfileForm(forms.ModelForm):
 
 
     username = BleachField(
-        max_length=150,
+        max_length=50,
         label='Имя пользователя',
         widget=forms.TextInput(
             attrs={
@@ -221,7 +221,7 @@ class ProfileForm(forms.ModelForm):
     )
 
     first_name = BleachField(
-        max_length=100,
+        max_length=80,
         min_length=5,
         label='Имя',
         widget=forms.TextInput(
@@ -233,7 +233,7 @@ class ProfileForm(forms.ModelForm):
     )
 
     last_name = BleachField(
-        max_length=100,
+        max_length=80,
         min_length=5,
         label='Фамилия',
         widget=forms.TextInput(

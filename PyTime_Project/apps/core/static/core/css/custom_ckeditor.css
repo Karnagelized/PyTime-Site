@@ -45,6 +45,9 @@
     }
 
     img {
+        border: solid;
+        border-width: 2px;
+        border-color: #dbdbdb;
         max-width: 100%;
         height: auto;
         object-position: center;
@@ -165,6 +168,10 @@
     
     tbody tr:nth-child(even) {
         background: #f3f3f3;
+    }
+
+    .hljs-built_in {
+        color: #adbac7;
     }
 
 
