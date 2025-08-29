@@ -19,7 +19,7 @@ class MainView(View):
 
     def get(self, request:HttpRequest, *args, **kwargs) -> HttpResponse:
         pageData = {
-            'title': 'Начало Backend разработчика на Python | PyTime',
+            'title': 'Начало Backend Python разработчика | PyTime',
             'og_description': 'PyTime – это виртуальная визитная карточка, отражающая страсть к разработке и ' +
                               'стремление к постоянному профессиональному росту.',
             'skillsCategoryData': HardSkillsCategory.visibleCategory.all(),
