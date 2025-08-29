@@ -1,5 +1,5 @@
 
-from django.http import HttpResponse, Http404
+from django.http import HttpResponse, Http404, HttpRequest
 from django.shortcuts import redirect, get_object_or_404
 from django.urls import reverse
 from django.views import View
@@ -15,7 +15,7 @@ class ArticleLikeView(View):
         Представление для лайков Статей
     """
 
-    def post(self, request, *args, **kwargs):
+    def post(self, request:HttpRequest, *args, **kwargs) -> HttpResponse:
         user = request.user
         slug = request.POST.get('contentSlug')
         parentURL = request.POST.get('parentURL')
@@ -47,7 +47,7 @@ class ProjectsLikeView(View):
         Представление для лайков Проектов
     """
 
-    def post(self, request, *args, **kwargs):
+    def post(self, request:HttpRequest, *args, **kwargs) -> HttpResponse:
         user = request.user
         slug = request.POST.get('contentSlug')
         parentURL = request.POST.get('parentURL')
@@ -79,7 +79,7 @@ class CommentsLikeView(View):
         Представление для лайков Комментария
     """
 
-    def post(self, request, *args, **kwargs):
+    def post(self, request:HttpRequest, *args, **kwargs) -> HttpResponse:
         contentType = request.POST.get('commentType')
         contentSlug = request.POST.get('commentSlug')
         commentID = request.POST.get('commentID')
@@ -106,7 +106,7 @@ class CommentsDislikeView(View):
         Представление для дизлайков Комментария
     """
 
-    def post(self, request, *args, **kwargs):
+    def post(self, request:HttpRequest, *args, **kwargs) -> HttpResponse:
         contentType = request.POST.get('commentType')
         contentSlug = request.POST.get('commentSlug')
         commentID = request.POST.get('commentID')

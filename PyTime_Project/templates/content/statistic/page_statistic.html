@@ -32,6 +32,7 @@
 			{% if request.user.is_authenticated %}
 				<form action="{{ likeContentURL }}" method="POST">
 					{% csrf_token %}
+
 					<input type="hidden" name="contentSlug" value="{{ content.slug }}">
 					<input type="hidden" name="parentURL" value="{{ request.build_absolute_uri }}">
 
@@ -104,8 +105,9 @@
 			{% endif %}
 
 			{% if request.user.is_authenticated %}
-				<form action="{{ likeArticleURL }}" method="POST">
+				<form action="{{ likeContentURL }}" method="POST">
 					{% csrf_token %}
+					
 					<input type="hidden" name="contentSlug" value="{{ content.slug }}">
 					<input type="hidden" name="parentURL" value="{{ request.build_absolute_uri }}">
 
