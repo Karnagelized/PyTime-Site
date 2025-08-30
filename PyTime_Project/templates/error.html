@@ -1,8 +1,12 @@
 {% extends "base.html" %}
 {% load static %}
 
+{% block ogTags %}
+    {% include 'meta/og_tags.html' %}
+{% endblock ogTags %}
+
 {% block title %}
-    PyTime - Forbidden
+    {{ title }}
 {% endblock title %}
 
 {% block main-container %}
@@ -10,30 +14,30 @@
         <div class="error_container d-flex align-items-center justify-content-between">
             <div class="container_left_side">
                 <h2 class="container_title">
-                    Ошибка 403
+                    {{ errorTitle }}
                 </h2>
-                
+
                 <p class="container_text mb-0">
-                    Доступ запрещен. У Вас нет прав для просмотра этой страницы. Войдите под другой учетной записью или попросите администратора дать Вам доступ.
+                    {{ errorDescription }}
                 </p>
             </div>
 
-            <img class="container_image" src="{% static 'core/img/errors/error.jpg' %}">
+            <img class="container_image" src="{% static 'errors/error.jpg' %}">
         </div>
 
         <div class="error_container_tablet d-flex flex-column align-items-center justify-content-center">
             <div class="container_up_side text-center">
                 <h2 class="container_title">
-                    Ошибка 403
+                    {{ errorTitle }}
                 </h2>
-                
+
                 <p class="container_text">
-                    Доступ запрещен. У Вас нет прав для просмотра этой страницы. Войдите под другой учетной записью или попросите администратора дать Вам доступ.
+                    {{ errorDescription }}
                 </p>
             </div>
 
             <div class="container_bottom_side">
-                <img class="container_image_tablet" src="{% static 'core/img/errors/error.jpg' %}">
+                <img class="container_image_tablet" src="{% static 'errors/error.jpg' %}">
             </div>
         </div>
     </div>

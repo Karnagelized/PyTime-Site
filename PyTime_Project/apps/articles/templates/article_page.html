@@ -11,7 +11,7 @@
 {% endblock title %}
 
 {% block ogTags %}
-	{% include 'meta/og_tags.html' with title=articleData.title description=articleData.description %}
+	{% include 'meta/og_tags.html' with title=articleData.title description=articleData.description imageURL=articleData.image.url %}
 {% endblock %}
 
 {% block main-container %}

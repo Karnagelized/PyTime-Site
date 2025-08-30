@@ -134,7 +134,7 @@ class ArticleAboutViewTestCase(TestCase):
 
         self.assertContains(
             response,
-            '<img src="/static/core/img/errors/imageNotFound.png" class="article_card_img">',
+            '<img src="/static/errors/imageNotFound.png" class="article_card_img">',
             html=True
         )
 

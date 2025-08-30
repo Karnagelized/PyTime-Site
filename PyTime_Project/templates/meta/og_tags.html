@@ -2,6 +2,12 @@
 
 <meta property="og:title" content="{{ title }}">
 <meta property="og:description" content="{{ description }}">
-<meta property="og:image" content="{{ request.build_absolute_uri }}{% static 'core/img/resume/avatar.jpg' %}">
+
+{% if imageURL %}
+    <meta property="og:image" content="{{ imageURL }}">
+{% else %}
+    <meta property="og:image" content="{% static 'meta/og-image.png' %}">
+{% endif %}
+
 <meta property="og:url" content="{{ request.build_absolute_uri }}">
 <meta property="og:type" content="website">

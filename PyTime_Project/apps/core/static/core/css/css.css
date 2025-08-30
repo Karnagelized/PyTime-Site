@@ -400,7 +400,7 @@ button {
     min-height: 600px;
     height: calc(100vh - 70px);
     background-image: url(
-    "../img/main_page/main.jpg"
+    "../img/main/main.jpg"
     );
     background-repeat: no-repeat;
     background-size: cover;
@@ -1571,7 +1571,7 @@ button {
     .main_greeting_tablet {
       background-image: 
         linear-gradient(rgba(0, 0, 0, 0.4)),
-        url("../img/main_page/main.jpg");
+        url("../img/main/main.jpg");
     }
 
     .container_left_side,
@@ -1842,7 +1842,7 @@ button {
     .main_greeting_tablet {
       background-image: 
         linear-gradient(rgba(0, 0, 0, 0.4)),
-        url("../img/main_page/main.jpg");
+        url("../img/main/main.jpg");
     }
 
     .container_left_side,

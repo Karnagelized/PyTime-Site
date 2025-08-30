@@ -150,7 +150,16 @@ class BadRequestView(View):
 
 
     def get(self, request:HttpRequest, *args, **kwargs) -> HttpResponse:
-        return render(request, 'errors/400.html', status=400)
+        pageData = {
+            'title': 'Bad Request | PyTime',
+            'errorTitle': 'Ошибка 400',
+            'errorDescription': (
+                'Ваш браузер отправил некорректный запрос. Возможно, у вас неправильный адрес или устаревшая ссылка.' +
+                ' Пожалуйста, очистите свой адрес и попробуйте отправить запрос еще раз.'
+            ),
+        }
+
+        return render(request, 'error.html', status=400, context=pageData)
 
 
 
@@ -164,7 +173,16 @@ class ForbiddenView(View):
 
 
     def get(self, request:HttpRequest, *args, **kwargs) -> HttpResponse:
-        return render(request, 'errors/403.html', status=403)
+        pageData = {
+            'title': 'Forbidden | PyTime',
+            'errorTitle': 'Ошибка 403',
+            'errorDescription': (
+                'Доступ запрещен. У вас нет прав для просмотра этой страницы.' +
+                ' Войдите под другой учетной записью или попросите администратора дать вам доступ.'
+            ),
+        }
+
+        return render(request, 'error.html', status=403, context=pageData)
 
 
 
@@ -178,7 +196,16 @@ class PageNotFoundView(View):
 
 
     def get(self, request:HttpRequest, *args, **kwargs) -> HttpResponse:
-        return render(request, 'errors/404.html', status=404)
+        pageData = {
+            'title': 'Page not found | PyTime',
+            'errorTitle': 'Ошибка 404',
+            'errorDescription': (
+                'Кажется что-то пошло не так! Страница, которую вы запрашиваете, не существует.' +
+                ' Возможно она устарела, была удалена, или был введен неверный адрес в адресной строке.'
+            ),
+        }
+
+        return render(request, 'error.html', status=404, context=pageData)
 
 
 
@@ -192,7 +219,17 @@ class InternalServerErrorView(View):
 
 
     def get(self, request:HttpRequest, *args, **kwargs) -> HttpResponse:
-        return render(request, 'errors/500.html', status=500)
+        pageData = {
+            'title': 'Internal server error | PyTime',
+            'errorTitle': 'Ошибка 500',
+            'errorDescription': (
+                'Извините, сервис временно недоступен. Мы уже в курсе и исправляем ошибку.' +
+                ' Обновите страницу через несколько минут. Если проблема не решится, напишите нам на почту.' +
+                ' Приносим свои извинения за временные неудобства.'
+            ),
+        }
+
+        return render(request, 'error.html', status=500, context=pageData)
 
 
 
@@ -206,4 +243,14 @@ class ServiceUnavailableView(View):
 
 
     def get(self, request:HttpRequest, *args, **kwargs) -> HttpResponse:
-        return render(request, 'errors/503.html', status=503)
+        pageData = {
+            'title': 'Service Unavailable | PyTime',
+            'errorTitle': 'Ошибка 503',
+            'errorDescription': (
+                'Данная страница находится в разработке или на техническом обслуживании.' +
+                ' Пожалуйста, подождите несколько минут и попробуйте обновить страницу.' +
+                ' Приносим свои извинения за временные неудобства.'
+            ),
+        }
+
+        return render(request, 'error.html', status=503, context=pageData)

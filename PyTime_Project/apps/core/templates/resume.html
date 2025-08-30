@@ -6,7 +6,8 @@
 {% endblock title %}
 
 {% block ogTags %}
-	{% include 'meta/og_tags.html' with title=title description=og_description %}
+    {% static 'core/img/resume/avatar.jpg' as imageStatic %}
+	{% include 'meta/og_tags.html' with title=title description=og_description imageURL=imageStatic %}
 {% endblock %}
 
 {% block main-container %}
