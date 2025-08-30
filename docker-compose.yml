@@ -49,7 +49,7 @@ services:
       - ./certbot/conf/:/etc/letsencrypt
       - static_volume:/static
       - media_volume:/media
-      - ./statistics:/pytime/statistics
+      - ./PyTime_Project/statistics:/pytime/statistics
     depends_on:
       - core
       - database_prod
