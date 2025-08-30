@@ -14,6 +14,7 @@ class ProjectAdmin(admin.ModelAdmin):
     def tagsDisplay(self):
         return ', '.join([f'{tag}' for tag in  self.tags.all()])
 
+
     list_display = ('id', 'title', tagsDisplay, 'datetimeCreate', 'datetimeUpdate', 'isPublished',)
     list_display_links = ('title',)
     filter_horizontal = ('tags',)

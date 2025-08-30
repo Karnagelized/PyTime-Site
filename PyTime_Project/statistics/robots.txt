@@ -1,0 +1,9 @@
+User-agent: *
+Allow: /
+Disallow: /admin/
+Disallow: /admin.pytime.ru/
+Disallow: /dev.pytime.ru/
+Disallow: /media/
+Sitemap: https://pytime.ru/static/sitemap_google.xml
+Sitemap: https://pytime.ru/static/sitemap_yandex.xml
+Host: pytime.ru
