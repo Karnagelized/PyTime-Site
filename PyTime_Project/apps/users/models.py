@@ -17,7 +17,7 @@ class ProfileAvatarModel(models.Model):
 
     avatar = models.FileField(
         upload_to='avatars/users/',
-        default='avatars/generate/default.svg',
+        default='avatars/generate/default.svg', # TODO Папка generate была удалена и перемещена. Проверить работу.
         verbose_name='Аватар',
     )
 

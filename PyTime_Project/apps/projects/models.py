@@ -15,7 +15,7 @@ class Project(models.Model):
 
     slug = models.SlugField(unique=True, verbose_name='Слаг')
     title = models.CharField(max_length=150, verbose_name='Заголовок')
-    description = models.CharField(max_length=500, blank=True, verbose_name='Описание')
+    description = models.TextField(blank=True, verbose_name='Описание')
     text = RichTextUploadingField(verbose_name='Текст')
     tags = models.ManyToManyField(Tag, blank=True, related_name='projectTags', verbose_name='Теги')
     image = models.ImageField(upload_to='uploads/projects/imageHead/%Y/%m/%d/', blank=True, verbose_name='Изображение')
