@@ -1,6 +1,9 @@
 # Byte-compiled / optimized / DLL files
 __pycache__/
 
+# Venv
+venv/
+
 # Backup
 .backup
 
