@@ -11,14 +11,20 @@
 				<input type="hidden" name="commentID" value="{{ comment.pk }}">
 
 				{% if request.user.is_authenticated %}
-					{% if request.user in comment.likes.all %}
-						<button type="submit" class="statistic_liked_button">
+					{% if not content.isPublished %}
+						<button type="button" class="statistic_like_button" data-bs-toggle="modal" data-bs-target="#contentNotPublished">
 							{% include 'icons/finger_like.html' %}
 						</button>
 					{% else %}
-						<button type="submit" class="statistic_like_button">
-							{% include 'icons/finger_like.html' %}
-						</button>
+						{% if request.user in comment.likes.all %}
+							<button type="submit" class="statistic_liked_button">
+								{% include 'icons/finger_like.html' %}
+							</button>
+						{% else %}
+							<button type="submit" class="statistic_like_button">
+								{% include 'icons/finger_like.html' %}
+							</button>
+						{% endif %}
 					{% endif %}
 				{% else %}
 					<button type="button" class="statistic_like_button" data-bs-toggle="modal" data-bs-target="#authForLike">
@@ -41,14 +47,20 @@
 				<input type="hidden" name="commentID" value="{{ comment.pk }}">
 
 				{% if request.user.is_authenticated %}
-					{% if request.user in comment.dislikes.all %}
-						<button type="submit" class="statistic_liked_button">
-							{% include 'icons/finger_dislike.html' %}
+					{% if not content.isPublished %}
+						<button type="button" class="statistic_like_button" data-bs-toggle="modal" data-bs-target="#contentNotPublished">
+							{% include 'icons/finger_like.html' %}
 						</button>
 					{% else %}
-						<button type="submit" class="statistic_like_button">
-							{% include 'icons/finger_dislike.html' %}
-						</button>
+						{% if request.user in comment.dislikes.all %}
+							<button type="submit" class="statistic_liked_button">
+								{% include 'icons/finger_dislike.html' %}
+							</button>
+						{% else %}
+							<button type="submit" class="statistic_like_button">
+								{% include 'icons/finger_dislike.html' %}
+							</button>
+						{% endif %}
 					{% endif %}
 				{% else %}
 					<button type="button" class="statistic_like_button" data-bs-toggle="modal" data-bs-target="#authForDislike">
@@ -70,3 +82,4 @@
 
 {%  include 'modalWindows/need_authorization_for_like.html' %}
 {%  include 'modalWindows/need_authorization_for_dislike.html' %}
+{%  include 'modalWindows/content_not_published.html' %}

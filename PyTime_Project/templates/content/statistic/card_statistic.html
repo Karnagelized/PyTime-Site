@@ -30,14 +30,20 @@
 					<input type="hidden" name="contentSlug" value="{{ content.slug }}">
 					<input type="hidden" name="parentURL" value="{{ request.build_absolute_uri }}">
 
-					{% if request.user in content.likes.all %}
-						<button type="submit" class="statistic_liked_button">
-							{% include 'icons/like_pressed.html' %}
-						</button>
-					{% else %}
-						<button type="submit" class="statistic_like_button">
+					{% if not content.isPublished %}
+						<div class="statistic_like_button">
 							{% include 'icons/like.html' %}
-						</button>
+						</div>
+					{% else %}
+						{% if request.user in content.likes.all %}
+							<button type="submit" class="statistic_liked_button">
+								{% include 'icons/like_pressed.html' %}
+							</button>
+						{% else %}
+							<button type="submit" class="statistic_like_button">
+								{% include 'icons/like.html' %}
+							</button>
+						{% endif %}
 					{% endif %}
 				</form>
 			{% else %}
@@ -95,14 +101,20 @@
 					<input type="hidden" name="contentSlug" value="{{ content.slug }}">
 					<input type="hidden" name="parentURL" value="{{ request.build_absolute_uri }}">
 
-					{% if request.user in content.likes.all %}
-						<button type="submit" class="statistic_liked_button">
-							{% include 'icons/like_pressed.html' %}
-						</button>
-					{% else %}
-						<button type="submit" class="statistic_like_button">
+					{% if not content.isPublished %}
+						<div class="statistic_like_button">
 							{% include 'icons/like.html' %}
-						</button>
+						</div>
+					{% else %}
+						{% if request.user in content.likes.all %}
+							<button type="submit" class="statistic_liked_button">
+								{% include 'icons/like_pressed.html' %}
+							</button>
+						{% else %}
+							<button type="submit" class="statistic_like_button">
+								{% include 'icons/like.html' %}
+							</button>
+						{% endif %}
 					{% endif %}
 				</form>
 			{% else %}

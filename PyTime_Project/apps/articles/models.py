@@ -5,6 +5,7 @@ from managers.content import PublishedManager
 from apps.tags.models import Tag
 from ckeditor_uploader.fields import RichTextUploadingField
 from apps.comments.models import Comment
+from slugify import slugify
 
 
 
@@ -13,14 +14,14 @@ class Article(models.Model):
         Модель Статей
     """
 
-    slug = models.SlugField(unique=True, verbose_name='Слаг')
+    slug = models.SlugField(blank=True, unique=True, max_length=150, verbose_name='Слаг статьи')
     title = models.CharField(max_length=150, verbose_name='Заголовок')
     description = models.TextField(blank=True, verbose_name='Описание')
     text = RichTextUploadingField(verbose_name='Текст')
     tags = models.ManyToManyField(Tag, blank=True, related_name='articleTags', verbose_name='Теги')
     image = models.ImageField(upload_to='uploads/articles/imageHead/%Y/%m/%d/', blank=True, verbose_name='Изображение')
     views = models.PositiveIntegerField(default=0, verbose_name='Просмотры')
-    likes = models.ManyToManyField("users.CustomUser", blank=True, related_name='articleLikes')
+    likes = models.ManyToManyField("users.CustomUser", blank=True, related_name='articleLikes', verbose_name='Лайки')
     datetimeCreate = models.DateTimeField(auto_now_add=True, verbose_name='Дата создания')
     datetimeUpdate = models.DateTimeField(auto_now=True, verbose_name='Дата изменения')
     isPublished = models.BooleanField(default=True, verbose_name='Видимость')
@@ -34,6 +35,13 @@ class Article(models.Model):
     class Meta:
         verbose_name = 'Статья'
         verbose_name_plural = 'Статьи'
+
+
+    def save(self, *args, **kwargs):
+        if not self.slug:
+            self.slug = slugify(self.title)
+
+        super(Article, self).save(*args, **kwargs)
 
 
     def increment_views(self):

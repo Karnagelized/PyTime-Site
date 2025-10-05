@@ -21,7 +21,10 @@ class ArticleAboutView(View):
 
 
     def get(self, request:HttpRequest, *args, **kwargs) -> HttpResponse:
-        lastArticles = Article.published.all().order_by('-datetimeCreate')[:4]
+        if request.user.is_superuser:
+            lastArticles = Article.objects.all().order_by('-datetimeCreate')[:4]
+        else:
+            lastArticles = Article.published.all().order_by('-datetimeCreate')[:4]
 
         # Проверка на существование изображения Статьи
         for article in lastArticles:
@@ -56,6 +59,11 @@ class ArticleListView(View):
             'allArticles': Article.published.all().order_by('-datetimeCreate'),
         }
 
+        if request.user.is_superuser:
+            pageData = {
+                'allArticles': Article.objects.all().order_by('-datetimeCreate'),
+            }
+
         return render(request, 'all_articles.html', context=pageData)
 
 
@@ -81,6 +89,13 @@ class ArticlePageView(View):
 
             return render(request, 'article_page.html', context=pageData)
 
+        # Пользователь не авторизован
+        if not commentForm.is_valid():
+            pageData['writeCommentForm'] = commentForm
+            pageData['comments'] = Comment.getAllByTypeAndSlug(slug=articleSlug, postType='ARTICLE')
+
+            return render(request, 'article_page.html', context=pageData)
+
         # Сохраняем комментарий
         newComment = commentForm.save(commit=False)
         newComment.contentSlug = articleSlug
@@ -95,11 +110,15 @@ class ArticlePageView(View):
 
 
     def get(self, request:HttpRequest, articleSlug:str, *args, **kwargs) -> HttpResponse:
-        articleData = get_object_or_404(Article.published, slug=articleSlug)
+        if request.user.is_superuser:
+            articleData = get_object_or_404(Article, slug=articleSlug)
+        else:
+            articleData = get_object_or_404(Article.published, slug=articleSlug)
 
-        # Добавляем просмотр к статье
+        # Добавляем просмотр к статье, если она опубликована
         if not request.session.pop('skipViewIncrement', False):
-            articleData.increment_views()
+            if articleData.isPublished:
+                articleData.increment_views()
 
         pageData = {
             'articleData': articleData,

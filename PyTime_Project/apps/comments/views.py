@@ -20,6 +20,8 @@ class ReplyCommentView(View):
         comment = Comment.objects.get(pk=commentID)
         commentForm = WriteCommentForm(request.POST)
 
+        # TODO Плохое взаимодействие с пользователем. Не пишется код ошибки почему валидация не прошла.
+        #  Связано с тем, что ошибки для reply и для new комментария дублируется
         if not commentForm.is_valid():
             if contentType == 'ARTICLE':
                 return redirect(reverse('articlePage', kwargs={'articleSlug': contentSlug}))

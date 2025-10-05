@@ -17,9 +17,15 @@
 						{% include 'agreement.html' %}
 					</div>
 
-					<div class="reply_agrement_submit_right_side">
-						{% include 'buttons/submit_black_background.html' with name="Ответить" isSubmit=1 %}
-					</div>
+					{% if not content.isPublished %}
+						<div data-bs-toggle="modal" data-bs-target="#contentNotPublished">
+							{% include 'buttons/submit_black_background.html' with name="Ответить" %}
+						</div>
+					{% else %}
+						<div class="reply_agrement_submit_right_side">
+							{% include 'buttons/submit_black_background.html' with name="Ответить" isSubmit=1 %}
+						</div>
+					{% endif %}
 				</div>
 			{% else %}
 				<div class="reply_agrement_submit d-flex justify-content-between align-items-center">

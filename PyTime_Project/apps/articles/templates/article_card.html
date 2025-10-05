@@ -1,7 +1,12 @@
 {% load static %}
 
 {% for article in articles %}
-    <div class="article_card d-flex flex-column">
+    {% if not article.isPublished and request.user.is_superuser %}
+        <div class="article_card card_not_published d-flex flex-column">
+    {% else %}
+        <div class="article_card d-flex flex-column">
+    {% endif %}
+
         <div class="article_card_img_block">
             {% if article.image %}
                 <img src="{{ article.image.url }}" class="article_card_img">

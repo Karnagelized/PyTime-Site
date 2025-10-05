@@ -19,7 +19,10 @@ class ProjectAboutView(View):
 
 
     def get(self, request:HttpRequest, *args, **kwargs) -> HttpResponse:
-        lastProjects = Project.published.all().order_by('-datetimeCreate')[:4]
+        if request.user.is_superuser:
+            lastProjects = Project.objects.all().order_by('-datetimeCreate')[:4]
+        else:
+            lastProjects = Project.published.all().order_by('-datetimeCreate')[:4]
 
         pageData = {
             'title': 'Проекты Разработчика | PyTime',
@@ -49,6 +52,11 @@ class ProjectListView(View):
             'allProjects': Project.published.all().order_by('-datetimeCreate'),
         }
 
+        if request.user.is_superuser:
+            pageData = {
+                'allProjects': Project.objects.all().order_by('-datetimeCreate'),
+            }
+
         return render(request, 'all_projects.html', context=pageData)
 
 
@@ -74,6 +82,13 @@ class ProjectPageView(View):
 
             return render(request, 'project_page.html', context=pageData)
 
+        # Валидация формы
+        if not commentForm.is_valid():
+            pageData['writeCommentForm'] = commentForm
+            pageData['comments'] = Comment.getAllByTypeAndSlug(slug=projectSlug, postType='PROJECT')
+
+            return render(request, 'project_page.html', context=pageData)
+
         # Сохраняем комментарий
         newComment = commentForm.save(commit=False)
         newComment.contentSlug = projectSlug
@@ -88,11 +103,15 @@ class ProjectPageView(View):
 
 
     def get(self, request:HttpRequest, projectSlug:str, *args, **kwargs) -> HttpResponse:
-        projectData = get_object_or_404(Project.published, slug=projectSlug)
+        if request.user.is_superuser:
+            projectData = get_object_or_404(Project, slug=projectSlug)
+        else:
+            projectData = get_object_or_404(Project.published, slug=projectSlug)
 
         # Добавляем просмотр к статье
         if not request.session.pop('skipViewIncrement', False):
-            projectData.increment_views()
+            if projectData.isPublished:
+                projectData.increment_views()
 
         pageData = {
             'projectData': projectData,

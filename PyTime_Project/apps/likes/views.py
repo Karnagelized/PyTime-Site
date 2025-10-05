@@ -94,6 +94,8 @@ class CommentsLikeView(View):
         if request.user in comment.dislikes.all():
             comment.dislikes.remove(request.user)
 
+        request.session['skipViewIncrement'] = True
+
         if contentType == 'ARTICLE':
             return redirect(reverse('articlePage', kwargs={'articleSlug': contentSlug}))
         else:
@@ -120,6 +122,8 @@ class CommentsDislikeView(View):
         # Удаляем лайк, если он есть
         if request.user in comment.likes.all():
             comment.likes.remove(request.user)
+
+        request.session['skipViewIncrement'] = True
 
         if contentType == 'ARTICLE':
             return redirect(reverse('articlePage', kwargs={'articleSlug': contentSlug}))

@@ -14,7 +14,13 @@
 			{% include 'agreement.html' %}
 
 			{% if request.user.is_authenticated %}
-				{% include 'buttons/submit_black_background.html' with name="Опубликовать" isSubmit=1 %}
+				{% if not content.isPublished %}
+					<div data-bs-toggle="modal" data-bs-target="#contentNotPublished" class="d-flex justify-content-center">
+						{% include 'buttons/submit_black_background.html' with name="Опубликовать" %}
+					</div>
+				{% else %}
+					{% include 'buttons/submit_black_background.html' with name="Опубликовать" isSubmit=1 %}
+				{% endif %}
 			{% else %}
 				<div data-bs-toggle="modal" data-bs-target="#authForComment" class="d-flex justify-content-center">
 					{% include 'buttons/submit_black_background.html' with name="Опубликовать" %}
@@ -27,7 +33,10 @@
 </div>
 
 
+
 {%  include 'modalWindows/need_authorization_for_comment.html' %}
+{%  include 'modalWindows/content_not_published.html' %}
+
 
 
 <div class="feedback_container_tablet d-flex flex-column justify-content-center align-items-center" id="comment_content_tablet">
@@ -44,7 +53,13 @@
 			{% include 'agreement.html' %}
 
 			{% if request.user.is_authenticated %}
-				{% include 'buttons/submit_black_background.html' with name="Опубликовать" isSubmit=1 %}
+				{% if not content.isPublished %}
+					<div data-bs-toggle="modal" data-bs-target="#contentNotPublished" class="d-flex justify-content-center">
+						{% include 'buttons/submit_black_background.html' with name="Опубликовать" %}
+					</div>
+				{% else %}
+					{% include 'buttons/submit_black_background.html' with name="Опубликовать" isSubmit=1 %}
+				{% endif %}
 			{% else %}
 				<div data-bs-toggle="modal" data-bs-target="#authForComment" class="d-flex justify-content-center">
 					{% include 'buttons/submit_black_background.html' with name="Опубликовать" %}

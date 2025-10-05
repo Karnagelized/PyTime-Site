@@ -11,7 +11,11 @@
 {% endblock title %}
 
 {% block ogTags %}
-	{% include 'meta/og_tags.html' with title=projectData.title description=projectData.description imageURL=projectData.image.url %}
+    {% if projectData.image %}
+        {% include 'meta/og_tags.html' with title=projectData.title description=projectData.description imageURL=projectData.image.url %}
+    {% else %}
+        {% include 'meta/og_tags.html' with title=projectData.title description=projectData.description imageURL='core/img/errors/imageNotFound.png' %}
+    {% endif %}
 {% endblock %}
 
 {% block main-container %}
@@ -45,8 +49,14 @@
 	        <!-- Separator line -->
 	        <hr class="content_separator">
 
+			<!-- Contact me -->
+			{% include 'content/contact_me.html' %}
+
+	        <!-- Separator line -->
+	        <hr class="content_separator">
+
 	        <!-- Write a comment block -->
-	        {% include 'write_comment.html' %}
+	        {% include 'write_comment.html' with content=projectData %}
 		</div>
 	</div>
 {% endblock %}

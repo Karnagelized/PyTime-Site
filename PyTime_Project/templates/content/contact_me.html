@@ -1,0 +1,42 @@
+<div class="short_content_container d-flex justify-content-between align-items-center align-content-center">
+	<div class="container_left_side">
+		<h2 class="container_title mb-0">
+			Нашли что-то полезное?<br>Разовьем идею вместе!
+		</h2>
+	</div>
+
+	<div class="container_right_side">
+		<p class="container_text">
+			Я открыт к новым проектам и профессиональному общению. Всегда рад новым знакомствам и интересным проектам! Обсудим сотрудничество, помогу с техническими вопросами или просто поговорим о IT. От идеи до реализации - один шаг!
+		</p>
+
+		<!-- Buttons -->
+		<div class="block_buttons d-flex justify-content-between">
+            {% url "contactPage" as contactUrl %}
+
+            {% include "buttons/link_white_background.html" with name="Связаться" url_name=contactUrl %}
+		</div>
+	</div>
+</div>
+
+<!-- Tablet/mobile version -->
+<div class="short_content_container_tablet d-flex flex-column text-center align-items-center align-content-center">
+	<div class="container_up_side">
+		<h2 class="container_title">
+			Нашли что-то полезное?<br>Разовьем идею вместе!
+		</h2>
+
+		<p class="container_text">
+			Я открыт к новым проектам и профессиональному общению. Всегда рад новым знакомствам и интересным проектам! Обсудим сотрудничество, помогу с техническими вопросами или просто поговорим о IT. От идеи до реализации - один шаг!
+		</p>
+	</div>
+
+	<div class="container_bottom_side">
+		<!-- Buttons -->
+		<div class="block_buttons d-flex justify-content-between">
+            {% url "contactPage" as contactUrl %}
+
+            {% include "buttons/link_white_background.html" with name="Связаться" url_name=contactUrl %}
+		</div>
+	</div>
+</div>
