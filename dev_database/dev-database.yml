@@ -1,6 +1,6 @@
 services:
   database_dev:
-    image: postgres:16.9-alpine
+    image: postgres:17-alpine
     container_name: database_dev
     env_file:
       - .env
