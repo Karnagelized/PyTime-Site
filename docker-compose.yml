@@ -61,12 +61,20 @@ services:
   certbot:
     image: certbot/certbot:latest
     container_name: certbot
-    entrypoint: "/bin/sh -c"
+    entrypoint: /bin/sh
     command: >
-      trap exit TERM; while :; do
-        certbot renew --webroot -w /var/www/certbot --non-interactive --post-hook 'nginx -s reload';
-        sleep 12h & wait $$!;
-      done
+      -c '
+        trap "exit 0" TERM;
+        while :; do
+          echo "=== Starting certbot renew at $(date) ===";
+          certbot renew \
+            --webroot -w /var/www/certbot \
+            --cert-name pytime.ru \
+            --non-interactive --quiet || true;
+          echo "=== Certbot renew finished, sleeping 12h ===";
+          sleep 12h & wait $!;
+        done
+      '
     volumes:
       - ./certbot/www/:/var/www/certbot
       - ./certbot/conf/:/etc/letsencrypt
@@ -74,6 +82,7 @@ services:
       - database_prod
       - core
       - nginx
+    restart: unless-stopped
 
 volumes:
   postgres_prod_data:
